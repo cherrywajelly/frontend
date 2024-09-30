@@ -1,0 +1,28 @@
+{
+  "theme_color": "#CCC2C0",
+  "background_color": "#CCC2C0",
+  "display": "standalone",
+  "scope": "/",
+  "start_url": "/",
+  "name": "TimeToast",
+  "short_name": "TimeToast",
+  "description": "TimeToast",
+  "icons": [
+    {
+      "src": "/image/icons/icon(114x114).png",
+      "type": "image/png",
+      "sizes": "114x114",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/image/icons/icon(152x152).png",
+      "type": "image/png",
+      "sizes": "152x152"
+    },
+    {
+      "src": "/image/icons/icon(512x512).png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ]
+}
