@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import Head from 'next/head';
+import pretendard from '@/styles/font';
+import Providers from './providers';
 
 export const metadata: Metadata = {
   title: 'TimeToast',
@@ -26,7 +28,9 @@ export default function RootLayout({
         <meta name="description" content="Description" />
         <meta name="keywords" content="Keywords" />
       </Head>
-      <body className={`antialiased`}>{children}</body>
+      <body className={`${pretendard.variable} font-pretendard antialiased`}>
+        <Providers>{children}</Providers>
+      </body>
     </html>
   );
 }

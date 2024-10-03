@@ -10,6 +10,7 @@
     "cz": "./node_modules/cz-customizable/standalone.js"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.59.0",
     "cz-customizable": "7.2.1",
     "next": "14.2.13",
     "next-pwa": "5.6.0",
@@ -17,6 +18,7 @@
     "react-dom": "^18"
   },
   "devDependencies": {
+    "@tanstack/react-query-devtools": "^5.59.0",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
