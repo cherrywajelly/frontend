@@ -9,18 +9,18 @@
   "description": "TimeToast",
   "icons": [
     {
-      "src": "/image/icons/icon(114x114).png",
+      "src": "/images/icons/icon(114x114).png",
       "type": "image/png",
       "sizes": "114x114",
       "purpose": "any maskable"
     },
     {
-      "src": "/image/icons/icon(152x152).png",
+      "src": "/images/icons/icon(152x152).png",
       "type": "image/png",
       "sizes": "152x152"
     },
     {
-      "src": "/image/icons/icon(512x512).png",
+      "src": "/images/icons/icon(512x512).png",
       "type": "image/png",
       "sizes": "512x512"
     }
