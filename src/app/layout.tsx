@@ -1,8 +1,11 @@
-import type { Metadata } from 'next';
 import './globals.css';
-import Head from 'next/head';
+
 import pretendard from '@/styles/font';
+
 import Providers from './providers';
+
+import type { Metadata } from 'next';
+import Head from 'next/head';
 
 export const metadata: Metadata = {
   title: 'TimeToast',

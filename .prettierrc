@@ -3,5 +3,19 @@
   "singleQuote": true,
   "tabWidth": 2,
   "trailingComma": "all",
-  "printWidth": 80
+  "printWidth": 80,
+  "plugins": ["@trivago/prettier-plugin-sort-imports"],
+  "importOrder": [
+    ".css$",
+    "style",
+    "^react",
+    "^@/components/common-components/(.*)$",
+    "^@/components/(.*)$",
+    "^@/(libs|hooks|utils|types|constants)/(.*)$",
+    "^@",
+    "^[./]",
+    "<THIRD_PARTY_MODULES>"
+  ],
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": false
 }
