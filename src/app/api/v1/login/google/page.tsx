@@ -6,17 +6,13 @@ import { useGoogleLogin } from '@/hooks/api/useLogin';
 
 import { useRouter } from 'next/navigation';
 
-//
-
 export default function GoogleCallback() {
   const router = useRouter();
-
   const code =
     (typeof window !== 'undefined' &&
       new URL(window.location.href).searchParams.get('code')) ||
     '';
 
-  // console.log(code);
   const { data, error, isLoading } = useGoogleLogin(code);
 
   useEffect(() => {
@@ -28,8 +24,13 @@ export default function GoogleCallback() {
     }
 
     if (data) {
-      router.push('/');
-      console.log('data:', data);
+      const accessToken: string | undefined = data.accessToken;
+      const refreshToken: string | undefined = data.refreshToken;
+      if (accessToken && refreshToken) {
+        window.sessionStorage.setItem('accessToken', accessToken);
+        window.sessionStorage.setItem('refreshToken', refreshToken);
+        router.push('/');
+      }
     } else {
       //   router.push('/');
       console.log('error', error);
