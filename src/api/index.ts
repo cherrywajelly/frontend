@@ -25,7 +25,6 @@ export const apiRequest = async <T>(
 
   try {
     const response = await fetch(`${BASE_URL}${endpoint}`, options);
-    console.log('response', response);
     if (!response.ok) {
       const errorData = await response.json();
       throw new Error(errorData.message || 'Failed to fetch data');

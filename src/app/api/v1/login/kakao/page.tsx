@@ -6,7 +6,7 @@ import { useKakaoToken } from '@/hooks/api/useLogin';
 
 import { useRouter } from 'next/navigation';
 
-const Page = () => {
+const KakaoCallback = () => {
   const router = useRouter();
 
   let kakaoCode: string = '';
@@ -42,8 +42,6 @@ const Page = () => {
   ) : (
     <></>
   );
-
-  return null;
 };
 
-export default Page;
+export default KakaoCallback;
