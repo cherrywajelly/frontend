@@ -26,7 +26,13 @@ const KakaoCallback = () => {
     }
 
     if (data) {
-      router.push('/');
+      const accessToken: string | undefined = data.accessToken;
+      const refreshToken: string | undefined = data.refreshToken;
+      if (accessToken && refreshToken) {
+        window.sessionStorage.setItem('accessToken', accessToken);
+        window.sessionStorage.setItem('refreshToken', refreshToken);
+        router.push('/');
+      }
     } else {
       //   router.push('/');
     }
