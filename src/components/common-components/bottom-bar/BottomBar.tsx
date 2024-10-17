@@ -21,8 +21,8 @@ const navVariants = {
     'fixed bottom-0 bg-white w-full h-[96px] px-6 pt-4 flex justify-between rounded-t-[12px] shadow-[0_0_4px_0px_rgba(78,69,64,0.25)]',
   itemContainer:
     'w-full max-w-[64px] flex flex-col gap-[2px] justify-start items-center',
-  textDefault: 'text-body4 text-gray-20',
-  iconDefault: 'text-[24px] text-body4 text-gray-20',
+  textDefault: 'text-body5 text-gray-20',
+  iconDefault: 'text-[24px] text-body5 text-gray-20',
   textActive: 'text-navigation1 text-secondary-main',
   iconActive: 'text-[24px] text-navigation1 text-secondary-main',
 };
