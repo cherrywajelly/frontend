@@ -14,9 +14,11 @@ export const buttonShapes = {
 export type ButtonShape = (typeof buttonShapes)[keyof typeof buttonShapes];
 
 export const buttonColors = {
-  active: 'active',
-  default: 'default',
   disabled: 'disabled',
+  subDisabled: 'subDisabled',
+  active: 'active',
+  primary: 'primary',
+  secondary: 'secondary',
 } as const;
 export type ButtonColor = (typeof buttonColors)[keyof typeof buttonColors];
 
