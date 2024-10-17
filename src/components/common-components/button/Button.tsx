@@ -15,10 +15,10 @@ const style: {
   shape: Record<ButtonShape, string>;
   color: Record<ButtonColor, string>;
 } = {
-  base: 'w-full h-[48px] flex items-center justify-center cursor-pointer disabled:cursor-default',
+  base: 'w-full flex items-center justify-center cursor-pointer disabled:cursor-default',
   size: {
-    sm: '',
-    md: 'px-25 ',
+    sm: 'h-[32px] px-4 text-body3',
+    md: 'h-[48px] px-25 text-body1',
     lg: '',
   },
   shape: {
@@ -26,9 +26,11 @@ const style: {
     rounded: 'rounded-full',
   },
   color: {
-    active: 'text-white',
-    default: 'bg-gray-80 text-white text-body2',
-    disabled: 'bg-gray-10 text-gray-60 text-body2',
+    disabled: 'bg-gray-10 text-gray-40 text-body2',
+    subDisabled: 'bg-gray-20 text-white',
+    active: 'bg-gray-80 text-white',
+    primary: 'bg-primary-main text-white',
+    secondary: 'bg-secondary-main text-white',
   },
 };
 
@@ -37,7 +39,7 @@ const Button = forwardRef<HTMLButtonElement, PropsWithChildren<ButtonProps>>(
     const {
       size = 'md',
       shape = 'square',
-      color = 'default',
+      color = 'disabled',
       startIcon,
       endIcon,
       className,

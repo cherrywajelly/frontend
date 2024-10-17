@@ -94,12 +94,20 @@ const config: Config = {
         body3: [
           '0.875rem', //14px
           {
-            fontWeight: 'regular',
+            fontWeight: 'bold',
             lineHeight: '140%',
             letterSpacing: '-2%',
           },
         ],
         body4: [
+          '0.875rem', //14px
+          {
+            fontWeight: 'regular',
+            lineHeight: '140%',
+            letterSpacing: '-2%',
+          },
+        ],
+        body5: [
           '0.75rem', //12px
           {
             fontWeight: 'regular',

@@ -31,7 +31,9 @@ export default function RootLayout({
         <meta name="description" content="Description" />
         <meta name="keywords" content="Keywords" />
       </Head>
-      <body className={`${pretendard.variable} font-pretendard antialiased`}>
+      <body
+        className={`${pretendard.variable} font-pretendard antialiased m-auto`}
+      >
         <Providers>{children}</Providers>
       </body>
     </html>
