@@ -34,7 +34,7 @@ const KakaoCallback = () => {
         router.push('/');
       }
     } else {
-      //   router.push('/');
+      console.log(data);
     }
   }, [data, isLoading, error, router]);
 
