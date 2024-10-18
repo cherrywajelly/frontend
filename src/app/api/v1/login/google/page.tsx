@@ -32,8 +32,7 @@ export default function GoogleCallback() {
         router.push('/');
       }
     } else {
-      //   router.push('/');
-      console.log('error', error);
+      console.log(data);
     }
   }, [data, isLoading, error, router]);
 

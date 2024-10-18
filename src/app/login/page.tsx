@@ -3,11 +3,19 @@
 import GoogleButton from '@/components/login/GoogleButton';
 import KakaoButton from '@/components/login/KakaoButton';
 
+import TimeToastLogo from '../../../public/images/timetoast.png';
+
+import Image from 'next/image';
+
 export default function Home() {
   return (
-    <div className="border border-black p-4">
-      <div>toast 캐릭터 이미지 넣기</div>
-      <div className="flex flex-col gap-4">
+    <div className="px-4 bg-gray-50 h-screen flex flex-col justify-center items-center">
+      <div className="flex flex-col items-center justify-center">
+        <Image src={TimeToastLogo} alt="timetoast" width={300} height={300} />
+        <h1 className="text-h1 italic">TimeToast</h1>
+      </div>
+
+      <div className="w-full flex flex-col gap-4 mt-[150px]">
         <KakaoButton />
         <GoogleButton />
       </div>
