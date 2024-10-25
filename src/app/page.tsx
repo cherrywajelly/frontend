@@ -1,9 +1,11 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import { LuCalendarDays } from 'react-icons/lu';
 
 import BottomBar from '@/components/common-components/bottom-bar';
 import Button from '@/components/common-components/button';
+import Input from '@/components/common-components/input';
 import TopBar from '@/components/common-components/top-bar';
 
 import { useRouter } from 'next/navigation';
@@ -54,6 +56,11 @@ export default function Home() {
           <Button size="md" color="active">
             다음
           </Button>
+
+          <div>input component test</div>
+          <Input placeholder="인풋입니다인풋" />
+          <Input placeholder="normal input" startIcon={<LuCalendarDays />} />
+          <Input placeholder="small input" size="sm" search />
         </div>
 
         <br />
@@ -68,7 +75,7 @@ export default function Home() {
           </button>
         )}
       </div>
-
+      <div className="pt-[96px]" />
       <BottomBar />
     </div>
   );
