@@ -1,3 +1,5 @@
+'use client';
+
 import { forwardRef, PropsWithChildren, useState } from 'react';
 import { IoIosSearch } from 'react-icons/io';
 
