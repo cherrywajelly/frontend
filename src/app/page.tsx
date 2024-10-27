@@ -1,9 +1,8 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 import BottomBar from '@/components/common-components/bottom-bar';
-import Button from '@/components/common-components/button';
 import TopBar from '@/components/common-components/top-bar';
 
 import { useRouter } from 'next/navigation';
@@ -35,26 +34,6 @@ export default function Home() {
         <span className="text-h3 py-2">안녕하세요. TimeToast입니다.</span>
         <br />
         <br />
-        <div className="w-full px-6 flex flex-col gap-1">
-          <Button size="md" color="disabled">
-            다음
-          </Button>
-          <Button size="md" color="secondary">
-            토스트 굽기
-          </Button>
-          <Button size="sm" color="primary">
-            팔로우
-          </Button>
-          <Button size="sm" color="subDisabled">
-            팔로잉
-          </Button>
-          <Button size="sm" color="active">
-            프로필 편집
-          </Button>
-          <Button size="md" color="active">
-            다음
-          </Button>
-        </div>
 
         <br />
 
@@ -68,7 +47,7 @@ export default function Home() {
           </button>
         )}
       </div>
-
+      <div className="pt-[96px]" />
       <BottomBar />
     </div>
   );
