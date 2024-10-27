@@ -50,16 +50,16 @@ export default function SignUpPage() {
             }
             subTitle="닉네임"
           >
-            <div className="flex flex-1 gap-2 w-full">
+            <div className="flex gap-2">
               <Input
                 placeholder="닉네임을 입력해주세요."
                 value={nickname}
                 onChange={handleNickname}
               />
               <Button
-                className="h-[56px] w-1/3 inline-flex"
-                color={nickname ? 'active' : 'disabled'}
+                color={nickname ? 'primary' : 'disabled'}
                 onClick={handleValidNickname}
+                size="lg"
               >
                 중복확인
               </Button>
