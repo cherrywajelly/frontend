@@ -15,11 +15,11 @@ const style: {
   shape: Record<ButtonShape, string>;
   color: Record<ButtonColor, string>;
 } = {
-  base: 'w-full flex items-center justify-center cursor-pointer disabled:cursor-default',
+  base: 'inline-flex items-center justify-center cursor-pointer disabled:cursor-default',
   size: {
     sm: 'h-[32px] px-4 text-body3',
     md: 'h-[48px] px-25 text-body1',
-    lg: '',
+    lg: 'h-[56px] px-4 text-body3 w-auto whitespace-nowrap',
   },
   shape: {
     square: 'rounded-[10px]',
