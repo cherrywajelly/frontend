@@ -1,7 +1,7 @@
 export type InputFormProps = {
   title: React.ReactNode;
-  subTitle: string;
-  children: React.ReactNode;
+  subTitle?: string;
+  children?: React.ReactNode;
 };
 
 export default function InputForm(props: InputFormProps) {
