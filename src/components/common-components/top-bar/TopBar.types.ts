@@ -1,7 +1,7 @@
 export type TopBarProps = {
   title?: string;
   isBackBtn?: boolean;
-  isRight?: RightType;
+  isRight?: boolean | RightType;
   submitAble?: boolean;
 };
 

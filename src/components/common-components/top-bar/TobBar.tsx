@@ -27,18 +27,26 @@ const TopBar = ({
       ) : (
         <></>
       )}
-      <div className="text-body2 text-black-main">{title}</div>
-      {isRight === 'hamburger' ? (
-        <RxHamburgerMenu size={20} className="text-black-main" />
+
+      <div className="flex-grow text-center text-body2 text-black-main">
+        {title}
+      </div>
+
+      {isRight ? (
+        isRight === 'hamburger' ? (
+          <RxHamburgerMenu size={20} className="text-black-main" />
+        ) : (
+          <span
+            className={clsx(
+              variants.base,
+              isActive ? variants.active : variants.disabled,
+            )}
+          >
+            등록
+          </span>
+        )
       ) : (
-        <span
-          className={clsx(
-            variants.base,
-            isActive ? variants.active : variants.disabled,
-          )}
-        >
-          등록
-        </span>
+        <div className="w-[20px]" />
       )}
     </div>
   );
