@@ -31,7 +31,7 @@ const KakaoCallback = () => {
       if (accessToken && refreshToken) {
         window.sessionStorage.setItem('accessToken', accessToken);
         window.sessionStorage.setItem('refreshToken', refreshToken);
-        router.push('/');
+        router.push('/sign-up');
       }
     } else {
       console.log(data);

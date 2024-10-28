@@ -1,5 +1,5 @@
 export type InputFormProps = {
-  title: string;
+  title: React.ReactNode;
   subTitle: string;
   children: React.ReactNode;
 };
@@ -13,7 +13,7 @@ export default function InputForm(props: InputFormProps) {
         {title}
       </h1>
       <div className="flex flex-col gap-1">
-        <p className="pl-1 text-gray-60 text-body5">{subTitle}</p>
+        <p className="pl-1 text-gray-60 text-navigation1">{subTitle}</p>
         {children}
       </div>
     </>

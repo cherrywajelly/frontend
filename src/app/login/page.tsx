@@ -7,7 +7,7 @@ import TimeToastLogo from '../../../public/images/timetoast.png';
 
 import Image from 'next/image';
 
-export default function Home() {
+export default function LoginPage() {
   return (
     <div className="px-4 bg-gray-50 h-screen flex flex-col justify-center items-center">
       <div className="flex flex-col items-center justify-center">
