@@ -4,6 +4,7 @@ const nextConfig = {
   images: {
     formats: ["image/avif", "image/webp"],
   },
+  output: 'standalone',
 };
 
 const config = withPWA({
