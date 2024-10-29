@@ -15,15 +15,15 @@ export default function EventToastPage() {
   const [step, setStep] = useState<number>(0);
 
   return (
-    <>
+    <div className="w-full h-lvh">
       <TopBar title="이벤트 토스트 굽기" isRight={isRightBtn} />
 
-      <div className="w-full h-screen flex flex-col gap-1">
+      <div className="h-[calc(100vh-48px)] flex flex-col gap-1 bg-gray-05">
         {step === 0 && <ToastDecoForm />}
         {/* {step === 0 && <EventToastOpenDateForm />} */}
         {step === 1 && <EventToastNameForm />}
-        {step === 2 && <EventToastOpenDateForm />}
+        {step === 2 && <ToastDecoForm />}
       </div>
-    </>
+    </div>
   );
 }
