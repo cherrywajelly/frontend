@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 import Button from '@/components/common-components/button';
 
@@ -59,6 +59,7 @@ export default function ToastDecoForm() {
   );
 
   const handleButtonClick = (title: string) => {
+    scrollToTop();
     setSelectedTopic(title);
     const topic = toastTopic.find((topic) => topic.title === title);
     if (topic) setButtonTopic(topic);
@@ -67,8 +68,16 @@ export default function ToastDecoForm() {
   // TODO: to get nickname global-state
   const nickname = '채민';
 
+  const toastBoxRef = useRef<HTMLDivElement>(null);
+
+  const scrollToTop = () => {
+    if (toastBoxRef.current) {
+      toastBoxRef.current.scrollTo(0, 0);
+    }
+  };
+
   return (
-    <div className="w-full h-full py-6 flex flex-col justify-between">
+    <div className="w-full h-full pt-6 flex flex-col justify-between">
       <div className="px-6">
         <InputForm title={`${nickname}님의 토스트를 꾸며보세요!`}>
           <Image
@@ -81,17 +90,17 @@ export default function ToastDecoForm() {
         </InputForm>
       </div>
 
-      <div className="w-full h-full max-h-[405px] py-6 flex flex-col justify-between px-6 border-t-2 border-gray-10 rounded-t-[20px]">
+      <div className="bg-white w-full h-full pt-6 pb-12 max-h-[405px] flex flex-col justify-between px-6 border-t-2 border-gray-10 rounded-t-[20px]">
         <div>
           <div className="w-full flex justify-between gap-3">
             {toastTopic.map((item) => {
               return (
                 <Button
                   key={item.title}
-                  size="md"
+                  size="sm"
                   onClick={() => handleButtonClick(item.title)}
                   color={selectedTopic === item.title ? 'primary' : 'disabled'}
-                  className="flex-1 rounded-[20px] h-[36px]"
+                  className="flex-1 rounded-[20px] !h-[36px]"
                 >
                   {item.title}
                 </Button>
@@ -99,7 +108,10 @@ export default function ToastDecoForm() {
             })}
           </div>
 
-          <div className="w-full h-full grid grid-cols-3 mt-6 gap-x-4 gap-y-6 max-h-[220px] overflow-y-auto">
+          <div
+            ref={toastBoxRef}
+            className="w-full h-full grid grid-cols-3 mt-6 gap-x-4 gap-y-6 max-h-[200px] overflow-y-auto"
+          >
             {buttonTopic.imgArr.map((option: ToastOptionsProps) => (
               <div
                 key={option.name}
