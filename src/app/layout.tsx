@@ -2,6 +2,7 @@ import './globals.css';
 
 import pretendard from '@/styles/font';
 
+import RecoilRootWrapper from './RecoilRootWrapper';
 import Providers from './providers';
 
 import type { Metadata } from 'next';
@@ -19,7 +20,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="ko">
       <Head>
         <link rel="manifest" href="/public/manifest.json" />
         <meta name="theme-color" content="#CCC2C0" />
@@ -31,11 +32,14 @@ export default function RootLayout({
         <meta name="description" content="Description" />
         <meta name="keywords" content="Keywords" />
       </Head>
-      <body
-        className={`${pretendard.variable} font-pretendard antialiased m-auto`}
-      >
-        <Providers>{children}</Providers>
-      </body>
+
+      <RecoilRootWrapper>
+        <body
+          className={`${pretendard.variable} font-pretendard antialiased m-auto`}
+        >
+          <Providers>{children}</Providers>
+        </body>
+      </RecoilRootWrapper>
     </html>
   );
 }
