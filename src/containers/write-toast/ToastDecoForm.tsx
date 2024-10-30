@@ -4,6 +4,8 @@ import Button from '@/components/common-components/button';
 
 import InputForm from '@/components/input-form/InputForm';
 
+import { pieceData, ToastData } from '@/types/atoms/toastAtom';
+
 import defaultImg from '../../../public/images/default-toast.png';
 import tempImg from '../../../public/images/timetoast.png';
 
@@ -12,6 +14,7 @@ import {
   StaticImport,
 } from 'next/dist/shared/lib/get-img-props';
 import Image from 'next/image';
+import { RecoilState, useRecoilState, useSetRecoilState } from 'recoil';
 
 export type ToastOptionsProps = {
   name: string;
@@ -48,15 +51,21 @@ const toastTopic = [
   { title: '설날', imgArr: defaultToastOptions },
 ];
 
-export default function ToastDecoForm() {
-  const [selectToast, setSelectToast] = useState<string | StaticImport>(
-    defaultImg,
-  );
+export type TostFormProps = {
+  stepState: RecoilState<number>;
+  dataState: RecoilState<pieceData | ToastData>;
+};
+
+export default function ToastDecoForm(props: TostFormProps) {
+  const { stepState, dataState } = props;
 
   const [buttonTopic, setButtonTopic] = useState<any>(toastTopic[0]);
   const [selectedTopic, setSelectedTopic] = useState<string>(
     toastTopic[0].title,
   );
+
+  const setStep = useSetRecoilState(stepState);
+  const [toastData, setToastData] = useRecoilState(dataState);
 
   const handleButtonClick = (title: string) => {
     scrollToTop();
@@ -76,13 +85,17 @@ export default function ToastDecoForm() {
     }
   };
 
+  const handleSubmit = () => {
+    setStep((prev) => prev + 1);
+  };
+
   return (
     <div className="w-full h-full pt-6 flex flex-col justify-between">
       <div className="px-6">
         <InputForm title={`${nickname}님의 토스트를 꾸며보세요!`}>
           <Image
             className="mx-auto pt-8"
-            src={selectToast}
+            src={toastData.deco as string}
             alt=""
             width={200}
             height={200}
@@ -123,7 +136,9 @@ export default function ToastDecoForm() {
                   width={80}
                   height={80}
                   className="cursor-pointer"
-                  onClick={() => setSelectToast(option.src)}
+                  onClick={() =>
+                    setToastData((prev) => ({ ...prev, deco: option.src }))
+                  }
                 />
               </div>
             ))}
@@ -131,8 +146,8 @@ export default function ToastDecoForm() {
         </div>
 
         <Button
-          color={selectToast !== defaultImg ? 'active' : 'disabled'}
-          // onClick={handleSubmit}
+          color={toastData.deco !== defaultImg ? 'active' : 'disabled'}
+          onClick={handleSubmit}
         >
           다음
         </Button>
