@@ -2,7 +2,6 @@
 
 import 'react-datepicker/dist/react-datepicker.css';
 
-import { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import { LuCalendarDays } from 'react-icons/lu';
 
@@ -11,15 +10,20 @@ import Input from '@/components/common-components/input';
 
 import InputForm from '@/components/input-form/InputForm';
 
-export default function EventToastOpenDateForm() {
-  const [isValid, setIsValid] = useState<boolean>(false);
-  const [date, setDate] = useState<Date>();
+import { eventToastDataState, eventToastStepState } from '@/atoms/toastAtom';
 
-  const handleSubmit = () => {};
+import { useRecoilState, useSetRecoilState } from 'recoil';
+
+export default function EventToastOpenDateForm() {
+  const setStep = useSetRecoilState(eventToastStepState);
+  const [eventData, setEventData] = useRecoilState(eventToastDataState);
+
+  const handleSubmit = () => {
+    setStep((prev) => prev + 1);
+  };
 
   const handleDate = (date: Date | null) => {
-    setDate(date as Date);
-    setIsValid(true);
+    setEventData((prev) => ({ ...prev, openDate: date }));
   };
 
   const handleDateInput = (e: any) => {
@@ -35,7 +39,7 @@ export default function EventToastOpenDateForm() {
           subTitle="오픈 날짜"
         >
           <DatePicker
-            selected={date}
+            selected={eventData.openDate}
             placeholderText="YYYY-MM-DD"
             dateFormat="yyyy-MM-dd"
             onChange={handleDate}
@@ -51,7 +55,10 @@ export default function EventToastOpenDateForm() {
         </InputForm>
       </div>
 
-      <Button color={isValid ? 'active' : 'disabled'} onClick={handleSubmit}>
+      <Button
+        color={eventData.openDate ? 'active' : 'disabled'}
+        onClick={handleSubmit}
+      >
         다음
       </Button>
     </div>
