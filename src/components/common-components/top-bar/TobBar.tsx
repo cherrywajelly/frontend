@@ -5,6 +5,7 @@ import { RxHamburgerMenu } from 'react-icons/rx';
 import { TopBarProps } from './TopBar.types';
 
 import clsx from 'clsx';
+import { useRouter } from 'next/navigation';
 
 const variants = {
   base: 'text-body1',
@@ -17,13 +18,23 @@ const TopBar = ({
   isBackBtn = true,
   isRight,
   submitAble = false,
-}: TopBarProps) => {
+  onBack,
+}: TopBarProps & { onBack?: () => void }) => {
   const [isActive, setIsActive] = useState<boolean>(submitAble ?? false);
+  const router = useRouter();
+
+  const handleBackBtn = () => {
+    router.back();
+  };
 
   return (
     <div className="w-full h-[48px] border-b border-gray-10 px-6 flex justify-between items-center">
       {isBackBtn ? (
-        <IoIosArrowBack size={20} className="text-black-main" />
+        <IoIosArrowBack
+          onClick={onBack || handleBackBtn}
+          size={20}
+          className="text-black-main"
+        />
       ) : (
         <></>
       )}
