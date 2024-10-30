@@ -1,24 +1,29 @@
 'use client';
 
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent } from 'react';
 
 import Button from '@/components/common-components/button';
 import Input from '@/components/common-components/input';
 
 import InputForm from '@/components/input-form/InputForm';
 
+import { giftToastDataState, giftToastStepState } from '@/atoms/toastAtom';
+
+import { useRecoilState, useSetRecoilState } from 'recoil';
+
 export default function GiftToastNameForm() {
-  const [toastName, setToastName] = useState<string>('');
+  const setStep = useSetRecoilState(giftToastStepState);
+  const [giftData, setgiftData] = useRecoilState(giftToastDataState);
 
   const handleToastName = (e: ChangeEvent<HTMLInputElement>) => {
-    setToastName(e.target.value);
+    setgiftData((prev) => ({ ...prev, toastName: e.target.value }));
   };
 
   // TODO: to get global-state nickname by using recoil
   const nickname = '채민';
 
   const handleSubmit = () => {
-    // TODO: ??
+    setStep((prev) => prev + 1);
   };
 
   return (
@@ -30,13 +35,16 @@ export default function GiftToastNameForm() {
         >
           <Input
             placeholder="토스트 이름을 입력해주세요."
-            value={toastName}
+            value={giftData.toastName}
             onChange={handleToastName}
           />
         </InputForm>
       </div>
 
-      <Button color={toastName ? 'active' : 'disabled'} onClick={handleSubmit}>
+      <Button
+        color={giftData.toastName ? 'active' : 'disabled'}
+        onClick={handleSubmit}
+      >
         다음
       </Button>
     </div>

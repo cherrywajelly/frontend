@@ -2,7 +2,6 @@
 
 import 'react-datepicker/dist/react-datepicker.css';
 
-import { useState } from 'react';
 import DatePicker from 'react-datepicker';
 import { LuCalendarDays } from 'react-icons/lu';
 import { RiCheckboxCircleLine } from 'react-icons/ri';
@@ -13,21 +12,24 @@ import Input from '@/components/common-components/input';
 
 import InputForm from '@/components/input-form/InputForm';
 
+import { giftToastDataState, giftToastStepState } from '@/atoms/toastAtom';
+
+import { useRecoilState, useSetRecoilState } from 'recoil';
+
 export default function GiftToastOpenDateForm() {
-  const [memoryDate, setMemoryDate] = useState<Date>();
-  const [openDate, setOpenDate] = useState<Date>();
-  const [isAgree, setIsAgree] = useState<boolean>(false);
+  const setStep = useSetRecoilState(giftToastStepState);
+  const [giftData, setGiftData] = useRecoilState(giftToastDataState);
 
   const handleSubmit = () => {
-    //
+    setStep((prev) => prev + 1);
   };
 
   const handleOpenDate = (date: Date | null) => {
-    setOpenDate(date as Date);
+    setGiftData((prev) => ({ ...prev, openDate: date }));
   };
 
   const handleMemoryDate = (date: Date | null) => {
-    setMemoryDate(date as Date);
+    setGiftData((prev) => ({ ...prev, memoryDate: date }));
   };
 
   const handleDateInput = (e: any) => {
@@ -35,7 +37,8 @@ export default function GiftToastOpenDateForm() {
     if (!isDateInput) e.preventDefault();
   };
 
-  const toggleAgree = () => setIsAgree((prev) => !prev);
+  const toggleAgree = () =>
+    setGiftData((prev) => ({ ...prev, isAgree: !prev.isAgree }));
 
   return (
     <div className="w-full h-full px-6 py-6 flex flex-col justify-between">
@@ -45,7 +48,7 @@ export default function GiftToastOpenDateForm() {
           subTitle="기억 날짜"
         >
           <DatePicker
-            selected={memoryDate}
+            selected={giftData.memoryDate}
             placeholderText="YYYY-MM-DD"
             dateFormat="yyyy-MM-dd"
             onChange={handleMemoryDate}
@@ -62,7 +65,7 @@ export default function GiftToastOpenDateForm() {
           subTitle="오픈 날짜"
         >
           <DatePicker
-            selected={openDate}
+            selected={giftData.openDate}
             placeholderText="YYYY-MM-DD"
             dateFormat="yyyy-MM-dd"
             onChange={handleOpenDate}
@@ -80,7 +83,7 @@ export default function GiftToastOpenDateForm() {
       <div className="flex flex-col w-full">
         <span className="flex gap-2 justify-center items-center pb-[30px] text-body5 text-gray-80 text-center">
           <button onClick={toggleAgree} className="flex items-center space-x-2">
-            {isAgree ? (
+            {giftData.isAgree ? (
               <RiCheckboxCircleFill className="text-primary-main" size={20} />
             ) : (
               <RiCheckboxCircleLine className="text-gray-40" size={20} />
@@ -90,7 +93,11 @@ export default function GiftToastOpenDateForm() {
         </span>
 
         <Button
-          color={memoryDate && openDate && isAgree ? 'active' : 'disabled'}
+          color={
+            giftData.memoryDate && giftData.openDate && giftData.isAgree
+              ? 'active'
+              : 'disabled'
+          }
           onClick={handleSubmit}
           size="md"
         >
