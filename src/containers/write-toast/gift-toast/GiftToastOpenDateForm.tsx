@@ -100,6 +100,9 @@ export default function GiftToastOpenDateForm() {
           }
           onClick={handleSubmit}
           size="md"
+          disabled={
+            !(giftData.memoryDate && giftData.openDate && giftData.isAgree)
+          }
         >
           다음
         </Button>

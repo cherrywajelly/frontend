@@ -148,6 +148,7 @@ export default function ToastDecoForm(props: TostFormProps) {
         <Button
           color={toastData.deco !== defaultImg ? 'active' : 'disabled'}
           onClick={handleSubmit}
+          disabled={toastData.deco == defaultImg}
         >
           다음
         </Button>

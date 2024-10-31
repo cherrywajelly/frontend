@@ -44,6 +44,7 @@ export default function GiftToastNameForm() {
       <Button
         color={giftData.toastName ? 'active' : 'disabled'}
         onClick={handleSubmit}
+        disabled={!giftData.toastName}
       >
         다음
       </Button>
