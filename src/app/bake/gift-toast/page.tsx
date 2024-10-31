@@ -6,15 +6,16 @@ import TopBar from '@/components/common-components/top-bar';
 
 import { giftToastDataState, giftToastStepState } from '@/atoms/toastAtom';
 import ToastDecoForm from '@/containers/write-toast/ToastDecoForm';
-import WriteToastForm from '@/containers/write-toast/WriteToastForm';
 import GiftToastNameForm from '@/containers/write-toast/gift-toast/GiftToastNameForm';
 import GiftToastOpenDateForm from '@/containers/write-toast/gift-toast/GiftToastOpenDateForm';
 
 import { useRouter } from 'next/navigation';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useResetRecoilState } from 'recoil';
 
 export default function GiftToastPage() {
   const [step, setStep] = useRecoilState(giftToastStepState);
+  const resetGiftToastData = useResetRecoilState(giftToastDataState);
+
   const router = useRouter();
 
   const [isSubmitAble, setIsSubmitAble] = useState<boolean>(false);
@@ -24,6 +25,7 @@ export default function GiftToastPage() {
       setStep((prev) => prev - 1); // move to previous step
     } else if (step === 0) {
       router.back();
+      resetGiftToastData();
     }
   };
 
