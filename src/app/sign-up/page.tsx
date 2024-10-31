@@ -38,7 +38,7 @@ export default function SignUpPage() {
   };
 
   return (
-    <div className="w-full h-screen px-6 py-6 mt-6">
+    <div className="w-full h-lvh px-6 py-6 mt-0 bg-gray-05">
       <div className="flex flex-col h-full justify-between">
         <div>
           <InputForm

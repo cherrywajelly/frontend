@@ -5,6 +5,7 @@ import { RxHamburgerMenu } from 'react-icons/rx';
 import { TopBarProps } from './TopBar.types';
 
 import clsx from 'clsx';
+import { useRouter } from 'next/navigation';
 
 const variants = {
   base: 'text-body1',
@@ -17,28 +18,46 @@ const TopBar = ({
   isBackBtn = true,
   isRight,
   submitAble = false,
-}: TopBarProps) => {
+  onBack,
+}: TopBarProps & { onBack?: () => void }) => {
   const [isActive, setIsActive] = useState<boolean>(submitAble ?? false);
+  const router = useRouter();
+
+  const handleBackBtn = () => {
+    router.back();
+  };
 
   return (
     <div className="w-full h-[48px] border-b border-gray-10 px-6 flex justify-between items-center">
       {isBackBtn ? (
-        <IoIosArrowBack size={20} className="text-black-main" />
+        <IoIosArrowBack
+          onClick={onBack || handleBackBtn}
+          size={20}
+          className="text-black-main"
+        />
       ) : (
         <></>
       )}
-      <div className="text-body2 text-black-main">{title}</div>
-      {isRight === 'hamburger' ? (
-        <RxHamburgerMenu size={20} className="text-black-main" />
+
+      <div className="flex-grow text-center text-body2 text-black-main">
+        {title}
+      </div>
+
+      {isRight ? (
+        isRight === 'hamburger' ? (
+          <RxHamburgerMenu size={20} className="text-black-main" />
+        ) : (
+          <span
+            className={clsx(
+              variants.base,
+              isActive ? variants.active : variants.disabled,
+            )}
+          >
+            등록
+          </span>
+        )
       ) : (
-        <span
-          className={clsx(
-            variants.base,
-            isActive ? variants.active : variants.disabled,
-          )}
-        >
-          등록
-        </span>
+        <div className="w-[20px]" />
       )}
     </div>
   );

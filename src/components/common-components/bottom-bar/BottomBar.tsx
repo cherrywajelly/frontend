@@ -4,9 +4,12 @@ import { FaRegSquarePlus } from 'react-icons/fa6';
 import { FiSearch, FiUser } from 'react-icons/fi';
 import { PiBellBold } from 'react-icons/pi';
 
+import tempImg from '../../../../public/images/timetoast.png';
 import { NavItem } from './BottomBar.types';
 
 import clsx from 'clsx';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 const navItem: NavItem[] = [
   { icon: <CgHome />, title: '홈' },
@@ -30,33 +33,81 @@ const navVariants = {
 const BottomBar = () => {
   const [selectedItem, setSelectedItem] = useState<NavItem>(navItem[0]);
 
+  const router = useRouter();
+
+  const handleCloseBackdrop = () => {
+    setSelectedItem(navItem[0]); // 홈으로 기본 선택 설정
+  };
+
   return (
-    <div className={navVariants.container}>
-      {navItem.map((item) => {
-        const isActive = selectedItem === item;
-        return (
-          <div
-            key={item.title}
-            className={navVariants.itemContainer}
-            onClick={() => setSelectedItem(item)}
-          >
+    <div className="relative">
+      <div className={navVariants.container}>
+        {navItem.map((item) => {
+          const isActive = selectedItem === item;
+          return (
             <div
-              className={clsx(
-                isActive ? navVariants.iconActive : navVariants.iconDefault,
-              )}
+              key={item.title}
+              className={navVariants.itemContainer}
+              onClick={() => setSelectedItem(item)}
             >
-              {item.icon}
+              <div
+                className={clsx(
+                  isActive ? navVariants.iconActive : navVariants.iconDefault,
+                )}
+              >
+                {item.icon}
+              </div>
+              <div
+                className={clsx(
+                  isActive ? navVariants.textActive : navVariants.textDefault,
+                )}
+              >
+                {item.title}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
+      {selectedItem.title === '토스트' && (
+        <div
+          className="px-6 fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-10"
+          onClick={handleCloseBackdrop}
+        >
+          <div className="w-full max-w-[400px] flex gap-4">
+            <div
+              className="flex flex-col justify-center text-center bg-white py-4 px-3 shadow-lg w-1/2 rounded-[10px]"
+              onClick={(e) => {
+                e.stopPropagation();
+                router.push('/bake/event-toast');
+              }}
+            >
+              <span className="text-black-main text-body1">
+                이벤트토스트 굽기
+              </span>
+              <Image src={tempImg} alt="" />
+              <p className="text-gray-80 text-body4">
+                특별한 날을 기념하는 토스트를 구워보세요
+              </p>
             </div>
             <div
-              className={clsx(
-                isActive ? navVariants.textActive : navVariants.textDefault,
-              )}
+              className="flex flex-col justify-center text-center bg-white py-4 px-3 shadow-lg w-1/2 rounded-[10px]"
+              onClick={(e) => {
+                e.stopPropagation();
+                router.push('/bake/gift-toast');
+              }}
             >
-              {item.title}
+              <span className="text-black-main text-body1">
+                선물토스트 굽기
+              </span>
+              <Image src={tempImg} alt="" />
+              <p className="text-gray-80 text-body4">
+                추억을 담은 토스트를 물고 당장 뛰쳐나가세요
+              </p>
             </div>
           </div>
-        );
-      })}
+        </div>
+      )}
     </div>
   );
 };
