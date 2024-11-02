@@ -4,6 +4,9 @@ import Button from '@/components/common-components/button';
 import Input from '@/components/common-components/input';
 
 import InputForm from '@/components/input-form/InputForm';
+import ToastBox from '@/components/toast/ToastBox';
+
+import tempImg from '../../../public/images/timetoast.png';
 
 export default function LabPage() {
   return (
@@ -26,6 +29,19 @@ export default function LabPage() {
       <Button size="md" color="active">
         다음
       </Button> */}
+      <div className="mt-10" />
+
+      <ToastBox
+        title="캡디종강"
+        toastImg={tempImg}
+        profileImg={tempImg}
+        nickname="chaemin"
+        openDate="2024-11-11"
+      >
+        <Button size="sm" color="primary">
+          잼 바르기
+        </Button>
+      </ToastBox>
 
       {/* <div>input component test</div> */}
       {/* <Input placeholder="인풋입니다인풋" /> */}
