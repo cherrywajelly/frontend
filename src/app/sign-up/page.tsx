@@ -11,6 +11,10 @@ export default function SignUpPage() {
   const [nickname, setNickname] = useState<string>('');
   const [isValid, setIsValid] = useState<boolean>(false);
 
+  const [validMessage, setValidMessage] = useState<string>(
+    '닉네임은 1자 이상 10자 이하의 영/문/숫자 조합으로? 입력해주세요.',
+  );
+
   const handleNickname = (e: ChangeEvent<HTMLInputElement>) => {
     setNickname(e.target.value);
     setIsValid(false);
@@ -64,6 +68,9 @@ export default function SignUpPage() {
                 중복확인
               </Button>
             </div>
+            <span className="px-2 text-body5 text-error-main">
+              {validMessage}
+            </span>
           </InputForm>
         </div>
 
