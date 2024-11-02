@@ -6,8 +6,12 @@ export const postNicknameValid = async (nickname: string) => {
     nickname,
   })
     .then((res) => {
+      if (res.status === 500) {
+        throw new Error('Internal Server Error');
+      }
+
       if (res.status === 200) {
-        console.log(res);
+        return res;
       }
     })
     .catch((err) => {
@@ -21,8 +25,13 @@ export const putNicknameSignUp = async (nickname: string) => {
     nickname,
   })
     .then((res) => {
+      if (res.status === 500) {
+        throw new Error('Internal Server Error');
+      }
+
       if (res.status === 200) {
-        console.log(res);
+        alert('회원가입 완료');
+        return res;
       }
     })
     .catch((err) => {
