@@ -4,9 +4,7 @@ import { useMutation } from '@tanstack/react-query';
 export const useNicknameValid = (nickname: string) => {
   const { mutate, isPending, error } = useMutation({
     mutationFn: () => postNicknameValid(nickname),
-    onSuccess: () => {
-      console.log('사용 가능한 닉네임');
-    },
+    onSuccess: () => {},
     onError: (error) => {
       console.log(error);
     },
