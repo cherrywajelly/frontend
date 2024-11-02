@@ -26,3 +26,8 @@ export type MyGiftToastItemProps = {
   title: string;
   groupUser: string[];
 };
+
+export type UserProfilePageProps = {
+  eventToastData: UserInfoProps[];
+  nickname: string;
+};
