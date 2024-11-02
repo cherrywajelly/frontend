@@ -76,7 +76,7 @@ const config: Config = {
           },
         ],
         body1: [
-          '1.125rem', //16px
+          '1rem', //16px
           {
             fontWeight: 'bold',
             lineHeight: '150%',
