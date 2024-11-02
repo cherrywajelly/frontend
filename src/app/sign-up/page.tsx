@@ -7,6 +7,10 @@ import Input from '@/components/common-components/input';
 
 import InputForm from '@/components/input-form/InputForm';
 
+import { useNicknameSignUp, useNicknameValid } from '@/hooks/api/useSignUp';
+
+import clsx from 'clsx';
+
 export default function SignUpPage() {
   const [nickname, setNickname] = useState<string>('');
   const [isValid, setIsValid] = useState<boolean>(false);
@@ -20,25 +24,44 @@ export default function SignUpPage() {
     setIsValid(false);
   };
 
+  const { mutate: mutateNicknameValid, isPending: isPendingValid } =
+    useNicknameValid(nickname);
+  const { mutate: mutateNicknameSignUp, isPending: isPendingSignUp } =
+    useNicknameSignUp(nickname);
+
   const handleValidNickname = () => {
     // nicknameRegx: 1자 이상 10자 이하의 한글, 영문, 숫자 조합만 허용
     const nicknameRegex = /^[a-zA-Z0-9가-힣]{1,10}$/;
     const isNicknameValid = nicknameRegex.test(nickname);
     // console.log(isNicknameValid);
 
-    if (isNicknameValid) {
-      setIsValid(true);
-    } else {
+    if (!isNicknameValid) {
       setIsValid(false);
-      // temporary alert
-      alert(
+      setValidMessage(
         '닉네임은 1자 이상 10자 이하의 한글, 영문 또는 숫자 조합만 가능합니다.',
       );
+      return;
     }
+
+    mutateNicknameValid(undefined, {
+      onSuccess: () => {
+        setIsValid(true);
+        setValidMessage('사용 가능한 닉네임입니다.');
+      },
+      onError: () => {
+        setIsValid(false);
+        setValidMessage('이미 사용 중인 닉네임입니다.');
+      },
+    });
   };
 
   const handleSubmit = () => {
-    // TODO: add sign-up logic by connecting API
+    mutateNicknameSignUp(undefined, {
+      onSuccess: () => {
+        // alert('회원가입 완료');
+      },
+      onError: () => {},
+    });
   };
 
   return (
@@ -68,7 +91,12 @@ export default function SignUpPage() {
                 중복확인
               </Button>
             </div>
-            <span className="px-2 text-body5 text-error-main">
+            <span
+              className={clsx(
+                'px-2 text-body5',
+                isValid ? 'text-success-main' : 'text-error-main',
+              )}
+            >
               {validMessage}
             </span>
           </InputForm>
