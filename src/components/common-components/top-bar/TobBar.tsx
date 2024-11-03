@@ -28,7 +28,7 @@ const TopBar = ({
   };
 
   return (
-    <div className="w-full h-[48px] border-b border-gray-10 px-6 flex justify-between items-center">
+    <div className="bg-white w-full h-[48px] border-b border-gray-10 px-6 flex justify-between items-center">
       {isBackBtn ? (
         <IoIosArrowBack
           onClick={onBack || handleBackBtn}
