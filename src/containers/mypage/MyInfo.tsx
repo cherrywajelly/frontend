@@ -19,12 +19,6 @@ export default function MyInfo() {
           <Button size="sm" className="w-full h-[36px]" color="active">
             프로필 편집
           </Button>
-          <Button
-            size="sm"
-            className="w-full h-[36px] border border-gray-80 text-gray-80 !bg-gray-05"
-          >
-            공유하기
-          </Button>
         </div>
       </UserInfo>
     </div>
