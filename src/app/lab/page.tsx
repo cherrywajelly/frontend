@@ -1,6 +1,10 @@
+'use client';
+
+import { useState } from 'react';
 import { LuCalendarDays } from 'react-icons/lu';
 
 import Button from '@/components/common-components/button';
+import Dropdown from '@/components/common-components/dropdown';
 import Input from '@/components/common-components/input';
 
 import InputForm from '@/components/input-form/InputForm';
@@ -9,7 +13,35 @@ import ToastBox from '@/components/toast/ToastBox';
 
 import tempImg from '../../../public/images/timetoast.png';
 
+import { useRouter } from 'next/navigation';
+
 export default function LabPage() {
+  const router = useRouter();
+  const [selectedItem, setSelectedItem] = useState<string>('');
+
+  const handleClick = (item: string) => {
+    switch (item) {
+      case '프로필 편집':
+        // router.push('/mypage/profile/edit');
+        break;
+      case '그룹 관리':
+        router.push('/setting/group');
+        console.log('hhhh');
+        break;
+    }
+  };
+
+  const SettingCategories = [
+    { label: '프로필 편집', onClick: () => handleClick('프로필 편집') },
+    { label: '그룹 관리', onClick: () => handleClick('그룹 관리') },
+    { label: '아이콘 마켓', onClick: () => console.log('아이콘 마켓 클릭됨') },
+    { label: '구독 플랜', onClick: () => console.log('구독 플랜 클릭됨') },
+  ];
+
+  const handleDelete = () => {
+    console.log('delete function');
+  };
+
   return (
     <div className="w-full px-6 flex flex-col gap-1">
       {/* <Button size="md" color="disabled">
@@ -30,6 +62,16 @@ export default function LabPage() {
       <Button size="md" color="active">
         다음
       </Button> */}
+      <div>
+        <span>hihㅁㄴㅇihihㅁㄴㅇㅁㄴㅇi</span>
+        <Dropdown items={SettingCategories} color="text-gray-80" />
+
+        <Dropdown
+          items={[{ label: '삭제하기', onClick: handleDelete }]}
+          size="sm"
+        />
+      </div>
+
       <div className="mt-10" />
 
       <ToastBox
