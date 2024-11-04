@@ -4,19 +4,23 @@ import { FaRegSquarePlus } from 'react-icons/fa6';
 import { FiSearch, FiUser } from 'react-icons/fi';
 import { PiBellBold } from 'react-icons/pi';
 
+import { bottomBarItemState } from '@/atoms/componentAtom';
+
 import tempImg from '../../../../public/images/timetoast.png';
 import { NavItem } from './BottomBar.types';
 
 import clsx from 'clsx';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import router from 'next/router';
+import { useRecoilState } from 'recoil';
 
-const navItem: NavItem[] = [
-  { icon: <CgHome />, title: '홈' },
-  { icon: <FiSearch />, title: '검색' },
-  { icon: <FaRegSquarePlus />, title: '토스트' },
-  { icon: <PiBellBold />, title: '알림' },
-  { icon: <FiUser />, title: '마이페이지' },
+export const navItem: NavItem[] = [
+  { icon: <CgHome />, title: '홈', url: '/' },
+  { icon: <FiSearch />, title: '검색', url: '/search' },
+  { icon: <FaRegSquarePlus />, title: '토스트', url: '' },
+  { icon: <PiBellBold />, title: '알림', url: '/notifications' },
+  { icon: <FiUser />, title: '마이페이지', url: '/mypage' },
 ];
 
 const navVariants = {
@@ -29,26 +33,35 @@ const navVariants = {
   textActive: 'text-navigation1 text-secondary-main',
   iconActive: 'text-[24px] text-navigation1 text-secondary-main',
 };
-
 const BottomBar = () => {
-  const [selectedItem, setSelectedItem] = useState<NavItem>(navItem[0]);
+  const [selectedItem, setSelectedItem] = useRecoilState(bottomBarItemState);
+  const [previousItem, setPreviousItem] = useState(navItem[0]); // 이전 아이템을 저장할 상태
 
   const router = useRouter();
 
+  const handleClickItem = (item: NavItem) => {
+    setPreviousItem(selectedItem);
+    setSelectedItem(item);
+
+    if (item.url) {
+      router.push(item.url);
+    }
+  };
+
   const handleCloseBackdrop = () => {
-    setSelectedItem(navItem[0]); // 홈으로 기본 선택 설정
+    setSelectedItem(previousItem);
   };
 
   return (
     <div className="relative">
       <div className={navVariants.container}>
         {navItem.map((item) => {
-          const isActive = selectedItem === item;
+          const isActive = selectedItem.title === item.title;
           return (
             <div
               key={item.title}
               className={navVariants.itemContainer}
-              onClick={() => setSelectedItem(item)}
+              onClick={() => handleClickItem(item)}
             >
               <div
                 className={clsx(
