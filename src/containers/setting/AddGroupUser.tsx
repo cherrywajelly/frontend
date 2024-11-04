@@ -65,7 +65,7 @@ export default function AddGroupUser({
             }
           }}
           className={`transition-all duration-300 ${
-            isFocused ? 'w-[calc(100%-16px)]' : 'w-full'
+            isFocused ? 'w-[calc(100%-20px)]' : 'w-full'
           }`}
         />
         {isFocused && (
