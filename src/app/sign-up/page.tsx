@@ -109,7 +109,11 @@ export default function SignUpPage() {
           </InputForm>
         </div>
 
-        <Button color={isValid ? 'active' : 'disabled'} onClick={handleSubmit}>
+        <Button
+          disabled={!isValid}
+          color={isValid ? 'active' : 'disabled'}
+          onClick={handleSubmit}
+        >
           회원가입하기
         </Button>
       </div>
