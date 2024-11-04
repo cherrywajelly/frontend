@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useGoogleLogin } from '@/hooks/api/useLogin';
 
@@ -8,12 +8,17 @@ import { useRouter } from 'next/navigation';
 
 export default function GoogleCallback() {
   const router = useRouter();
-  const code =
-    (typeof window !== 'undefined' &&
-      new URL(window.location.href).searchParams.get('code')) ||
-    '';
 
-  const { data, error, isLoading } = useGoogleLogin(code);
+  const [googleCode, setGoogleCode] = useState<string>('');
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const code = new URL(window.location.href).searchParams.get('code') || '';
+      setGoogleCode(code);
+    }
+  }, []);
+
+  const { data, error, isLoading } = useGoogleLogin(googleCode);
 
   useEffect(() => {
     if (isLoading) return;
@@ -29,8 +34,9 @@ export default function GoogleCallback() {
       if (accessToken && refreshToken) {
         window.sessionStorage.setItem('accessToken', accessToken);
         window.sessionStorage.setItem('refreshToken', refreshToken);
-        router.push('/sign-up');
       }
+
+      data.isNew ? router.push('/sign-up') : router.push('/');
     } else {
       console.log(data);
     }
