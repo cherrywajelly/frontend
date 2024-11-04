@@ -10,6 +10,7 @@ import InputForm from '@/components/input-form/InputForm';
 import { useNicknameSignUp, useNicknameValid } from '@/hooks/api/useSignUp';
 
 import clsx from 'clsx';
+import { useRouter } from 'next/navigation';
 
 export default function SignUpPage() {
   const [nickname, setNickname] = useState<string>('');
@@ -18,6 +19,8 @@ export default function SignUpPage() {
   const [validMessage, setValidMessage] = useState<string>(
     '닉네임은 1자 이상 10자 이하의 영/문/숫자 조합으로? 입력해주세요.',
   );
+
+  const router = useRouter();
 
   const handleNickname = (e: ChangeEvent<HTMLInputElement>) => {
     setNickname(e.target.value);
@@ -59,8 +62,12 @@ export default function SignUpPage() {
     mutateNicknameSignUp(undefined, {
       onSuccess: () => {
         // alert('회원가입 완료');
+        router.push('/');
       },
-      onError: () => {},
+      onError: () => {
+        alert('예기치 못한 에러가 발생했습니다.');
+        router.push('/login');
+      },
     });
   };
 
