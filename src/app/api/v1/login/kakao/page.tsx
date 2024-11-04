@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useKakaoToken } from '@/hooks/api/useLogin';
 
@@ -9,11 +9,14 @@ import { useRouter } from 'next/navigation';
 const KakaoCallback = () => {
   const router = useRouter();
 
-  let kakaoCode: string = '';
+  const [kakaoCode, setKakaoCode] = useState<string>('');
 
-  if (typeof window !== 'undefined') {
-    kakaoCode = new URL(window.location.href).searchParams.get('code') || '';
-  }
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const code = new URL(window.location.href).searchParams.get('code') || '';
+      setKakaoCode(code);
+    }
+  }, []);
 
   const { data, isLoading, error } = useKakaoToken(kakaoCode);
 
