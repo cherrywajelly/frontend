@@ -3,6 +3,7 @@ import { UserInfoProps } from '@/types/mypage';
 import defaultImg from '../../../public/images/timetoast.png';
 
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 const variants = {
   container: 'flex flex-col gap-[2px] justify-center items-center w-[48px]',
@@ -13,6 +14,7 @@ const variants = {
 
 export default function UserInfo(props: UserInfoProps) {
   const { nickname, profileImg, follower, following, group, children } = props;
+  const router = useRouter();
 
   return (
     <>
@@ -28,21 +30,30 @@ export default function UserInfo(props: UserInfoProps) {
         <span className="text-black-main text-body1">{nickname}</span>
 
         <div className="flex gap-6 items-center">
-          <span className={variants.container}>
+          <span
+            className={variants.container}
+            onClick={() => router.push('/mypage/follow?tab=follower')}
+          >
             <span className={variants.count}>{follower ?? 0}</span>
             <span className={variants.text}>팔로워</span>
           </span>
 
           <span className={variants.line} />
 
-          <span className={variants.container}>
+          <span
+            className={variants.container}
+            onClick={() => router.push('/mypage/follow?tab=following')}
+          >
             <span className={variants.count}>{following ?? 0}</span>
             <span className={variants.text}>팔로잉</span>
           </span>
 
           <span className={variants.line} />
 
-          <span className={variants.container}>
+          <span
+            className={variants.container}
+            onClick={() => router.push('/mypage/follow?tab=group')}
+          >
             <span className={variants.count}>{group ?? 0}</span>
             <span className={variants.text}>그룹</span>
           </span>
