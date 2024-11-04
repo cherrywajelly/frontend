@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import Button from '@/components/common-components/button';
 import Input from '@/components/common-components/input';
@@ -79,11 +79,6 @@ export default function FollowTab() {
     isPending: isPendingDeleteFollowerUser,
   } = useDeleteFollowerUser();
 
-  useEffect(() => {
-    queryClient.invalidateQueries({ queryKey: ['followers'] });
-    queryClient.invalidateQueries({ queryKey: ['followings'] });
-  }, [followersData, followingData, activeTab]);
-
   return (
     <>
       <div className="mt-6 w-full flex border-b border-gray-10">
@@ -147,6 +142,7 @@ export default function FollowTab() {
                     <Button
                       size="sm"
                       color="active"
+                      className="w-[80px]"
                       onClick={(e) => {
                         e.stopPropagation();
                         deleteFollowerMutate(item.memberId);
@@ -158,6 +154,7 @@ export default function FollowTab() {
                     <Button
                       size="sm"
                       color="primary"
+                      className="w-[80px]"
                       onClick={(e) => {
                         e.stopPropagation();
                         postFollowMutate(item.memberId);
@@ -182,6 +179,7 @@ export default function FollowTab() {
                   <Button
                     size="sm"
                     color="active"
+                    className="w-[80px]"
                     onClick={(e) => {
                       e.stopPropagation();
                       deleteFollowingMutate(item.memberId);
