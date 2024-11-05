@@ -26,7 +26,7 @@ export default function FollowTab() {
   const searchParams = useSearchParams();
   const tabParam = searchParams.get('tab') || 'follower';
 
-  const [activeTab, setActiveTab] = useState(() => {
+  const [activeTab, setActiveTab] = useState<number>(() => {
     if (tabParam === 'follower') return 0;
     if (tabParam === 'following') return 1;
     if (tabParam === 'group') return 2;

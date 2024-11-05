@@ -12,7 +12,7 @@ import GenerateGroup from '@/containers/setting/GenerateGroup';
 import { useRouter } from 'next/navigation';
 
 export default function SettingGroup() {
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState<number>(0);
   const router = useRouter();
   const [selectedUsers, setSelectedUsers] = useState<UserDefaultProps[]>([]); // 선택된 유저 상태 추가
 
