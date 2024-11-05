@@ -56,7 +56,7 @@ export const postFollowingUser = async (followingId: number) => {
 
 // 팔로잉 취소
 export const deleteFollowingUser = async (followingMemberId: number) => {
-  await apiRequest(`api/v1/follows/following/${followingMemberId}`, 'DELETE')
+  await apiRequest(`/api/v1/follows/following/${followingMemberId}`, 'DELETE')
     .then((res) => {
       if (res.status === 500) {
         throw new Error('Internal Server Error');
@@ -74,7 +74,7 @@ export const deleteFollowingUser = async (followingMemberId: number) => {
 
 // 팔로워 취소
 export const deleteFollowerUser = async (followerMemberId: number) => {
-  await apiRequest(`api/v1/follows/follower/${followerMemberId}`, 'DELETE')
+  await apiRequest(`/api/v1/follows/follower/${followerMemberId}`, 'DELETE')
     .then((res) => {
       if (res.status === 500) {
         throw new Error('Internal Server Error');
