@@ -89,3 +89,21 @@ export const deleteFollowerUser = async (followerMemberId: number) => {
       console.log(err);
     });
 };
+
+// 그룹 삭제
+export const deleteGroup = async (teamId: number) => {
+  await apiRequest(`/api/v1/teams/${teamId}`, 'DELETE')
+    .then((res) => {
+      if (res.status === 500) {
+        throw new Error('Internal Server Error');
+      }
+
+      if (res.status === 200) {
+        console.log('그룹 삭제됨');
+        return res;
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};

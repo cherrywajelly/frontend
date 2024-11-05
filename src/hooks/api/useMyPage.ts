@@ -1,6 +1,7 @@
 import {
   deleteFollowerUser,
   deleteFollowingUser,
+  deleteGroup,
   getFollowers,
   getFollowings,
   getGroup,
@@ -80,6 +81,17 @@ export const useDeleteFollowerUser = () => {
       queryClient.invalidateQueries({ queryKey: ['followers'] });
       queryClient.invalidateQueries({ queryKey: ['followings'] });
     },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+  return { mutate, isPending, error };
+};
+
+export const useDeleteGroup = () => {
+  const { mutate, isPending, error } = useMutation({
+    mutationFn: (teamId: number) => deleteGroup(teamId),
+    onSuccess: () => {},
     onError: (error) => {
       console.log(error);
     },
