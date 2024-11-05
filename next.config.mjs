@@ -1,14 +1,20 @@
-import withPWA from "next-pwa";
+import withPWA from 'next-pwa';
 
 const nextConfig = {
   images: {
-    formats: ["image/avif", "image/webp"],
+    formats: ['image/avif', 'image/webp'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: `axmpikvsv3z9.objectstorage.ap-chuncheon-1.oci.customer-oci.com`,
+      },
+    ],
   },
   output: 'standalone',
 };
 
 const config = withPWA({
-  dest: "public",
+  dest: 'public',
 })(nextConfig);
 
 export default config;
