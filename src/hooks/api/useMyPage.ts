@@ -9,8 +9,7 @@ import {
 } from '@/api/mypage';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
-import { error } from 'console';
-
+// 팔로워 목록 조회
 export const useGetFollowers = () => {
   const { data, isLoading, error } = useQuery({
     queryKey: ['followers'],
@@ -20,6 +19,7 @@ export const useGetFollowers = () => {
   return { data, isLoading, error };
 };
 
+// 팔로잉 목록 조회
 export const useGetFollowings = () => {
   const { data, isLoading, error } = useQuery({
     queryKey: ['followings'],
@@ -29,6 +29,7 @@ export const useGetFollowings = () => {
   return { data, isLoading, error };
 };
 
+// 그룹 목록 조회
 export const useGetGroup = () => {
   const { data, isLoading, error } = useQuery({
     queryKey: ['group'],
@@ -38,6 +39,7 @@ export const useGetGroup = () => {
   return { data, isLoading, error };
 };
 
+// 팔로잉 등록
 export const usePostFollowingUser = () => {
   const queryClient = useQueryClient();
 
@@ -54,6 +56,7 @@ export const usePostFollowingUser = () => {
   return { mutate, isPending, error };
 };
 
+// 팔로잉 취소
 export const useDeleteFollowingUser = () => {
   const queryClient = useQueryClient();
 
@@ -71,6 +74,7 @@ export const useDeleteFollowingUser = () => {
   return { mutate, isPending, error };
 };
 
+// 팔로워 취소
 export const useDeleteFollowerUser = () => {
   const queryClient = useQueryClient();
 
@@ -88,6 +92,7 @@ export const useDeleteFollowerUser = () => {
   return { mutate, isPending, error };
 };
 
+// 그룹 삭제
 export const useDeleteGroup = () => {
   const { mutate, isPending, error } = useMutation({
     mutationFn: (teamId: number) => deleteGroup(teamId),
