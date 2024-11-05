@@ -65,16 +65,7 @@ export default function SearchPage() {
                   profileImg={item.profileImg}
                   nickname={item.nickname}
                   onClick={() => router.push(`/profile/${item.nickname}`)}
-                >
-                  {/* TODO: 팔로잉 여부에 따라 상태 관리하기 */}
-                  <Button
-                    size="sm"
-                    color="primary"
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    팔로우
-                  </Button>
-                </UserListItem>
+                />
               ))}
             </div>
           </div>
