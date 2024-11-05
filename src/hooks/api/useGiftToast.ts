@@ -10,7 +10,7 @@ import {
 import { useMutation, useQuery } from '@tanstack/react-query';
 
 // 작성해야 할 선물 받은 토스트 목록 조회
-export const useGetFollowers = () => {
+export const useGetToastIncompleted = () => {
   const { data, isLoading, error } = useQuery({
     queryKey: ['giftToastIncompleted'],
     queryFn: () => getGiftToastIncompleted(),
@@ -21,7 +21,7 @@ export const useGetFollowers = () => {
 // 개인 선물 토스트 목록 조회
 export const useGetGiftToastList = () => {
   const { data, isLoading, error } = useQuery({
-    queryKey: ['GiftToastList'],
+    queryKey: ['giftToastList'],
     queryFn: () => getGiftToastList(),
   });
   return { data, isLoading, error };
@@ -73,9 +73,9 @@ export const usePostGiftToastMine = () => {
 };
 
 // 선물 토스트 삭제
-export const useDeleteGiftToast = (giftToastId: number) => {
+export const useDeleteGiftToast = () => {
   const { mutate, isPending, error } = useMutation({
-    mutationFn: () => deleteGiftToast(giftToastId),
+    mutationFn: (giftToastId: number) => deleteGiftToast(giftToastId),
     onSuccess: () => {},
     onError: (error) => {
       console.log(error);

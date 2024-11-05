@@ -15,9 +15,7 @@ export const useNicknameValid = (nickname: string) => {
 export const useNicknameSignUp = (nickname: string) => {
   const { mutate, isPending, error } = useMutation({
     mutationFn: () => putNicknameSignUp(nickname),
-    onSuccess: () => {
-      console.log('회원가입 완료');
-    },
+    onSuccess: () => {},
     onError: (error) => {
       console.log(error);
     },
