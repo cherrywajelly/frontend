@@ -91,7 +91,7 @@ export default function AddGroupUser({
                 <RiCheckboxCircleFill className="text-primary-main" size={24} />
               ) : (
                 <RiCheckboxBlankCircleLine className="text-gray-40" size={24} />
-              )}{' '}
+              )}
             </UserListItem>
           ))}
         </div>

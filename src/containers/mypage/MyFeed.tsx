@@ -13,10 +13,22 @@ export const tabVariants = {
   active: 'text-gray-80 text-body1 border-b-2 border-primary-main',
 };
 
-const tempData = [
-  { image: '', title: '타이틀입니당', date: '2020년 4월 3일' },
-  { image: '', title: '타이틀입니당', date: '2020년 4월 3일' },
-  { image: '', title: '타이틀입니당', date: '2020년 4월 3일' },
+export const tempData = [
+  { image: tempImg, title: '타이틀입니당', date: '2020년 4월 3일' },
+  { image: tempImg, title: '타이틀입니당', date: '2020년 4월 3일' },
+  { image: tempImg, title: '타이틀입니당', date: '2020년 4월 3일' },
+  { image: tempImg, title: '타이틀입니당', date: '2020년 4월 3일' },
+  { image: tempImg, title: '타이틀입니당', date: '2020년 4월 3일' },
+  { image: tempImg, title: '타이틀입니당', date: '2020년 4월 3일' },
+  { image: tempImg, title: '타이틀입니당', date: '2020년 4월 3일' },
+  { image: tempImg, title: '타이틀입니당', date: '2020년 4월 3일' },
+  { image: tempImg, title: '타이틀입니당', date: '2020년 4월 3일' },
+  { image: tempImg, title: '타이틀입니당', date: '2020년 4월 3일' },
+  { image: tempImg, title: '타이틀입니당', date: '2020년 4월 3일' },
+  { image: tempImg, title: '타이틀입니당', date: '2020년 4월 3일' },
+  { image: tempImg, title: '타이틀입니당', date: '2020년 4월 3일' },
+  { image: tempImg, title: '타이틀입니당', date: '2020년 4월 3일' },
+  { image: tempImg, title: '타이틀입니당', date: '2020년 4월 3일' },
 ];
 
 const tempData2 = [
