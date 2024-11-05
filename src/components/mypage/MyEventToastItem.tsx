@@ -6,10 +6,10 @@ import { MyEventToastItemProps } from '@/types/mypage';
 import Image from 'next/image';
 
 export default function MyEventToastItem(props: MyEventToastItemProps) {
-  const { image, title, date } = props;
+  const { image, title, date, isSetting = true, children, onClick } = props;
 
   return (
-    <div className="flex gap-4 py-2 bg-white">
+    <div className="flex gap-4 py-2 bg-white" onClick={onClick}>
       <Image
         src={image}
         alt=""
@@ -26,8 +26,9 @@ export default function MyEventToastItem(props: MyEventToastItemProps) {
           <span className="text-gray-80 text-body4">{date}</span>
         </span>
       </div>
+      {isSetting && <IoIosMore size={24} className="text-gray-20" />}
 
-      <IoIosMore size={24} className="text-gray-20" />
+      {children}
     </div>
   );
 }
