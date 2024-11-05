@@ -1,4 +1,4 @@
-import { postNicknameSignUp, postNicknameValid } from '@/api/signup';
+import { putNicknameSignUp, postNicknameValid } from '@/api/signup';
 import { useMutation } from '@tanstack/react-query';
 
 export const useNicknameValid = (nickname: string) => {
@@ -14,7 +14,7 @@ export const useNicknameValid = (nickname: string) => {
 
 export const useNicknameSignUp = (nickname: string) => {
   const { mutate, isPending, error } = useMutation({
-    mutationFn: () => postNicknameSignUp(nickname),
+    mutationFn: () => putNicknameSignUp(nickname),
     onSuccess: () => {
       console.log('회원가입 완료');
     },

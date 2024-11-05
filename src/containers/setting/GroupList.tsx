@@ -1,57 +1,37 @@
-import { Dispatch, SetStateAction, useState } from 'react';
-import {
-  RiCheckboxCircleFill,
-  RiCheckboxBlankCircleLine,
-} from 'react-icons/ri';
+import { useDebugValue, useState } from 'react';
 
 import Button from '@/components/common-components/button';
 import Input from '@/components/common-components/input';
 
 import UserListItem from '@/components/search/UserListItem';
 
-import { UserDefaultProps } from '@/types/user';
+import { useDeleteGroup, useGetGroup } from '@/hooks/api/useMyPage';
 
-import { tempUserList } from './GenerateGroup';
+import temp from '../../../public/images/timetoast.png';
 
-export type AddGroupUserProps = {
-  setStep: Dispatch<SetStateAction<number>>;
-  selectedUsers: UserDefaultProps[];
-  setSelectedUsers: Dispatch<SetStateAction<UserDefaultProps[]>>;
-};
+import { useRouter } from 'next/navigation';
 
-export default function AddGroupUser({
-  setStep,
-  selectedUsers,
-  setSelectedUsers,
-}: AddGroupUserProps) {
+export default function GroupList() {
   const [isFocused, setIsFocused] = useState<boolean>(false);
   const [searchValue, setSearchValue] = useState<string>('');
+
+  const router = useRouter();
 
   const handleCancel = () => {
     setSearchValue('');
     setIsFocused(false);
   };
 
-  const toggleUserSelection = (item: UserDefaultProps) => {
-    setSelectedUsers((prev) => {
-      if (prev.includes(item)) {
-        return prev.filter((user) => user !== item);
-      } else {
-        return [...prev, item];
-      }
-    });
+  const handleClick = () => {
+    router.push('/setting/group/create');
   };
 
-  const handleSubmit = () => {
-    setStep((prev) => prev + 1);
-  };
+  const { data: groupData, isLoading: isLoadingGroup } = useGetGroup();
+  const { mutate, isPending } = useDeleteGroup();
 
   return (
     <div className="w-full h-full p-6 flex flex-col bg-gray-05">
-      <div
-        className="flex items-center flex-none
-      "
-      >
+      <div className="flex items-center flex-none">
         <Input
           placeholder="검색어를 입력하세요."
           size="sm"
@@ -80,18 +60,23 @@ export default function AddGroupUser({
 
       <div className="flex-grow my-6 overflow-y-auto hide-scrollbar">
         <div className="flex flex-col gap-4">
-          {tempUserList.map((item, idx) => (
+          {groupData?.teamResponses?.map((item: any) => (
             <UserListItem
-              key={idx}
-              profileImg={item.profileImg}
-              nickname={item.nickname}
-              onClick={() => toggleUserSelection(item)}
+              key={item.teamName}
+              profileImg={item.teamProfileUrl || temp}
+              nickname={item.teamName}
             >
-              {selectedUsers.includes(item) ? (
-                <RiCheckboxCircleFill className="text-primary-main" size={24} />
-              ) : (
-                <RiCheckboxBlankCircleLine className="text-gray-40" size={24} />
-              )}
+              <Button
+                size="sm"
+                color="active"
+                className="w-[80px]"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  mutate(item.teamId);
+                }}
+              >
+                삭제
+              </Button>
             </UserListItem>
           ))}
         </div>
@@ -99,12 +84,11 @@ export default function AddGroupUser({
 
       <Button
         size="md"
-        color={selectedUsers.length ? 'active' : 'disabled'}
-        onClick={handleSubmit}
-        disabled={!selectedUsers.length}
+        color="secondary"
+        onClick={handleClick}
         className="flex-none mb-4"
       >
-        다음
+        그룹 만들기
       </Button>
     </div>
   );

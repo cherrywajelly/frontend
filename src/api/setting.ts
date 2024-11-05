@@ -42,3 +42,20 @@ export const postGroupTeam = async ({
       alert(err.message);
     });
 };
+
+// 프로필 이미지 등록
+export const postProfileImage = async () => {
+  await apiRequest(`/api/v1/members/profile-images`, 'POST')
+    .then((res) => {
+      if (res.status === 500) {
+        throw new Error('Internal Server Error');
+      }
+
+      if (res.status === 200) {
+        return res;
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};

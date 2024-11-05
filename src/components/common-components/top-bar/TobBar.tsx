@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { IoIosArrowBack } from 'react-icons/io';
-import { RxHamburgerMenu } from 'react-icons/rx';
 
+import Dropdown from '../dropdown';
 import { TopBarProps } from './TopBar.types';
 
 import clsx from 'clsx';
@@ -27,6 +27,13 @@ const TopBar = ({
     router.back();
   };
 
+  const SettingCategories = [
+    { label: '프로필 편집', onClick: () => router.push('/setting/profile') },
+    { label: '그룹 관리', onClick: () => router.push('/setting/group') },
+    { label: '아이콘 마켓', onClick: () => router.push('/') },
+    { label: '구독 플랜', onClick: () => router.push('/') },
+  ];
+
   return (
     <div className="bg-white w-full h-[48px] border-b border-gray-10 px-6 flex justify-between items-center">
       {isBackBtn ? (
@@ -44,8 +51,8 @@ const TopBar = ({
       </div>
 
       {isRight ? (
-        isRight === 'hamburger' ? (
-          <RxHamburgerMenu size={20} className="text-black-main" />
+        isRight === 'setting' ? (
+          <Dropdown items={SettingCategories} color="text-gray-80" />
         ) : (
           <span
             className={clsx(

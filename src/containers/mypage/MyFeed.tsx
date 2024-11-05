@@ -7,16 +7,28 @@ import tempImg from '../../../public/images/default-toast.png';
 
 import clsx from 'clsx';
 
-const variants = {
+export const tabVariants = {
   common: 'w-full py-2 text-center',
   default: 'text-gray-40 text-body1',
   active: 'text-gray-80 text-body1 border-b-2 border-primary-main',
 };
 
-const tempData = [
-  { image: '', title: '타이틀입니당', date: '2020년 4월 3일' },
-  { image: '', title: '타이틀입니당', date: '2020년 4월 3일' },
-  { image: '', title: '타이틀입니당', date: '2020년 4월 3일' },
+export const tempData = [
+  { image: tempImg, title: '타이틀입니당', date: '2020년 4월 3일' },
+  { image: tempImg, title: '타이틀입니당', date: '2020년 4월 3일' },
+  { image: tempImg, title: '타이틀입니당', date: '2020년 4월 3일' },
+  { image: tempImg, title: '타이틀입니당', date: '2020년 4월 3일' },
+  { image: tempImg, title: '타이틀입니당', date: '2020년 4월 3일' },
+  { image: tempImg, title: '타이틀입니당', date: '2020년 4월 3일' },
+  { image: tempImg, title: '타이틀입니당', date: '2020년 4월 3일' },
+  { image: tempImg, title: '타이틀입니당', date: '2020년 4월 3일' },
+  { image: tempImg, title: '타이틀입니당', date: '2020년 4월 3일' },
+  { image: tempImg, title: '타이틀입니당', date: '2020년 4월 3일' },
+  { image: tempImg, title: '타이틀입니당', date: '2020년 4월 3일' },
+  { image: tempImg, title: '타이틀입니당', date: '2020년 4월 3일' },
+  { image: tempImg, title: '타이틀입니당', date: '2020년 4월 3일' },
+  { image: tempImg, title: '타이틀입니당', date: '2020년 4월 3일' },
+  { image: tempImg, title: '타이틀입니당', date: '2020년 4월 3일' },
 ];
 
 const tempData2 = [
@@ -54,8 +66,8 @@ export default function MyFeed() {
       <div className="w-full flex border-b border-gray-10 px-6">
         <div
           className={clsx(
-            variants.common,
-            `${activeTab === 0 ? variants.active : variants.default}`,
+            tabVariants.common,
+            `${activeTab === 0 ? tabVariants.active : tabVariants.default}`,
           )}
           onClick={() => handleTabClick(0)}
         >
@@ -64,8 +76,8 @@ export default function MyFeed() {
 
         <div
           className={clsx(
-            variants.common,
-            `${activeTab === 1 ? variants.active : variants.default}`,
+            tabVariants.common,
+            `${activeTab === 1 ? tabVariants.active : tabVariants.default}`,
           )}
           onClick={() => handleTabClick(1)}
         >

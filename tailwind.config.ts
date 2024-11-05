@@ -44,7 +44,7 @@ const config: Config = {
           },
         ],
         subtitle1: [
-          '1.125rem', //20px
+          '1.25rem', //20px
           {
             fontWeight: 'bold',
             lineHeight: '160%',

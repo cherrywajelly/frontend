@@ -20,8 +20,8 @@ export const postNicknameValid = async (nickname: string) => {
 };
 
 // 닉네임 등록
-export const postNicknameSignUp = async (nickname: string) => {
-  await apiRequest(`/api/v1/members?nickname=${nickname}`, 'POST', {
+export const putNicknameSignUp = async (nickname: string) => {
+  await apiRequest(`/api/v1/members?nickname=${nickname}`, 'PUT', {
     nickname,
   })
     .then((res) => {
