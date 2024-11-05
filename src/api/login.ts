@@ -35,3 +35,15 @@ export const getGoogleLogin = async (code: string) => {
   const data = await res.json();
   return data;
 };
+
+// 사용자 프로필(닉네임, 프로필 이미지) 조회
+export const getMyInfo = async () => {
+  const res = await apiRequest(`/api/v1/members/info`);
+
+  if (!res.ok) {
+    throw new Error(`HTTP error in Google! Status: ${res.status}`);
+  }
+
+  const data = await res.json();
+  return data;
+};
