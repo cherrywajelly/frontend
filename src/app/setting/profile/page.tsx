@@ -7,6 +7,7 @@ import Button from '@/components/common-components/button';
 import Input from '@/components/common-components/input';
 import TopBar from '@/components/common-components/top-bar';
 
+import { useMyInfo } from '@/hooks/api/useLogin';
 import { useNicknameSignUp, useNicknameValid } from '@/hooks/api/useSignUp';
 
 import temp from '../../../../public/images/default-toast.png';
@@ -18,10 +19,12 @@ export default function SettingProfilePage() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
 
-  const prevNickname = '기존닉네임';
-  const prevProfileImg = temp;
+  const { data, isLoading } = useMyInfo();
 
-  const [nickname, setNickname] = useState<string>(prevNickname);
+  const prevNickname = data.nickname;
+  const prevProfileImg = data.profileUrl;
+
+  const [nickname, setNickname] = useState<string>(data.nickname);
   const [profileImg, setProfileImg] = useState<string | StaticImageData>(
     prevProfileImg,
   );
