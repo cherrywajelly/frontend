@@ -3,10 +3,12 @@ import { IoIosMore } from 'react-icons/io';
 
 import { MyGiftToastItemProps } from '@/types/mypage';
 
+import Dropdown from '../common-components/dropdown';
+
 import Image from 'next/image';
 
 export default function MyGiftToastItem(props: MyGiftToastItemProps) {
-  const { image, title, groupUser } = props;
+  const { image, title, groupUser, handleDelete } = props;
 
   return (
     <div className="flex gap-4 py-2 bg-white">
@@ -23,11 +25,14 @@ export default function MyGiftToastItem(props: MyGiftToastItemProps) {
 
         <span className="flex gap-1 items-center">
           <HiMiniUserGroup className="text-gray-80" />
-          <span className="text-gray-80 text-body4">{`${groupUser[0]}님 외 ${groupUser.length - 1}명`}</span>
+          <span className="text-gray-80 text-body4">{groupUser}</span>
         </span>
       </div>
 
-      <IoIosMore size={24} className="text-gray-20" />
+      <Dropdown
+        items={[{ label: '삭제하기', onClick: handleDelete }]}
+        size="sm"
+      />
     </div>
   );
 }

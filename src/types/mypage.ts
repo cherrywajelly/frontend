@@ -28,6 +28,7 @@ export type MyGiftToastItemProps = {
   image: string | StaticImageData;
   title: string;
   groupUser: string[];
+  handleDelete: () => void;
 };
 
 export type UserProfilePageProps = {
