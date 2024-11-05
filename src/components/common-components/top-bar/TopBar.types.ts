@@ -7,6 +7,6 @@ export type TopBarProps = {
 
 export const rightTypes = {
   submit: 'submit',
-  hamburger: 'hamburger',
+  setting: 'setting',
 } as const;
 export type RightType = (typeof rightTypes)[keyof typeof rightTypes];
