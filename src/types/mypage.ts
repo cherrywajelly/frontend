@@ -19,6 +19,9 @@ export type MyEventToastItemProps = {
   image: string | StaticImageData;
   title: string;
   date: string;
+  isSetting?: boolean;
+  children?: React.ReactNode;
+  onClick?: () => void;
 };
 
 export type MyGiftToastItemProps = {
