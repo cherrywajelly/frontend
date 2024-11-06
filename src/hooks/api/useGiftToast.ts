@@ -7,7 +7,7 @@ import {
   postGiftToastGroup,
   postGiftToastMine,
 } from '@/api/giftToast';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 // 작성해야 할 선물 받은 토스트 목록 조회
 export const useGetToastIncompleted = () => {
@@ -74,9 +74,13 @@ export const usePostGiftToastMine = () => {
 
 // 선물 토스트 삭제
 export const useDeleteGiftToast = () => {
+  const queryClient = useQueryClient();
+
   const { mutate, isPending, error } = useMutation({
     mutationFn: (giftToastId: number) => deleteGiftToast(giftToastId),
-    onSuccess: () => {},
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['giftToastList'] });
+    },
     onError: (error) => {
       console.log(error);
     },
