@@ -22,12 +22,14 @@ export type MyEventToastItemProps = {
   isSetting?: boolean;
   children?: React.ReactNode;
   onClick?: () => void;
+  handleDelete?: () => void;
 };
 
 export type MyGiftToastItemProps = {
   image: string | StaticImageData;
   title: string;
   groupUser: string[];
+  handleDelete: () => void;
 };
 
 export type UserProfilePageProps = {

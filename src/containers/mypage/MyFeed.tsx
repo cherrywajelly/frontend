@@ -3,6 +3,15 @@ import { useState } from 'react';
 import MyEventToastItem from '@/components/mypage/MyEventToastItem';
 import MyGiftToastItem from '@/components/mypage/MyGiftToastItem';
 
+import {
+  useDeleteEventToast,
+  useGetEventToastList,
+} from '@/hooks/api/useEventToast';
+import {
+  useDeleteGiftToast,
+  useGetGiftToastList,
+} from '@/hooks/api/useGiftToast';
+
 import tempImg from '../../../public/images/default-toast.png';
 
 import clsx from 'clsx';
@@ -31,35 +40,20 @@ export const tempData = [
   { image: tempImg, title: '타이틀입니당', date: '2020년 4월 3일' },
 ];
 
-const tempData2 = [
-  {
-    image: '',
-    title: 'sdfsdf',
-    groupUser: ['chch', 'chaemin', '채민채민', '아아아'],
-  },
-  {
-    image: '',
-    title: '타이틀입니당',
-    groupUser: ['chch', 'chaemin', '채민채민', '아아아'],
-  },
-  {
-    image: '',
-    title: '타이틀입니당',
-    groupUser: ['chch', 'chaemin', '채민채민', '아아아'],
-  },
-  {
-    image: '',
-    title: '타이틀입니당',
-    groupUser: ['chch', 'chaemin', '채민채민', '아아아'],
-  },
-];
-
 export default function MyFeed() {
   const [activeTab, setActiveTab] = useState<number>(0);
 
   const handleTabClick = (tab: number) => {
     setActiveTab(tab);
   };
+
+  const { data: giftToastListData, isLoading: isLoadingGiftToastList } =
+    useGetGiftToastList();
+  const { data: eventToastListData, isLoading: isLoadingEventToastList } =
+    useGetEventToastList();
+  const { mutate: deleteGiftToast, isPending } = useDeleteGiftToast();
+  const { mutate: deleteEventToast, isPending: isPendingDeleteEventToast } =
+    useDeleteEventToast();
 
   return (
     <>
@@ -88,26 +82,34 @@ export default function MyFeed() {
       <div className="bg-white p-6 h-full">
         <div className="flex flex-col gap-4">
           {activeTab === 0
-            ? tempData.map((item, idx) => {
+            ? eventToastListData?.map((item: any) => {
                 return (
                   <MyEventToastItem
-                    key={idx}
-                    image={item.image}
+                    key={item.event_toast_id}
+                    image={item.icon.icon_image_url}
                     title={item.title}
-                    date={item.date}
+                    date={item.opened_date}
+                    handleDelete={() => {
+                      deleteEventToast(item.event_toast_id);
+                    }}
                   />
                 );
               })
-            : tempData2.map((item, idx) => {
-                return (
-                  <MyGiftToastItem
-                    key={idx}
-                    image={item.image}
-                    title={item.title}
-                    groupUser={item.groupUser}
-                  />
-                );
-              })}
+            : giftToastListData?.giftToastResponses.map(
+                (item: any, idx: number) => {
+                  return (
+                    <MyGiftToastItem
+                      key={idx}
+                      image={item.iconImageUrl}
+                      title={item.title}
+                      groupUser={item.giftToastOwner}
+                      handleDelete={() => {
+                        deleteGiftToast(item.giftToastId);
+                      }}
+                    />
+                  );
+                },
+              )}
         </div>
       </div>
     </>

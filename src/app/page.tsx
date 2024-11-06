@@ -5,6 +5,9 @@ import { useEffect } from 'react';
 import BottomBar from '@/components/common-components/bottom-bar';
 import TopBar from '@/components/common-components/top-bar';
 
+import ArriveEventToast from '@/containers/home/ArriveEventToast';
+import ArriveGiftToast from '@/containers/home/ArriveGiftToast';
+
 import { useRouter } from 'next/navigation';
 
 export default function Home() {
@@ -27,26 +30,21 @@ export default function Home() {
 
   return (
     <div className="w-full h-screen">
-      <TopBar />
+      <TopBar title="Time Toast" />
 
-      <div className="flex flex-col justify-center items-center">
-        <h1 className="text-h2 pt-8">안녕하세요..Team 2 cherry wa jelly</h1>
-        <span className="text-h3 py-2">안녕하세요. TimeToast입니다.</span>
-        <br />
-        <br />
-
-        <br />
-
-        {accessToken ? (
-          <button className="border rounded p-2" onClick={handleLogout}>
-            로그아웃
-          </button>
-        ) : (
-          <button className="border rounded p-2" onClick={handleLogin}>
-            로그인
-          </button>
-        )}
+      <div className="w-full h-[calc(100vh-48px)] p-6 bg-gray-05">
+        <ArriveGiftToast />
+        <ArriveEventToast />
       </div>
+      {accessToken ? (
+        <button className="border rounded p-2" onClick={handleLogout}>
+          로그아웃
+        </button>
+      ) : (
+        <button className="border rounded p-2" onClick={handleLogin}>
+          로그인
+        </button>
+      )}
       <div className="pt-[96px]" />
       <BottomBar />
     </div>

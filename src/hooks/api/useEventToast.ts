@@ -6,7 +6,7 @@ import {
   getUserEventToastList,
   postEventToast,
 } from '@/api/eventToast';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 // 개인 이벤트 토스트 목록 조회
 export const useGetEventToastList = () => {
@@ -36,6 +36,19 @@ export const useGetEventToastItem = (eventToastId: number) => {
 };
 
 // 사용자가 팔로우 하고 있는 타사용자의 이벤트 토스트 목록 조회
+/*
+{
+        "event_toast_id": 1,
+        "title": "내 생일 ~",
+        "opened_date": "2023-01-03",
+        "nickname": "moon",
+        "postedJam" : true | false,
+        "icon": {
+            "icon_id": 1,
+            "icon_image_url": "123"
+        }
+    },
+*/
 export const useGetFollowingUserEventToast = () => {
   const { data, isLoading, error } = useQuery({
     queryKey: ['followingUserEventToast'],
@@ -63,10 +76,13 @@ export const useGetFollowingUserEventToast = () => {
 };
 
 // 이벤트 토스트 삭제
-export const useDeleteEventToast = (eventToastId: number) => {
+export const useDeleteEventToast = () => {
+  const queryClient = useQueryClient();
   const { mutate, isPending, error } = useMutation({
-    mutationFn: () => deleteEventToast(eventToastId),
-    onSuccess: () => {},
+    mutationFn: (eventToastId: number) => deleteEventToast(eventToastId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['eventToastList'] });
+    },
     onError: (error) => {
       console.log(error);
     },

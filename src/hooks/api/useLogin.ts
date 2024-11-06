@@ -1,4 +1,4 @@
-import { getGoogleLogin, getKakaoToken } from '@/api/login';
+import { getGoogleLogin, getKakaoToken, getMyInfo } from '@/api/login';
 import { useQuery } from '@tanstack/react-query';
 
 export const useKakaoToken = (kakaoCode: string) => {
@@ -15,6 +15,16 @@ export const useGoogleLogin = (googleCode: string) => {
     queryKey: ['googleLogin', googleCode],
     queryFn: () => getGoogleLogin(googleCode),
     enabled: !!googleCode,
+  });
+
+  return { data, error, isLoading };
+};
+
+// 사용자 정보(닉네임, 프로필 이미지) 조회
+export const useMyInfo = () => {
+  const { data, error, isLoading } = useQuery({
+    queryKey: ['myInfo'],
+    queryFn: () => getMyInfo(),
   });
 
   return { data, error, isLoading };

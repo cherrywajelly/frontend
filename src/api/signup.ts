@@ -30,7 +30,6 @@ export const putNicknameSignUp = async (nickname: string) => {
       }
 
       if (res.status === 200) {
-        alert('회원가입 완료');
         return res;
       }
     })
