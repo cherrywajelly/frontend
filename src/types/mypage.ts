@@ -22,6 +22,7 @@ export type MyEventToastItemProps = {
   isSetting?: boolean;
   children?: React.ReactNode;
   onClick?: () => void;
+  handleDelete?: () => void;
 };
 
 export type MyGiftToastItemProps = {

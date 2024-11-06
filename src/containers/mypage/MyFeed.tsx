@@ -3,7 +3,10 @@ import { useState } from 'react';
 import MyEventToastItem from '@/components/mypage/MyEventToastItem';
 import MyGiftToastItem from '@/components/mypage/MyGiftToastItem';
 
-import { useGetEventToastList } from '@/hooks/api/useEventToast';
+import {
+  useDeleteEventToast,
+  useGetEventToastList,
+} from '@/hooks/api/useEventToast';
 import {
   useDeleteGiftToast,
   useGetGiftToastList,
@@ -48,9 +51,9 @@ export default function MyFeed() {
     useGetGiftToastList();
   const { data: eventToastListData, isLoading: isLoadingEventToastList } =
     useGetEventToastList();
-  const { mutate, isPending } = useDeleteGiftToast();
-
-  console.log(eventToastListData);
+  const { mutate: deleteGiftToast, isPending } = useDeleteGiftToast();
+  const { mutate: deleteEventToast, isPending: isPendingDeleteEventToast } =
+    useDeleteEventToast();
 
   return (
     <>
@@ -79,13 +82,16 @@ export default function MyFeed() {
       <div className="bg-white p-6 h-full">
         <div className="flex flex-col gap-4">
           {activeTab === 0
-            ? tempData.map((item, idx) => {
+            ? eventToastListData?.map((item: any) => {
                 return (
                   <MyEventToastItem
-                    key={idx}
-                    image={item.image}
+                    key={item.event_toast_id}
+                    image={item.icon.icon_image_url}
                     title={item.title}
-                    date={item.date}
+                    date={item.opened_date}
+                    handleDelete={() => {
+                      deleteEventToast(item.event_toast_id);
+                    }}
                   />
                 );
               })
@@ -98,7 +104,7 @@ export default function MyFeed() {
                       title={item.title}
                       groupUser={item.giftToastOwner}
                       handleDelete={() => {
-                        mutate(item.giftToastId);
+                        deleteGiftToast(item.giftToastId);
                       }}
                     />
                   );
