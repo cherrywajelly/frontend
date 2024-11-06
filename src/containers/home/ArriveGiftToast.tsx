@@ -4,7 +4,7 @@ import { useMyInfo } from '@/hooks/api/useLogin';
 import clsx from 'clsx';
 import Image from 'next/image';
 
-export default function ArriveToast() {
+export default function ArriveGiftToast() {
   const { data: myInfoData, isLoading } = useMyInfo();
   const { data: incompletedToastData, isLoading: isLoadingToastData } =
     useGetToastIncompleted();
