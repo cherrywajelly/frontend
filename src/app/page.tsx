@@ -5,7 +5,8 @@ import { useEffect } from 'react';
 import BottomBar from '@/components/common-components/bottom-bar';
 import TopBar from '@/components/common-components/top-bar';
 
-import ArriveToast from '@/containers/home/ArriveToast';
+import ArriveEventToast from '@/containers/home/ArriveEventToast';
+import ArriveGiftToast from '@/containers/home/ArriveGiftToast';
 
 import { useRouter } from 'next/navigation';
 
@@ -32,7 +33,8 @@ export default function Home() {
       <TopBar title="Time Toast" />
 
       <div className="w-full h-[calc(100vh-48px)] p-6 bg-gray-05">
-        <ArriveToast />
+        <ArriveGiftToast />
+        <ArriveEventToast />
       </div>
       {accessToken ? (
         <button className="border rounded p-2" onClick={handleLogout}>
