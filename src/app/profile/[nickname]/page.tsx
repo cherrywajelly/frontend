@@ -35,8 +35,9 @@ const tempData: ToastBoxProps[] = [
   },
 ];
 
-export default function UserProfilePage(props: UserProfilePageProps) {
-  const { eventToastData, nickname } = props;
+export default function UserProfilePage({ params }: { params: string }) {
+  // const { eventToastData, nickname } = props;
+  const nickname = params;
 
   return (
     <div className="w-full h-lvh">
@@ -75,6 +76,7 @@ export default function UserProfilePage(props: UserProfilePageProps) {
           <div className="pt-4 flex flex-col gap-4">
             {tempData.map((item) => (
               <ToastBox
+                key={item.nickname}
                 title={item.title}
                 profileImg={item.profileImg}
                 nickname={item.nickname}
