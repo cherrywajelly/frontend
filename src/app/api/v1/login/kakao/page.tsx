@@ -4,9 +4,7 @@ import React, { useEffect, useState } from 'react';
 
 import { useKakaoToken } from '@/hooks/api/useLogin';
 
-import { error } from 'console';
 import { useRouter } from 'next/navigation';
-import router from 'next/router';
 
 const KakaoCallback = () => {
   const router = useRouter();
@@ -37,8 +35,11 @@ const KakaoCallback = () => {
         window.sessionStorage.setItem('accessToken', accessToken);
         window.sessionStorage.setItem('refreshToken', refreshToken);
       }
-
-      data.isNew ? router.push('/sign-up') : router.push('/');
+      if (data.isNew) {
+        router.push('/sign-up');
+      } else {
+        router.push('/');
+      }
     } else {
       console.log(data);
     }

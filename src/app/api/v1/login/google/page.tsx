@@ -35,8 +35,11 @@ export default function GoogleCallback() {
         window.sessionStorage.setItem('accessToken', accessToken);
         window.sessionStorage.setItem('refreshToken', refreshToken);
       }
-
-      data.isNew ? router.push('/sign-up') : router.push('/');
+      if (data.isNew) {
+        router.push('/sign-up');
+      } else {
+        router.push('/');
+      }
     } else {
       console.log(data);
     }
