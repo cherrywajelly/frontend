@@ -1,5 +1,7 @@
 'use client';
 
+import { Suspense } from 'react';
+
 import TopBar from '@/components/common-components/top-bar';
 
 import FollowTab from '@/containers/mypage/FollowTab';
@@ -26,7 +28,9 @@ export default function MyPageFollow() {
           />
 
           {/* 팔로워-팔로잉-그룹 탭 및 리스트 컴포넌트*/}
-          <FollowTab />
+          <Suspense>
+            <FollowTab />
+          </Suspense>
         </div>
       </div>
     </div>

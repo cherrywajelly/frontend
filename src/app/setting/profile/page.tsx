@@ -15,16 +15,16 @@ import temp from '../../../../public/images/default-toast.png';
 import Image, { StaticImageData } from 'next/image';
 import { useRouter } from 'next/navigation';
 
-export default function SettingProfilePage() {
+const SettingProfilePage = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
 
   const { data, isLoading } = useMyInfo();
 
-  const prevNickname = data.nickname;
-  const prevProfileImg = data.profileUrl;
+  const prevNickname = data?.nickname ?? '';
+  const prevProfileImg = data?.profileUrl ?? '';
 
-  const [nickname, setNickname] = useState<string>(data.nickname);
+  const [nickname, setNickname] = useState<string>(data?.nickname);
   const [profileImg, setProfileImg] = useState<string | StaticImageData>(
     prevProfileImg,
   );
@@ -163,4 +163,6 @@ export default function SettingProfilePage() {
       </div>
     </div>
   );
-}
+};
+
+export default SettingProfilePage;
