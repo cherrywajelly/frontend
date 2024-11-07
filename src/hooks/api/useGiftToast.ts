@@ -1,4 +1,10 @@
 import {
+  GiftToastDefaultResponse,
+  GiftToastItemResponse,
+  GiftToastResponses,
+} from '@/types/api/giftToast';
+
+import {
   deleteGiftToast,
   getGiftToastIncompleted,
   getGiftToastItem,
@@ -11,7 +17,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 // 작성해야 할 선물 받은 토스트 목록 조회
 export const useGetToastIncompleted = () => {
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading, error } = useQuery<GiftToastDefaultResponse[]>({
     queryKey: ['giftToastIncompleted'],
     queryFn: () => getGiftToastIncompleted(),
   });
@@ -20,7 +26,7 @@ export const useGetToastIncompleted = () => {
 
 // 개인 선물 토스트 목록 조회
 export const useGetGiftToastList = () => {
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading, error } = useQuery<GiftToastItemResponse[]>({
     queryKey: ['giftToastList'],
     queryFn: () => getGiftToastList(),
   });
@@ -29,7 +35,7 @@ export const useGetGiftToastList = () => {
 
 // 선물 토스트 단일 조회
 export const useGetGiftToastItem = (giftToastId: number) => {
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading, error } = useQuery<GiftToastResponses>({
     queryKey: ['getGiftToastItem'],
     queryFn: () => getGiftToastItem(giftToastId),
   });
