@@ -95,21 +95,19 @@ export default function MyFeed() {
                   />
                 );
               })
-            : giftToastListData?.giftToastResponses.map(
-                (item: any, idx: number) => {
-                  return (
-                    <MyGiftToastItem
-                      key={idx}
-                      image={item.iconImageUrl}
-                      title={item.title}
-                      groupUser={item.giftToastOwner}
-                      handleDelete={() => {
-                        deleteGiftToast(item.giftToastId);
-                      }}
-                    />
-                  );
-                },
-              )}
+            : giftToastListData?.map((item) => {
+                return (
+                  <MyGiftToastItem
+                    key={item.giftToastId}
+                    image={item.iconImageUrl}
+                    title={item.title}
+                    groupUser={item.giftToastOwner}
+                    handleDelete={() => {
+                      deleteGiftToast(item.giftToastId);
+                    }}
+                  />
+                );
+              })}
         </div>
       </div>
     </>
