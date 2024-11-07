@@ -1,4 +1,9 @@
 import {
+  EventToastItemResponse,
+  EventToastPostReqBody,
+} from '@/types/api/eventToast';
+
+import {
   deleteEventToast,
   getEventToastItem,
   getEventToastList,
@@ -10,7 +15,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 // 개인 이벤트 토스트 목록 조회
 export const useGetEventToastList = () => {
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading, error } = useQuery<EventToastItemResponse[]>({
     queryKey: ['eventToastList'],
     queryFn: () => getEventToastList(),
   });
@@ -19,7 +24,7 @@ export const useGetEventToastList = () => {
 
 // 특정 사용자의 이벤트 토스트 목록 조회
 export const useGetUserEventToastList = (memberId: number) => {
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading, error } = useQuery<EventToastItemResponse[]>({
     queryKey: ['userEventToastList'],
     queryFn: () => getUserEventToastList(memberId),
   });
@@ -36,21 +41,8 @@ export const useGetEventToastItem = (eventToastId: number) => {
 };
 
 // 사용자가 팔로우 하고 있는 타사용자의 이벤트 토스트 목록 조회
-/*
-{
-        "event_toast_id": 1,
-        "title": "내 생일 ~",
-        "opened_date": "2023-01-03",
-        "nickname": "moon",
-        "postedJam" : true | false,
-        "icon": {
-            "icon_id": 1,
-            "icon_image_url": "123"
-        }
-    },
-*/
 export const useGetFollowingUserEventToast = () => {
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading, error } = useQuery<EventToastItemResponse[]>({
     queryKey: ['followingUserEventToast'],
     queryFn: () => getFollowingUserEventToast(),
   });
@@ -58,15 +50,9 @@ export const useGetFollowingUserEventToast = () => {
 };
 
 // 이벤트 토스트 등록
-/* req body
-{
-    "opened_date": "2025-01-03",
-    "title": "내 생일 ~",
-    "icon_id": 1
-}
-*/ export const usePostEventToast = (item: any) => {
+export const usePostEventToast = () => {
   const { mutate, isPending, error } = useMutation({
-    mutationFn: () => postEventToast(item),
+    mutationFn: (item: EventToastPostReqBody) => postEventToast(item),
     onSuccess: () => {},
     onError: (error) => {
       console.log(error);

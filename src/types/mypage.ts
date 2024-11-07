@@ -28,7 +28,7 @@ export type MyEventToastItemProps = {
 export type MyGiftToastItemProps = {
   image: string | StaticImageData;
   title: string;
-  groupUser: string[];
+  groupUser: string;
   handleDelete: () => void;
 };
 

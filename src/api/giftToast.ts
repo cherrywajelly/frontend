@@ -7,9 +7,8 @@ export const getGiftToastIncompleted = async () => {
   if (!res.ok) {
     throw new Error(`HTTP error in Google! Status: ${res.status}`);
   }
-
   const data = await res.json();
-  return data;
+  return data.giftToastResponses;
 };
 
 // 개인 선물 토스트 목록 조회
@@ -21,7 +20,7 @@ export const getGiftToastList = async () => {
   }
 
   const data = await res.json();
-  return data;
+  return data.giftToastResponses;
 };
 
 // 선물 토스트 단일 조회

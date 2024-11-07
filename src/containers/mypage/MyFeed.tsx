@@ -12,8 +12,6 @@ import {
   useGetGiftToastList,
 } from '@/hooks/api/useGiftToast';
 
-import tempImg from '../../../public/images/default-toast.png';
-
 import clsx from 'clsx';
 
 export const tabVariants = {
@@ -21,24 +19,6 @@ export const tabVariants = {
   default: 'text-gray-40 text-body1',
   active: 'text-gray-80 text-body1 border-b-2 border-primary-main',
 };
-
-export const tempData = [
-  { image: tempImg, title: '타이틀입니당', date: '2020년 4월 3일' },
-  { image: tempImg, title: '타이틀입니당', date: '2020년 4월 3일' },
-  { image: tempImg, title: '타이틀입니당', date: '2020년 4월 3일' },
-  { image: tempImg, title: '타이틀입니당', date: '2020년 4월 3일' },
-  { image: tempImg, title: '타이틀입니당', date: '2020년 4월 3일' },
-  { image: tempImg, title: '타이틀입니당', date: '2020년 4월 3일' },
-  { image: tempImg, title: '타이틀입니당', date: '2020년 4월 3일' },
-  { image: tempImg, title: '타이틀입니당', date: '2020년 4월 3일' },
-  { image: tempImg, title: '타이틀입니당', date: '2020년 4월 3일' },
-  { image: tempImg, title: '타이틀입니당', date: '2020년 4월 3일' },
-  { image: tempImg, title: '타이틀입니당', date: '2020년 4월 3일' },
-  { image: tempImg, title: '타이틀입니당', date: '2020년 4월 3일' },
-  { image: tempImg, title: '타이틀입니당', date: '2020년 4월 3일' },
-  { image: tempImg, title: '타이틀입니당', date: '2020년 4월 3일' },
-  { image: tempImg, title: '타이틀입니당', date: '2020년 4월 3일' },
-];
 
 export default function MyFeed() {
   const [activeTab, setActiveTab] = useState<number>(0);
@@ -82,34 +62,32 @@ export default function MyFeed() {
       <div className="bg-white p-6 h-full">
         <div className="flex flex-col gap-4">
           {activeTab === 0
-            ? eventToastListData?.map((item: any) => {
+            ? eventToastListData?.map((item) => {
                 return (
                   <MyEventToastItem
-                    key={item.event_toast_id}
-                    image={item.icon.icon_image_url}
+                    key={item.eventToastId}
+                    image={item.icon.iconImageUrl}
                     title={item.title}
-                    date={item.opened_date}
+                    date={item.openedDate}
                     handleDelete={() => {
-                      deleteEventToast(item.event_toast_id);
+                      deleteEventToast(item.eventToastId);
                     }}
                   />
                 );
               })
-            : giftToastListData?.giftToastResponses.map(
-                (item: any, idx: number) => {
-                  return (
-                    <MyGiftToastItem
-                      key={idx}
-                      image={item.iconImageUrl}
-                      title={item.title}
-                      groupUser={item.giftToastOwner}
-                      handleDelete={() => {
-                        deleteGiftToast(item.giftToastId);
-                      }}
-                    />
-                  );
-                },
-              )}
+            : giftToastListData?.map((item) => {
+                return (
+                  <MyGiftToastItem
+                    key={item.giftToastId}
+                    image={item.iconImageUrl}
+                    title={item.title}
+                    groupUser={item.giftToastOwner}
+                    handleDelete={() => {
+                      deleteGiftToast(item.giftToastId);
+                    }}
+                  />
+                );
+              })}
         </div>
       </div>
     </>
