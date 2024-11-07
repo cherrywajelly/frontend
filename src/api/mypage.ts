@@ -1,5 +1,17 @@
 import { apiRequest } from '.';
 
+// 마이페이지 - 상단 프로필 정보 조회
+export const getMyProfile = async () => {
+  const res = await apiRequest(`/api/v1/members`);
+
+  if (!res.ok) {
+    throw new Error(`HTTP error in Google! Status: ${res.status}`);
+  }
+
+  const data = await res.json();
+  return data;
+};
+
 // 팔로워 목록 조회
 export const getFollowers = async () => {
   const res = await apiRequest(`/api/v1/follows/followers`);
