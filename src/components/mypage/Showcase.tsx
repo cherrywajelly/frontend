@@ -5,6 +5,7 @@ import { ShowcaseProps } from '@/types/mypage';
 import tempImg from '../../../public/images/default-toast.png';
 
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 const tempData = [
   { img: tempImg, title: '' },
@@ -14,9 +15,10 @@ const tempData = [
 
 export default function Showcase(props: ShowcaseProps) {
   const { isMine, nickname = 'timetoast' } = props;
+  const router = useRouter();
 
   const handleEdit = () => {
-    //
+    router.push('/mypage/showcase');
   };
 
   return (

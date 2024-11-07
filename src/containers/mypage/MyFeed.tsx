@@ -13,6 +13,7 @@ import {
 } from '@/hooks/api/useGiftToast';
 
 import clsx from 'clsx';
+import { useRouter } from 'next/navigation';
 
 export const tabVariants = {
   common: 'w-full py-2 text-center',
@@ -22,6 +23,7 @@ export const tabVariants = {
 
 export default function MyFeed() {
   const [activeTab, setActiveTab] = useState<number>(0);
+  const router = useRouter();
 
   const handleTabClick = (tab: number) => {
     setActiveTab(tab);
@@ -72,6 +74,9 @@ export default function MyFeed() {
                     handleDelete={() => {
                       deleteEventToast(item.eventToastId);
                     }}
+                    onClick={() =>
+                      router.push(`/event-toast/${item.eventToastId}`)
+                    }
                   />
                 );
               })
@@ -82,6 +87,9 @@ export default function MyFeed() {
                     image={item.iconImageUrl}
                     title={item.title}
                     groupUser={item.giftToastOwner}
+                    onClick={() =>
+                      router.push(`/gift-toast/${item.giftToastId}`)
+                    }
                     handleDelete={() => {
                       deleteGiftToast(item.giftToastId);
                     }}

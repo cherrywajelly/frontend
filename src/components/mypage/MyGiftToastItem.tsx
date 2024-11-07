@@ -8,10 +8,10 @@ import Dropdown from '../common-components/dropdown';
 import Image from 'next/image';
 
 export default function MyGiftToastItem(props: MyGiftToastItemProps) {
-  const { image, title, groupUser, handleDelete } = props;
+  const { image, title, groupUser, handleDelete, onClick } = props;
 
   return (
-    <div className="flex gap-4 py-2 bg-white">
+    <div className="flex gap-4 py-2 bg-white" onClick={onClick}>
       <Image
         src={image}
         alt=""
