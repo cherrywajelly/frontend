@@ -1,3 +1,5 @@
+import { MyProfileResponse } from '@/types/api/mypage';
+
 import {
   deleteFollowerUser,
   deleteFollowingUser,
@@ -5,9 +7,19 @@ import {
   getFollowers,
   getFollowings,
   getGroup,
+  getMyProfile,
   postFollowingUser,
 } from '@/api/mypage';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+
+// 마이페이지 - 상단 프로필 정보 조회
+export const useGetMyProfile = () => {
+  const { data, isLoading, error } = useQuery<MyProfileResponse>({
+    queryKey: ['myProfile'],
+    queryFn: () => getMyProfile(),
+  });
+  return { data, isLoading, error };
+};
 
 // 팔로워 목록 조회
 export const useGetFollowers = () => {

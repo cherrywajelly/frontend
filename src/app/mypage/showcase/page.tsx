@@ -11,10 +11,14 @@ import TopBar from '@/components/common-components/top-bar';
 
 import MyEventToastItem from '@/components/mypage/MyEventToastItem';
 
-import { tempData } from '@/containers/mypage/MyFeed';
+import { useGetEventToastList } from '@/hooks/api/useEventToast';
 
 export default function ShowcaseEdit() {
   const [selectedToast, setSelectedToast] = useState(['']);
+
+  // TODO: 진열장 목록 조회 api로 바꾸기
+  const { data: eventToastListData, isLoading: isLoadingEventToastList } =
+    useGetEventToastList();
 
   const toggleToastSelection = (item: any) => {
     setSelectedToast((prev) => {
@@ -45,31 +49,32 @@ export default function ShowcaseEdit() {
         <div className="w-full h-[calc(100vh-154px)] flex flex-col justify-between flex-grow bg-white px-6 py-4 border-t-2 border-gray-10 rounded-t-[20px]">
           <div className="flex-grow mb-6 overflow-y-auto hide-scrollbar">
             <div className="flex flex-col gap-4">
-              {tempData.map((item, idx) => {
-                return (
-                  <MyEventToastItem
-                    key={idx}
-                    image={item.image}
-                    title={item.title}
-                    date={item.date}
-                    isSetting={false}
-                    onClick={() => toggleToastSelection(item)}
-                  >
-                    {/* TODO: response type에 맞춰서 다시 상태 로직 수정하기 */}
-                    {selectedToast.includes(item.title) ? (
-                      <RiCheckboxCircleFill
-                        className="text-primary-main my-auto"
-                        size={24}
-                      />
-                    ) : (
-                      <RiCheckboxBlankCircleLine
-                        className="text-gray-40 my-auto"
-                        size={24}
-                      />
-                    )}
-                  </MyEventToastItem>
-                );
-              })}
+              {eventToastListData &&
+                eventToastListData?.map((item) => {
+                  return (
+                    <MyEventToastItem
+                      key={item.eventToastId}
+                      image={item.memberProfileUrl}
+                      title={item.title}
+                      date={item.openedDate}
+                      isSetting={false}
+                      onClick={() => toggleToastSelection(item)}
+                    >
+                      {/* TODO: response type에 맞춰서 다시 상태 로직 수정하기 */}
+                      {selectedToast.includes(item.title) ? (
+                        <RiCheckboxCircleFill
+                          className="text-primary-main my-auto"
+                          size={24}
+                        />
+                      ) : (
+                        <RiCheckboxBlankCircleLine
+                          className="text-gray-40 my-auto"
+                          size={24}
+                        />
+                      )}
+                    </MyEventToastItem>
+                  );
+                })}
             </div>
           </div>
 

@@ -51,7 +51,13 @@ export default function Dropdown({
 
   return (
     <div ref={dropdownRef} className="relative inline-block">
-      <button onClick={toggleDropdown} className="flex items-center">
+      <button
+        onClick={(e) => {
+          e.stopPropagation();
+          toggleDropdown();
+        }}
+        className="flex items-center"
+      >
         <IoIosMore size={24} className={color} />
       </button>
 
@@ -68,7 +74,8 @@ export default function Dropdown({
               <li
                 key={index}
                 className="cursor-pointer"
-                onClick={() => {
+                onClick={(e) => {
+                  e.stopPropagation();
                   item.onClick();
                   setIsOpenCategory(false);
                 }}

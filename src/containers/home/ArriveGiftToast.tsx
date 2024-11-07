@@ -1,3 +1,7 @@
+import Skeleton from 'react-loading-skeleton';
+
+import CustomSkeleton from '@/components/common-components/skeleton';
+
 import { useGetToastIncompleted } from '@/hooks/api/useGiftToast';
 import { useMyInfo } from '@/hooks/api/useLogin';
 
@@ -8,7 +12,7 @@ import { useRouter } from 'next/navigation';
 export default function ArriveGiftToast() {
   const router = useRouter();
 
-  const { data: myInfoData, isLoading } = useMyInfo();
+  const { data: myInfoData, isLoading: isLoadingNickname } = useMyInfo();
   const { data: incompletedToastData, isLoading: isLoadingToastData } =
     useGetToastIncompleted();
 
@@ -21,12 +25,25 @@ export default function ArriveGiftToast() {
       <span className="text-gray-80 text-subtitle1">
         반가워요 🙌🏻
         <br />
-        {myInfoData?.nickname}님에게 도착한 토스트예요!
+        <span className="flex">
+          {isLoadingNickname ? (
+            <CustomSkeleton width={130} height={24} />
+          ) : (
+            <span>{myInfoData?.nickname}</span>
+          )}
+          님에게 도착한 토스트예요!
+        </span>
       </span>
 
       <div className="mt-4 flex overflow-x-auto whitespace-nowrap hide-scrollbar">
-        {incompletedToastData ? (
-          incompletedToastData.map((item, idx: number) => {
+        {isLoadingToastData ? (
+          <>
+            <Skeleton width={140} height={174} className="mr-2" />
+            <Skeleton width={140} height={174} className="mr-2" />
+            <Skeleton width={140} height={174} />
+          </>
+        ) : incompletedToastData ? (
+          incompletedToastData.map((item, idx) => {
             return (
               <div
                 key={idx}
@@ -50,7 +67,6 @@ export default function ArriveGiftToast() {
             );
           })
         ) : (
-          // TODO: isLoading이랑 아예 데이터 없는 경우 고려해서 로직 다시 작성
           <div className="">도착한 토스트가 없어요 ㅠㅠ</div>
         )}
       </div>

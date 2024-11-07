@@ -30,6 +30,7 @@ export type MyGiftToastItemProps = {
   title: string;
   groupUser: string;
   handleDelete: () => void;
+  onClick: () => void;
 };
 
 export type UserProfilePageProps = {
