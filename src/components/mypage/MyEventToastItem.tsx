@@ -1,5 +1,4 @@
 import { FaRegCalendar } from 'react-icons/fa6';
-import { IoIosMore } from 'react-icons/io';
 
 import { MyEventToastItemProps } from '@/types/mypage';
 
