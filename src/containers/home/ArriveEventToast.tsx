@@ -1,17 +1,14 @@
 import Button from '@/components/common-components/button';
+import CustomSkeleton from '@/components/common-components/skeleton';
 
 import ToastBox from '@/components/toast/ToastBox';
 
-import {
-  useGetFollowingUserEventToast,
-  useGetUserEventToastList,
-} from '@/hooks/api/useEventToast';
+import { useGetFollowingUserEventToast } from '@/hooks/api/useEventToast';
 
 import tempImg from '../../../public/images/timetoast.png';
 
 export default function ArriveEventToast() {
   const { data, isLoading } = useGetFollowingUserEventToast();
-  console.log(data);
 
   return (
     <div className="mt-6">
@@ -19,17 +16,19 @@ export default function ArriveEventToast() {
         친구의 토스트에 잼을 발라볼까요?
       </span>
       <div className="mt-4 flex flex-col gap-4">
-        {data ? (
-          data.map((item: any) => {
+        {isLoading ? (
+          <CustomSkeleton height={178} />
+        ) : data ? (
+          data.map((item) => {
             return (
               <ToastBox
-                key={item.event_toast_id}
+                key={item.eventToastId}
                 title={item.title}
                 //   TODO: profile img로 바꾸기
-                profileImg={item.icon.icon_image_url}
-                toastImg={item.icon.icon_image_url}
-                nickname="chaemin"
-                openDate="2024-11-11"
+                profileImg={item.icon.iconImageUrl}
+                toastImg={item.icon.iconImageUrl}
+                nickname={item.nickname}
+                openDate={item.openedDate}
               >
                 <Button size="sm" color="primary">
                   잼 바르기
