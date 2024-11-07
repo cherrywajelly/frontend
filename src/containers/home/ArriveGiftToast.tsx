@@ -3,8 +3,11 @@ import { useMyInfo } from '@/hooks/api/useLogin';
 
 import clsx from 'clsx';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 export default function ArriveGiftToast() {
+  const router = useRouter();
+
   const { data: myInfoData, isLoading } = useMyInfo();
   const { data: incompletedToastData, isLoading: isLoadingToastData } =
     useGetToastIncompleted();
@@ -19,6 +22,10 @@ export default function ArriveGiftToast() {
   incompletedToastData?.giftToastResponses.push(
     incompletedToastData?.giftToastResponses[0],
   );
+
+  const handleClick = (id: number) => {
+    router.push(`/gift-toast/${id}`);
+  };
 
   return (
     <div>
@@ -35,6 +42,7 @@ export default function ArriveGiftToast() {
               return (
                 <div
                   key={idx}
+                  onClick={() => handleClick(item.giftToastId)}
                   className={clsx(
                     `${idx !== incompletedToastData.giftToastResponses.length - 1 ? 'mr-2' : ''}`,
                     'w-[140px] bg-white px-4 py-5 flex flex-col justify-center items-center border border-gray-10 rounded-[10px]',
