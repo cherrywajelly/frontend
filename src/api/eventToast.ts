@@ -49,13 +49,6 @@ export const getFollowingUserEventToast = async () => {
 };
 
 // 이벤트 토스트 등록
-/* req body
-{
-    "opened_date": "2025-01-03",
-    "title": "내 생일 ~",
-    "icon_id": 1
-}
-*/
 export const postEventToast = async (item: any) => {
   await apiRequest(`/api/v1/eventToasts`, 'POST', {
     item,

@@ -1,6 +1,7 @@
 import {
   EventToastItemResponse,
   EventToastPostReqBody,
+  EventToastResponse,
 } from '@/types/api/eventToast';
 
 import {
@@ -33,7 +34,7 @@ export const useGetUserEventToastList = (memberId: number) => {
 
 // 사용자 이벤트 토스트 상세 조회
 export const useGetEventToastItem = (eventToastId: number) => {
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading, error } = useQuery<EventToastResponse>({
     queryKey: ['eventToastItem'],
     queryFn: () => getEventToastItem(eventToastId),
   });
