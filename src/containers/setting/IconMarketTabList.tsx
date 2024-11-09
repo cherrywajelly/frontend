@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import tempImg from '../../../public/images/default-toast.png';
-import { tabVariants, tempData } from '../mypage/MyFeed';
+import { tabVariants } from '../mypage/MyFeed';
 
 import clsx from 'clsx';
 import Image from 'next/image';
