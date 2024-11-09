@@ -54,10 +54,11 @@ const toastTopic = [
 export type TostFormProps = {
   stepState: RecoilState<number>;
   dataState: RecoilState<pieceData | ToastData>;
+  handleSubmit?: () => void;
 };
 
 export default function ToastDecoForm(props: TostFormProps) {
-  const { stepState, dataState } = props;
+  const { stepState, dataState, handleSubmit } = props;
 
   const [buttonTopic, setButtonTopic] = useState<any>(toastTopic[0]);
   const [selectedTopic, setSelectedTopic] = useState<string>(
@@ -85,9 +86,9 @@ export default function ToastDecoForm(props: TostFormProps) {
     }
   };
 
-  const handleSubmit = () => {
-    setStep((prev) => prev + 1);
-  };
+  // const handleSubmit = () => {
+  //   // setStep((prev) => prev + 1);
+  // };
 
   return (
     <div className="w-full h-full pt-6 flex flex-col justify-between">
@@ -150,7 +151,7 @@ export default function ToastDecoForm(props: TostFormProps) {
           onClick={handleSubmit}
           disabled={toastData.deco == defaultImg}
         >
-          다음
+          토스트 생성
         </Button>
       </div>
     </div>

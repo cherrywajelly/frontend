@@ -35,7 +35,9 @@ export default function ToastBox(props: ToastBoxProps) {
               height={24}
               className="object-cover rounded-full"
             />
-            <span className="text-gray-80 text-body4">{nickname}</span>
+            <span className="text-gray-80 text-body4">
+              {nickname === null ? '나에게' : nickname}
+            </span>
           </span>
           <span className="flex gap-1 items-center">
             <FaRegCalendar className="text-gray-80" />

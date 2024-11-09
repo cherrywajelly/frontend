@@ -33,5 +33,5 @@ export interface GiftToastResponses extends GiftToastItemResponse {
   memorizedDate: string;
   openedDate: string;
   createdDate: string;
-  toastPieceResponses: ToastPieceResponses[];
+  toastPieceResponses: ToastPieceResponses;
 }

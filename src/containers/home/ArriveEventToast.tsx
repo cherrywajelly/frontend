@@ -7,8 +7,11 @@ import { useGetFollowingUserEventToast } from '@/hooks/api/useEventToast';
 
 import tempImg from '../../../public/images/timetoast.png';
 
+import { useRouter } from 'next/navigation';
+
 export default function ArriveEventToast() {
   const { data, isLoading } = useGetFollowingUserEventToast();
+  const router = useRouter();
 
   return (
     <div className="mt-6">
@@ -30,7 +33,13 @@ export default function ArriveEventToast() {
                 nickname={item.nickname}
                 openDate={item.openedDate}
               >
-                <Button size="sm" color="primary">
+                <Button
+                  size="sm"
+                  color="primary"
+                  onClick={() =>
+                    router.push(`/event-toast/${item.eventToastId}`)
+                  }
+                >
                   잼 바르기
                 </Button>
               </ToastBox>
