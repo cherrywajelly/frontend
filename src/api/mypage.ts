@@ -50,7 +50,7 @@ export const getGroup = async () => {
 
 // 팔로잉 등록
 export const postFollowingUser = async (followingId: number) => {
-  await apiRequest(`/api/v1/follows/following/${followingId}`, 'POST')
+  await apiRequest(`/api/v1/follows/followings/${followingId}`, 'POST')
     .then((res) => {
       if (res.status === 500) {
         throw new Error('Internal Server Error');
@@ -68,7 +68,7 @@ export const postFollowingUser = async (followingId: number) => {
 
 // 팔로잉 취소
 export const deleteFollowingUser = async (followingMemberId: number) => {
-  await apiRequest(`/api/v1/follows/following/${followingMemberId}`, 'DELETE')
+  await apiRequest(`/api/v1/follows/followings/${followingMemberId}`, 'DELETE')
     .then((res) => {
       if (res.status === 500) {
         throw new Error('Internal Server Error');
@@ -86,7 +86,7 @@ export const deleteFollowingUser = async (followingMemberId: number) => {
 
 // 팔로워 취소
 export const deleteFollowerUser = async (followerMemberId: number) => {
-  await apiRequest(`/api/v1/follows/follower/${followerMemberId}`, 'DELETE')
+  await apiRequest(`/api/v1/follows/followers/${followerMemberId}`, 'DELETE')
     .then((res) => {
       if (res.status === 500) {
         throw new Error('Internal Server Error');

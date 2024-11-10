@@ -44,15 +44,18 @@ export const postGroupTeam = async ({
 };
 
 // 프로필 이미지 등록
-export const postProfileImage = async () => {
-  await apiRequest(`/api/v1/members/profile-images`, 'POST')
+export const postProfileImage = async (profileImage: File) => {
+  const formData = new FormData();
+  formData.append('profileImage', profileImage);
+
+  await apiRequest(`/api/v1/members/profile-image`, 'POST', formData)
     .then((res) => {
       if (res.status === 500) {
         throw new Error('Internal Server Error');
       }
 
       if (res.status === 200) {
-        return res;
+        return res.json();
       }
     })
     .catch((err) => {
