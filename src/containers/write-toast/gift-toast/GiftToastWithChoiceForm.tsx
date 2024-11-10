@@ -10,10 +10,10 @@ import Input from '@/components/common-components/input';
 import InputForm from '@/components/input-form/InputForm';
 import UserListItem from '@/components/search/UserListItem';
 
-import { UserDefaultProps } from '@/types/user';
+import { useMyInfo } from '@/hooks/api/useLogin';
+import { useGetFollowings, useGetGroup } from '@/hooks/api/useMyPage';
 
 import { giftToastDataState, giftToastStepState } from '@/atoms/toastAtom';
-import { tempUserList } from '@/containers/setting/GenerateGroup';
 
 import { useRecoilState, useSetRecoilState } from 'recoil';
 
@@ -33,15 +33,24 @@ export default function GiftToastWithChoiceForm() {
     setIsFocused(false);
   };
 
-  //   const toggleUserSelection = (item: UserDefaultProps) => {
-  //     setSelectedUsers((prev) => {
-  //       if (prev.includes(item)) {
-  //         return prev.filter((user) => user !== item);
-  //       } else {
-  //         return [...prev, item];
-  //       }
-  //     });
-  //   };
+  // 자기 자신 조회
+  const { data: mineData, isLoading: isLoadingMineData } = useMyInfo();
+  console.log(mineData);
+  // 팔로잉 목록 및 그룹 목록 조회
+  const { data: followingData, isLoading: isLoadingFollowings } =
+    useGetFollowings();
+  const { data: groupData, isLoading: isLoadingGroup } = useGetGroup();
+
+  const toggleUserSelection = (
+    itemId: number | null,
+    type: 'mine' | 'friend' | 'group',
+  ) => {
+    if (giftData.id === itemId && giftData.type === type) {
+      // setGiftData((prev) => ({ ...prev, id: null, type: null }));
+    } else {
+      setGiftData((prev) => ({ ...prev, id: itemId, type }));
+    }
+  };
 
   return (
     <div className="w-full h-full px-6 py-6 flex flex-col justify-between">
@@ -76,14 +85,26 @@ export default function GiftToastWithChoiceForm() {
 
       <div className="flex-grow my-6 overflow-y-auto hide-scrollbar">
         <div className="flex flex-col gap-4">
-          {tempUserList.map((item, idx) => (
-            <UserListItem
-              key={idx}
-              profileImg={item.profileImg}
-              nickname={item.nickname}
-              // onClick={() => toggleUserSelection(item)}
-            >
-              {/* {selectedUsers.includes(item) ? (
+          <UserListItem
+            profileImg={mineData?.profileUrl as string}
+            nickname={mineData?.nickname as string}
+            onClick={() => toggleUserSelection(null, 'mine')}
+          >
+            {giftData.type === 'mine' ? (
+              <RiCheckboxCircleFill className="text-primary-main" size={24} />
+            ) : (
+              <RiCheckboxBlankCircleLine className="text-gray-40" size={24} />
+            )}
+          </UserListItem>
+          {followingData &&
+            followingData.followResponses.map((item) => (
+              <UserListItem
+                key={item.memberId}
+                profileImg={item.memberProfileUrl}
+                nickname={item.nickname}
+                onClick={() => toggleUserSelection(item.memberId, 'friend')}
+              >
+                {item.memberId === giftData.id && giftData.type === 'friend' ? (
                   <RiCheckboxCircleFill
                     className="text-primary-main"
                     size={24}
@@ -93,19 +114,40 @@ export default function GiftToastWithChoiceForm() {
                     className="text-gray-40"
                     size={24}
                   />
-                )} */}
-              <>hi</>
-            </UserListItem>
-          ))}
+                )}
+              </UserListItem>
+            ))}
+          {groupData &&
+            groupData.teamResponses.map((item, idx) => (
+              <UserListItem
+                // key={item.teamId}
+                key={idx}
+                profileImg={item.teamProfileUrl}
+                nickname={item.teamName}
+                onClick={() => toggleUserSelection(item.teamId, 'group')}
+              >
+                {item.teamId === giftData.id && giftData.type === 'group' ? (
+                  <RiCheckboxCircleFill
+                    className="text-primary-main"
+                    size={24}
+                  />
+                ) : (
+                  <RiCheckboxBlankCircleLine
+                    className="text-gray-40"
+                    size={24}
+                  />
+                )}
+              </UserListItem>
+            ))}
         </div>
       </div>
 
       <Button
         size="md"
         className="flex-none"
-        // color={giftData.toastName ? 'active' : 'disabled'}
+        color={giftData.type ? 'active' : 'disabled'}
         onClick={handleSubmit}
-        // disabled={!giftData.toastName}
+        disabled={!giftData.type}
       >
         다음
       </Button>
