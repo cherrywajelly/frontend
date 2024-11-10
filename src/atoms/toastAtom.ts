@@ -27,11 +27,13 @@ export const giftToastStepState = atom<number>({
 export const giftToastDataState = atom<ToastData>({
   key: 'giftToastDataState',
   default: {
+    id: null,
     isAgree: false,
     memoryDate: null,
     openDate: null,
     toastName: '',
     deco: defaultImg,
+    type: null,
   },
 });
 
