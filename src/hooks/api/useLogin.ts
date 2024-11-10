@@ -1,3 +1,5 @@
+import { MyInfoResponse } from '@/types/api/login';
+
 import { getGoogleLogin, getKakaoToken, getMyInfo } from '@/api/login';
 import { useQuery } from '@tanstack/react-query';
 
@@ -22,10 +24,13 @@ export const useGoogleLogin = (googleCode: string) => {
 
 // 사용자 정보(닉네임, 프로필 이미지) 조회
 export const useMyInfo = () => {
-  const { data, error, isLoading } = useQuery({
+  const { data, error, isLoading, refetch } = useQuery<MyInfoResponse>({
     queryKey: ['myInfo'],
     queryFn: () => getMyInfo(),
+    enabled: true,
+    refetchOnWindowFocus: true,
+    refetchOnMount: true,
   });
 
-  return { data, error, isLoading };
+  return { data, error, isLoading, refetch };
 };

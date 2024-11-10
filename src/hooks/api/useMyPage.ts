@@ -1,4 +1,8 @@
-import { MyProfileResponse } from '@/types/api/mypage';
+import {
+  FollowingListResponse,
+  GroupListResponse,
+  MyProfileResponse,
+} from '@/types/api/mypage';
 
 import {
   deleteFollowerUser,
@@ -17,6 +21,9 @@ export const useGetMyProfile = () => {
   const { data, isLoading, error } = useQuery<MyProfileResponse>({
     queryKey: ['myProfile'],
     queryFn: () => getMyProfile(),
+    refetchOnWindowFocus: true,
+    refetchOnMount: true,
+    enabled: true,
   });
   return { data, isLoading, error };
 };
@@ -33,7 +40,7 @@ export const useGetFollowers = () => {
 
 // 팔로잉 목록 조회
 export const useGetFollowings = () => {
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading, error } = useQuery<FollowingListResponse>({
     queryKey: ['followings'],
     queryFn: () => getFollowings(),
     refetchOnWindowFocus: true,
@@ -43,7 +50,7 @@ export const useGetFollowings = () => {
 
 // 그룹 목록 조회
 export const useGetGroup = () => {
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading, error } = useQuery<GroupListResponse>({
     queryKey: ['group'],
     queryFn: () => getGroup(),
     refetchOnWindowFocus: true,
