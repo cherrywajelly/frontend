@@ -6,6 +6,8 @@ export interface ToastData {
   openDate?: Date | null;
   toastName?: string;
   deco: StaticImageData | string | null;
+  id?: number | null;
+  type?: 'mine' | 'friend' | 'group' | null;
 }
 
 export interface pieceData {
