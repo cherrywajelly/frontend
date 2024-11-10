@@ -24,7 +24,7 @@ export default function UserInfo(props: UserInfoProps) {
           alt="profile"
           width={124}
           height={124}
-          className="rounded-full border border-gray-10"
+          className="rounded-full border border-gray-10 w-[124px] h-[124px] object-cover"
         />
 
         <span className="text-black-main text-body1">{nickname}</span>

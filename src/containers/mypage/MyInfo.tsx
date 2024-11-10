@@ -9,7 +9,6 @@ import { useRouter } from 'next/navigation';
 export default function MyInfo() {
   const router = useRouter();
   const { data, isLoading } = useGetMyProfile();
-  console.log(data);
 
   return (
     <div className="px-6 py-4">
