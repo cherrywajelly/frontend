@@ -48,30 +48,6 @@ export default function ArriveEventToast() {
         ) : (
           <div>텅</div>
         )}
-
-        <ToastBox
-          title="캡디종강"
-          toastImg={tempImg}
-          profileImg={tempImg}
-          nickname="chaemin"
-          openDate="2024-11-11"
-        >
-          <Button size="sm" color="primary">
-            잼 바르기
-          </Button>
-        </ToastBox>
-
-        <ToastBox
-          title="캡디종강"
-          toastImg={tempImg}
-          profileImg={tempImg}
-          nickname="chaemin"
-          openDate="2024-11-11"
-        >
-          <Button size="sm" color="primary">
-            잼 바르기
-          </Button>
-        </ToastBox>
       </div>
     </div>
   );
