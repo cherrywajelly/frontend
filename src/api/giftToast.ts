@@ -120,7 +120,7 @@ export const postGiftToastMine = async () => {
 
 // 선물 토스트 삭제
 export const deleteGiftToast = async (giftToastId: number) => {
-  await apiRequest(`/api/v1/giftToast/${giftToastId}`, 'DELETE')
+  await apiRequest(`/api/v1/giftToasts/${giftToastId}`, 'DELETE')
     .then((res) => {
       if (res.status === 500) {
         throw new Error('Internal Server Error');
