@@ -3,15 +3,18 @@ import { RequestGroupTeam } from '@/types/api/setting';
 import { apiRequest } from '.';
 
 // 그룹 이미지 등록
-export const postGroupTeamImage = async (teamId: number) => {
-  await apiRequest(`/api/v1/teams/${teamId}/image`, 'POST')
+export const postGroupTeamImage = async (teamId: number, teamImage: File) => {
+  const formData = new FormData();
+  formData.append('teamProfileImage', teamImage);
+
+  await apiRequest(`/api/v1/teams/${teamId}/image`, 'POST', formData)
     .then((res) => {
       if (res.status === 500) {
         throw new Error('Internal Server Error');
       }
 
       if (res.status === 200) {
-        return res;
+        return res.json();
       }
     })
     .catch((err) => {
@@ -24,23 +27,26 @@ export const postGroupTeam = async ({
   teamName,
   teamMembers,
 }: RequestGroupTeam) => {
-  await apiRequest(`/api/v1/teams`, 'POST', {
-    teamName,
-    teamMembers,
-  })
-    .then((res) => {
-      if (res.status === 500) {
-        throw new Error('Internal Server Error');
-      }
-
-      if (res.status === 200) {
-        return res;
-      }
-    })
-    .catch((err) => {
-      console.log(err.message);
-      alert(err.message);
+  try {
+    const res = await apiRequest(`/api/v1/teams`, 'POST', {
+      teamName,
+      teamMembers,
     });
+
+    if (res.status === 500) {
+      throw new Error('Internal Server Error');
+    }
+
+    if (res.ok) {
+      const data = await res.json();
+      return data;
+    }
+
+    throw new Error(`Unexpected status code: ${res.status}`);
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
 };
 
 // 프로필 이미지 등록
