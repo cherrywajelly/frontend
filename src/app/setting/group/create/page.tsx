@@ -4,6 +4,7 @@ import { useState } from 'react';
 
 import TopBar from '@/components/common-components/top-bar';
 
+import { FollowingItemResponse } from '@/types/api/mypage';
 import { UserDefaultProps } from '@/types/user';
 
 import AddGroupUser from '@/containers/setting/AddGroupUser';
@@ -14,7 +15,9 @@ import { useRouter } from 'next/navigation';
 export default function SettingGroup() {
   const [step, setStep] = useState<number>(0);
   const router = useRouter();
-  const [selectedUsers, setSelectedUsers] = useState<UserDefaultProps[]>([]); // 선택된 유저 상태 추가
+  const [selectedUsers, setSelectedUsers] = useState<FollowingItemResponse[]>(
+    [],
+  ); // 선택된 유저 상태 추가
 
   const handleBack = () => {
     if (step > 0) {
