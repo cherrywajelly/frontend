@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import BottomBar from '@/components/common-components/bottom-bar';
 import Button from '@/components/common-components/button';
@@ -9,20 +9,55 @@ import TopBar from '@/components/common-components/top-bar';
 
 import UserListItem from '@/components/search/UserListItem';
 
-import { tempUserList } from '@/containers/setting/GenerateGroup';
+import { usePostSearchResult } from '@/hooks/api/useSearch';
+import { SearchItemResponse, SearchResultResponse } from '@/types/api/search';
 
-import { useRouter } from 'next/navigation';
+// import { tempUserList } from '@/containers/setting/GenerateGroup';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 export default function SearchPage() {
   const [isFocused, setIsFocused] = useState<boolean>(false);
   const [searchValue, setSearchValue] = useState<string>('');
+
+  const searchParams = useSearchParams();
+  const { mutate, isPending, error, mutateAsync } = usePostSearchResult();
+
+  const [searchResults, setSearchResults] = useState<SearchItemResponse[]>([]);
+
+  const [pageIndex, setPageIndex] = useState<number>(0);
+  const [pageSize, setPageSize] = useState<number>(10);
 
   const router = useRouter();
 
   const handleCancel = () => {
     setSearchValue('');
     setIsFocused(false);
+    setSearchResults([]);
   };
+
+  const searchKeyword = async (keyword: string) => {
+    setSearchValue(keyword);
+    if (keyword.trim()) {
+      mutate(
+        { page: pageIndex, size: pageSize, searchKeyword: keyword },
+        {
+          onSuccess: (data) => {
+            setSearchResults(data.searchResponses);
+          },
+          onError: (err) => {
+            console.log(err); // 오류 처리
+          },
+        },
+      );
+    }
+  };
+
+  useEffect(() => {
+    if (searchValue) {
+      // console.log(searchResults);
+      searchKeyword(searchValue);
+    }
+  }, [pageIndex, pageSize, searchValue]);
 
   return (
     <div className="w-full h-lvh">
@@ -43,6 +78,12 @@ export default function SearchPage() {
                   setIsFocused(false);
                 }
               }}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  const { value } = e.currentTarget;
+                  searchKeyword(value);
+                }
+              }}
               className={`transition-all duration-300 ${
                 isFocused ? 'w-[calc(100%-20px)]' : 'w-full'
               }`}
@@ -59,14 +100,15 @@ export default function SearchPage() {
 
           <div className="flex-grow my-6 overflow-y-auto hide-scrollbar">
             <div className="flex flex-col gap-4">
-              {tempUserList.map((item, idx) => (
-                <UserListItem
-                  key={idx}
-                  profileImg={item.profileImg}
-                  nickname={item.nickname}
-                  onClick={() => router.push(`/profile/${item.nickname}`)}
-                />
-              ))}
+              {searchResults &&
+                searchResults.map((item) => (
+                  <UserListItem
+                    key={item.memberId}
+                    profileImg={item.profileUrl}
+                    nickname={item.nickname}
+                    onClick={() => router.push(`/profile/${item.memberId}`)}
+                  />
+                ))}
             </div>
           </div>
         </div>
