@@ -1,25 +1,27 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import BottomBar from '@/components/common-components/bottom-bar';
-import Button from '@/components/common-components/button';
 import Input from '@/components/common-components/input';
 import TopBar from '@/components/common-components/top-bar';
 
 import UserListItem from '@/components/search/UserListItem';
 
 import { usePostSearchResult } from '@/hooks/api/useSearch';
-import { SearchItemResponse, SearchResultResponse } from '@/types/api/search';
+import { SearchItemResponse } from '@/types/api/search';
 
-// import { tempUserList } from '@/containers/setting/GenerateGroup';
+import { memberIdState } from '@/atoms/userInfoAtom';
+
 import { useRouter, useSearchParams } from 'next/navigation';
+import { useRecoilValue } from 'recoil';
 
 export default function SearchPage() {
   const [isFocused, setIsFocused] = useState<boolean>(false);
   const [searchValue, setSearchValue] = useState<string>('');
 
-  const searchParams = useSearchParams();
+  const memberId = useRecoilValue(memberIdState);
+
   const { mutate, isPending, error, mutateAsync } = usePostSearchResult();
 
   const [searchResults, setSearchResults] = useState<SearchItemResponse[]>([]);
@@ -106,7 +108,10 @@ export default function SearchPage() {
                     key={item.memberId}
                     profileImg={item.profileUrl}
                     nickname={item.nickname}
-                    onClick={() => router.push(`/profile/${item.memberId}`)}
+                    onClick={() => {
+                      if (item.memberId === memberId) router.push('/mypage');
+                      else router.push(`/profile/${item.memberId}`);
+                    }}
                   />
                 ))}
             </div>
