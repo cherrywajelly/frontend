@@ -158,7 +158,11 @@ export const postToastPieces = async ({
     formData.append('toastPieceImages', item);
   });
 
-  formData.append('toastPieceRequest', JSON.stringify(toastPieceRequest));
+  const requestBlob = new Blob([JSON.stringify(toastPieceRequest)], {
+    type: 'application/json',
+  });
+
+  formData.append('toastPieceRequest', requestBlob);
 
   await apiRequest(`/api/v1/toastPieces`, 'POST', formData)
     .then((res) => {
