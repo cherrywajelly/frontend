@@ -9,6 +9,7 @@ import {
   usePostGiftToastGroup,
   usePostGiftToastMine,
 } from '@/hooks/api/useGiftToast';
+import useFormatDate from '@/hooks/useFormat';
 
 import { giftToastDataState, giftToastStepState } from '@/atoms/toastAtom';
 import ToastDecoForm from '@/containers/write-toast/ToastDecoForm';
@@ -23,7 +24,6 @@ export default function GiftToastPage() {
   const [step, setStep] = useRecoilState(giftToastStepState);
   const resetGiftToastData = useResetRecoilState(giftToastDataState);
   const [giftData, setGiftData] = useRecoilState(giftToastDataState);
-  console.log(giftData);
 
   const router = useRouter();
 
@@ -42,17 +42,61 @@ export default function GiftToastPage() {
   const { mutate: mutateGiftToastFriend } = usePostGiftToastFriend();
   const { mutate: mutateGiftToastMine } = usePostGiftToastMine();
 
+  console.log('giftData', giftData);
+
+  const formatMemoryDate = useFormatDate(giftData.memoryDate as Date);
+  const formatOpenDate = useFormatDate(giftData.openDate as Date);
+
   const handleSubmit = () => {
-    // mutateGiftToastGroup
+    const handleSuccess = () => {
+      // TODO: 임의로 홈으로 리다이렉트, 모달 추가 후 로직 변경
+      router.push('/');
+    };
+
+    if (giftData.type === 'group') {
+      mutateGiftToastGroup(
+        {
+          iconId: 5,
+          groupId: giftData.id as number,
+          memorizedDate: formatMemoryDate,
+          openedDate: formatOpenDate,
+          title: giftData.toastName as string,
+        },
+        {
+          onSuccess: handleSuccess,
+        },
+      );
+    } else if (giftData.type === 'friend') {
+      mutateGiftToastFriend(
+        {
+          iconId: 5,
+          friendId: giftData.id as number,
+          memorizedDate: formatMemoryDate,
+          openedDate: formatOpenDate,
+          title: giftData.toastName as string,
+        },
+        {
+          onSuccess: handleSuccess,
+        },
+      );
+    } else if (giftData.type === 'mine') {
+      mutateGiftToastMine(
+        {
+          iconId: 5,
+          memorizedDate: formatMemoryDate,
+          openedDate: formatOpenDate,
+          title: giftData.toastName as string,
+        },
+        {
+          onSuccess: handleSuccess,
+        },
+      );
+    }
   };
 
   return (
     <div className="w-full h-lvh">
-      <TopBar
-        onBack={handleBack}
-        title="선물 토스트 굽기"
-        isRight={step === 3 ? 'submit' : false}
-      />
+      <TopBar onBack={handleBack} title="선물 토스트 굽기" />
 
       <div className="h-[calc(100vh-48px)] flex flex-col gap-1 bg-gray-05">
         {step === 0 && <GiftToastWithChoiceForm />}

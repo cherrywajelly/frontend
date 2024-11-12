@@ -4,6 +4,9 @@ import { useState } from 'react';
 
 import TopBar from '@/components/common-components/top-bar';
 
+import { usePostEventToast } from '@/hooks/api/useEventToast';
+import useFormatDate from '@/hooks/useFormat';
+
 import { eventToastDataState, eventToastStepState } from '@/atoms/toastAtom';
 import ToastDecoForm from '@/containers/write-toast/ToastDecoForm';
 import EventToastNameForm from '@/containers/write-toast/event-toast/EventToastNameForm';
@@ -15,7 +18,8 @@ import { useRecoilState, useResetRecoilState } from 'recoil';
 export default function EventToastPage() {
   const [step, setStep] = useRecoilState(eventToastStepState);
   const resetEventToastData = useResetRecoilState(eventToastDataState);
-
+  const [eventToastData, setEventToastData] =
+    useRecoilState(eventToastDataState);
   const router = useRouter();
 
   const [isSubmitAble, setIsSubmitAble] = useState<boolean>(false);
@@ -29,13 +33,33 @@ export default function EventToastPage() {
     }
   };
 
+  const { mutate, isPending } = usePostEventToast();
+
+  const formatOpenDate = useFormatDate(eventToastData.openDate as Date);
+
+  const handleSubmit = () => {
+    //
+    const handleSuccess = () => {
+      // TODO: 임의로 홈으로 리다이렉트, 모달 추가 후 로직 변경
+      router.push('/');
+    };
+
+    console.log(eventToastData);
+    mutate(
+      {
+        iconId: 5,
+        openedDate: formatOpenDate,
+        title: eventToastData.toastName as string,
+      },
+      {
+        onSuccess: handleSuccess,
+      },
+    );
+  };
+
   return (
     <div className="w-full h-lvh">
-      <TopBar
-        onBack={handleBack}
-        title="이벤트 토스트 굽기"
-        isRight={step === 2 ? 'submit' : false}
-      />
+      <TopBar onBack={handleBack} title="이벤트 토스트 굽기" />
 
       <div className="h-[calc(100vh-48px)] flex flex-col gap-1 bg-gray-05">
         {step === 0 && <EventToastOpenDateForm />}
@@ -44,6 +68,7 @@ export default function EventToastPage() {
           <ToastDecoForm
             stepState={eventToastStepState}
             dataState={eventToastDataState}
+            handleSubmit={handleSubmit}
           />
         )}
       </div>
