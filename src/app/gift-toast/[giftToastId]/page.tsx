@@ -31,7 +31,7 @@ export default function GiftToastItemPage({ params }: { params: PageParams }) {
         <div className="h-[calc(100vh-144px)] flex flex-col gap-1 bg-gray-05 p-6">
           <ToastBox
             title={data.title}
-            toastImg={data.iconImageUrl}
+            toastImg={data.iconImageUrl ?? ''}
             profileImg={tempImg}
             nickname={data.giftToastOwner}
             openDate={data.openedDate}
@@ -49,7 +49,7 @@ export default function GiftToastItemPage({ params }: { params: PageParams }) {
             </Button>
           </ToastBox>
 
-          <div className="w-full h-full mt-4 flex flex-col gap-4 justify-center items-center border-2">
+          <div className="w-full h-full mt-4 flex flex-col gap-4 justify-center items-center">
             {data.toastPieceResponses.toastPieceResponses.length > 0 ? (
               data.toastPieceResponses.toastPieceResponses.map((item, idx) => {
                 return (
@@ -71,8 +71,7 @@ export default function GiftToastItemPage({ params }: { params: PageParams }) {
                 className="opacity-50 w-[240px] h-[240px]"
               />
             )}
-            {/* TODO: api response에 맞게 넣기 */}
-            <div>D-104</div>
+            <div>D-{data.dDay}</div>
           </div>
         </div>
       )}
