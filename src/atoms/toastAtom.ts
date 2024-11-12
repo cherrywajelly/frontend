@@ -64,5 +64,6 @@ export const toastPieceDataState = atom<pieceData | ToastData>({
     title: '',
     contents: '',
     imgList: [],
+    submitAble: false,
   },
 });
