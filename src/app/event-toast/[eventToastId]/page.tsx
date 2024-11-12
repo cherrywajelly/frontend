@@ -8,7 +8,7 @@ import ToastBox from '@/components/toast/ToastBox';
 
 import { useGetEventToastItem } from '@/hooks/api/useEventToast';
 
-import lockedToast from '../../../public/images/toast/lockedToast.png';
+import lockedToast from '../../../../public/images/toast/lockedToast.png';
 
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
