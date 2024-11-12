@@ -51,14 +51,15 @@ const toastTopic = [
   { title: '설날', imgArr: defaultToastOptions },
 ];
 
-export type TostFormProps = {
+export type ToastFormProps = {
   stepState: RecoilState<number>;
   dataState: RecoilState<pieceData | ToastData>;
   handleSubmit?: () => void;
+  isMainToast?: boolean;
 };
 
-export default function ToastDecoForm(props: TostFormProps) {
-  const { stepState, dataState, handleSubmit } = props;
+export default function ToastDecoForm(props: ToastFormProps) {
+  const { stepState, dataState, handleSubmit, isMainToast = true } = props;
 
   const [buttonTopic, setButtonTopic] = useState<any>(toastTopic[0]);
   const [selectedTopic, setSelectedTopic] = useState<string>(
@@ -75,8 +76,7 @@ export default function ToastDecoForm(props: TostFormProps) {
     if (topic) setButtonTopic(topic);
   };
 
-  // TODO: to get nickname global-state
-  const nickname = '채민';
+  const nickname = localStorage.getItem('nickname');
 
   const toastBoxRef = useRef<HTMLDivElement>(null);
 
@@ -147,7 +147,7 @@ export default function ToastDecoForm(props: TostFormProps) {
           onClick={handleSubmit}
           disabled={toastData.deco == defaultImg}
         >
-          토스트 생성
+          {isMainToast ? '토스트 생성' : '다음'}
         </Button>
       </div>
     </div>

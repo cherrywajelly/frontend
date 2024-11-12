@@ -52,24 +52,22 @@ export default function GiftWritePage() {
     if (toastPieceData.submitAble) {
       //
       const toastPieceRequest = {
-        giftToastId: 5,
+        giftToastId: 7,
         iconId: 5,
         title: toastPieceData.title ?? 'testrequ',
       };
 
-      // console.log('herererere');
-      // console.log('toastPieceContentsFile', toastPieceContentsFile);
-      // console.log('toastPieceData.imgList', toastPieceData.imgList);
-
-      mutate({
-        toastPieceContents: toastPieceContentsFile,
-        toastPieceImages: toastPieceData.imgList ?? [],
-        toastPieceRequest: toastPieceRequest,
-      });
+      mutate(
+        {
+          toastPieceContents: toastPieceContentsFile,
+          toastPieceImages: toastPieceData.imgList ?? [],
+          toastPieceRequest: toastPieceRequest,
+        },
+        {
+          onSuccess: () => router.back(),
+        },
+      );
     }
-
-    console.log(toastPieceData);
-    console.log(toastPieceContentsFile);
   };
 
   useEffect(() => {
