@@ -119,3 +119,63 @@ export const deleteGroup = async (teamId: number) => {
       console.log(err);
     });
 };
+
+// 마이페이지 - 진열장 조회
+export const getMyShowcase = async () => {
+  const res = await apiRequest(`/api/v1/showcases/members`);
+
+  if (!res.ok) {
+    throw new Error(`HTTP error in Google! Status: ${res.status}`);
+  }
+
+  const data = await res.json();
+  return data.showcaseResponses;
+};
+
+//  진열장 목록 조회
+export const getMyShowcaseList = async () => {
+  const res = await apiRequest(`/api/v1/showcases`);
+
+  if (!res.ok) {
+    throw new Error(`HTTP error in Google! Status: ${res.status}`);
+  }
+
+  const data = await res.json();
+  return data.showcaseEditResponses;
+};
+
+// 진열장 등록
+export const postMyShowcaseList = async (showcases: number[]) => {
+  await apiRequest(`/api/v1/showcases`, 'POST', {
+    showcases,
+  })
+    .then((res) => {
+      if (res.status === 500) {
+        throw new Error('Internal Server Error');
+      }
+
+      if (res.status === 200) {
+        return res;
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+// 진열장 삭제
+export const deleteShowcaseItem = async (showcaseId: number) => {
+  await apiRequest(`/api/v1/showcases/${showcaseId}`, 'DELETE')
+    .then((res) => {
+      if (res.status === 500) {
+        throw new Error('Internal Server Error');
+      }
+
+      if (res.status === 200) {
+        return res;
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};

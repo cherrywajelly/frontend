@@ -1,3 +1,9 @@
+import {
+  GiftToastFriendRequestBody,
+  GiftToastGroupRequestBody,
+  GiftToastRequestBody,
+} from '@/types/api/giftToast';
+
 import { apiRequest } from '.';
 
 // 작성해야 할 선물 받은 토스트 목록 조회
@@ -36,18 +42,19 @@ export const getGiftToastItem = async (giftToastId: number) => {
 };
 
 // 선물 토스트 등록 (그룹)
-/* request
-{
-    "iconId":1,
-    "groupId":1,
-    "memorizedDate":"2024-11-03",
-    "openedDate":"2024-11-03",
-    "title":"title"
-}
-*/
-export const postGiftToastGroup = async () => {
+export const postGiftToastGroup = async ({
+  iconId,
+  memorizedDate,
+  openedDate,
+  title,
+  groupId,
+}: GiftToastGroupRequestBody) => {
   await apiRequest(`/api/v1/giftToasts/group`, 'POST', {
-    // TODO: write request body
+    iconId,
+    memorizedDate,
+    openedDate,
+    title,
+    groupId,
   })
     .then((res) => {
       if (res.status === 500) {
@@ -64,18 +71,19 @@ export const postGiftToastGroup = async () => {
 };
 
 // 선물 토스트 등록 (팔로잉)
-/* request
-{
-    "iconId":1,
-    "friendId":1,
-    "memorizedDate":"2024-11-03",
-    "openedDate":"2024-11-03",
-    "title":"title"
-}
-*/
-export const postGiftToastFriend = async () => {
+export const postGiftToastFriend = async ({
+  iconId,
+  memorizedDate,
+  openedDate,
+  title,
+  friendId,
+}: GiftToastFriendRequestBody) => {
   await apiRequest(`/api/v1/giftToasts/friend`, 'POST', {
-    // TODO: write request body
+    iconId,
+    memorizedDate,
+    openedDate,
+    title,
+    friendId,
   })
     .then((res) => {
       if (res.status === 500) {
@@ -92,17 +100,17 @@ export const postGiftToastFriend = async () => {
 };
 
 // 선물 토스트 등록 (자신)
-/* request
-{
-    "iconId":1,
-    "memorizedDate":"2024-11-03",
-    "openedDate":"2024-11-03",
-    "title":"title"
-}
-*/
-export const postGiftToastMine = async () => {
+export const postGiftToastMine = async ({
+  iconId,
+  memorizedDate,
+  openedDate,
+  title,
+}: GiftToastRequestBody) => {
   await apiRequest(`/api/v1/giftToasts/mine`, 'POST', {
-    // TODO: write request body
+    iconId,
+    memorizedDate,
+    openedDate,
+    title,
   })
     .then((res) => {
       if (res.status === 500) {
