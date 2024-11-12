@@ -86,7 +86,7 @@ export default function GiftToastWithChoiceForm() {
       <div className="flex-grow my-6 overflow-y-auto hide-scrollbar">
         <div className="flex flex-col gap-4">
           <UserListItem
-            profileImg={mineData?.profileUrl as string}
+            profileImg={mineData?.profileUrl ?? ''}
             nickname={mineData?.nickname as string}
             onClick={() => toggleUserSelection(null, 'mine')}
           >

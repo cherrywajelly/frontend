@@ -20,6 +20,8 @@ export default function ArriveGiftToast() {
     router.push(`/gift-toast/${id}`);
   };
 
+  localStorage.setItem('nickname', myInfoData?.nickname ?? '');
+
   return (
     <div>
       <span className="text-gray-80 text-subtitle1">

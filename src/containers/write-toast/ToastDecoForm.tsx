@@ -86,10 +86,6 @@ export default function ToastDecoForm(props: TostFormProps) {
     }
   };
 
-  // const handleSubmit = () => {
-  //   // setStep((prev) => prev + 1);
-  // };
-
   return (
     <div className="w-full h-full pt-6 flex flex-col justify-between">
       <div className="px-6">
@@ -107,10 +103,10 @@ export default function ToastDecoForm(props: TostFormProps) {
       <div className="bg-white w-full h-full pt-6 pb-12 max-h-[405px] flex flex-col justify-between px-6 border-t-2 border-gray-10 rounded-t-[20px]">
         <div>
           <div className="w-full flex justify-between gap-3">
-            {toastTopic.map((item) => {
+            {toastTopic.map((item, idx) => {
               return (
                 <Button
-                  key={item.title}
+                  key={idx}
                   size="sm"
                   onClick={() => handleButtonClick(item.title)}
                   color={selectedTopic === item.title ? 'primary' : 'disabled'}

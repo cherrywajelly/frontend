@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+
 import Button from '@/components/common-components/button';
 
 import UserInfo from '@/components/mypage/UserInfo';
@@ -8,7 +10,11 @@ import { useRouter } from 'next/navigation';
 
 export default function MyInfo() {
   const router = useRouter();
-  const { data, isLoading } = useGetMyProfile();
+  const { data, isLoading, refetch } = useGetMyProfile();
+
+  useEffect(() => {
+    refetch();
+  }, [data]);
 
   return (
     <div className="px-6 py-4">
