@@ -28,8 +28,6 @@ export const useMyInfo = () => {
     queryKey: ['myInfo'],
     queryFn: () => getMyInfo(),
     enabled: true,
-    // refetchOnWindowFocus: true,
-    // refetchOnMount: true,
   });
 
   return { data, error, isLoading, refetch };

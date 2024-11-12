@@ -7,6 +7,8 @@ import {
 } from '@/api/setting';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
+import { useRouter } from 'next/navigation';
+
 // 그룹 등록
 export const useGroupTeam = ({ teamName, teamMembers }: RequestGroupTeam) => {
   const { mutate, isPending, error, data, mutateAsync } = useMutation({
@@ -45,11 +47,13 @@ export const usePostProfileImage = () => {
 // 그룹 이미지 등록
 export const usePostGroupImage = () => {
   const queryClient = useQueryClient();
+  const router = useRouter();
 
   const { mutate, isPending, error } = useMutation({
     mutationFn: ({ teamId, teamImage }: { teamId: number; teamImage: File }) =>
       postGroupTeamImage(teamId, teamImage),
     onSuccess: () => {
+      router.push('/setting/group');
       // queryClient.invalidateQueries({ queryKey: [''] });
     },
     onError: (error) => {

@@ -1,6 +1,9 @@
 import {
   GiftToastDefaultResponse,
+  GiftToastFriendRequestBody,
+  GiftToastGroupRequestBody,
   GiftToastItemResponse,
+  GiftToastRequestBody,
   GiftToastResponses,
 } from '@/types/api/giftToast';
 
@@ -45,7 +48,7 @@ export const useGetGiftToastItem = (giftToastId: number) => {
 // 선물 토스트 등록 (그룹)
 export const usePostGiftToastGroup = () => {
   const { mutate, isPending, error } = useMutation({
-    mutationFn: () => postGiftToastGroup(),
+    mutationFn: (item: GiftToastGroupRequestBody) => postGiftToastGroup(item),
     onSuccess: () => {},
     onError: (error) => {
       console.log(error);
@@ -57,7 +60,7 @@ export const usePostGiftToastGroup = () => {
 // 선물 토스트 등록 (팔로잉)
 export const usePostGiftToastFriend = () => {
   const { mutate, isPending, error } = useMutation({
-    mutationFn: () => postGiftToastFriend(),
+    mutationFn: (item: GiftToastFriendRequestBody) => postGiftToastFriend(item),
     onSuccess: () => {},
     onError: (error) => {
       console.log(error);
@@ -69,7 +72,7 @@ export const usePostGiftToastFriend = () => {
 // 선물 토스트 등록 (자신)
 export const usePostGiftToastMine = () => {
   const { mutate, isPending, error } = useMutation({
-    mutationFn: () => postGiftToastMine(),
+    mutationFn: (item: GiftToastRequestBody) => postGiftToastMine(item),
     onSuccess: () => {},
     onError: (error) => {
       console.log(error);
