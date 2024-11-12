@@ -3,6 +3,7 @@ import {
   GiftToastFriendRequestBody,
   GiftToastGroupRequestBody,
   GiftToastItemResponse,
+  GiftToastPiecePostRequestBody,
   GiftToastRequestBody,
   GiftToastResponses,
 } from '@/types/api/giftToast';
@@ -15,6 +16,7 @@ import {
   postGiftToastFriend,
   postGiftToastGroup,
   postGiftToastMine,
+  postToastPieces,
 } from '@/api/giftToast';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
@@ -94,5 +96,18 @@ export const useDeleteGiftToast = () => {
       console.log(error);
     },
   });
+  return { mutate, isPending, error };
+};
+
+// 토스트 조각 등록
+export const usePostToastPieces = () => {
+  const { mutate, isPending, error } = useMutation({
+    mutationFn: (item: GiftToastPiecePostRequestBody) => postToastPieces(item),
+    onSuccess: () => {},
+    onError: (error) => {
+      console.error(error);
+    },
+  });
+
   return { mutate, isPending, error };
 };

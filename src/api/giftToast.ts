@@ -1,6 +1,7 @@
 import {
   GiftToastFriendRequestBody,
   GiftToastGroupRequestBody,
+  GiftToastPiecePostRequestBody,
   GiftToastRequestBody,
 } from '@/types/api/giftToast';
 
@@ -129,6 +130,37 @@ export const postGiftToastMine = async ({
 // 선물 토스트 삭제
 export const deleteGiftToast = async (giftToastId: number) => {
   await apiRequest(`/api/v1/giftToasts/${giftToastId}`, 'DELETE')
+    .then((res) => {
+      if (res.status === 500) {
+        throw new Error('Internal Server Error');
+      }
+
+      if (res.status === 200) {
+        return res;
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+// 토스트 조각 등록
+export const postToastPieces = async ({
+  toastPieceContents,
+  toastPieceImages,
+  toastPieceRequest,
+}: GiftToastPiecePostRequestBody) => {
+  const formData = new FormData();
+
+  formData.append('toastPieceContents', toastPieceContents);
+
+  toastPieceImages.forEach((item) => {
+    formData.append('toastPieceImages', item);
+  });
+
+  formData.append('toastPieceRequest', JSON.stringify(toastPieceRequest));
+
+  await apiRequest(`/api/v1/toastPieces`, 'POST', formData)
     .then((res) => {
       if (res.status === 500) {
         throw new Error('Internal Server Error');
