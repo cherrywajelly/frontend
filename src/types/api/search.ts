@@ -1,3 +1,5 @@
+import { MyProfileResponse } from './mypage';
+
 export interface SearchRequestBody {
   page: number;
   size: number;
@@ -14,4 +16,8 @@ export interface SearchResultResponse {
   nextPage: number;
   size: number;
   searchResponses: SearchItemResponse[];
+}
+
+export interface UserProfileResponse extends MyProfileResponse {
+  isFollow: boolean;
 }

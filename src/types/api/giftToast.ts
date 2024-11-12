@@ -33,5 +33,22 @@ export interface GiftToastResponses extends GiftToastItemResponse {
   memorizedDate: string;
   openedDate: string;
   createdDate: string;
+  dDay: number;
   toastPieceResponses: ToastPieceResponses;
+}
+
+// 선물 토스트 등록 (그룹)
+export interface GiftToastRequestBody {
+  iconId: number;
+  memorizedDate: string;
+  openedDate: string;
+  title: string;
+}
+
+export interface GiftToastGroupRequestBody extends GiftToastRequestBody {
+  groupId: number;
+}
+
+export interface GiftToastFriendRequestBody extends GiftToastRequestBody {
+  friendId: number;
 }

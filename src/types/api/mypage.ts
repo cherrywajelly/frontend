@@ -26,3 +26,16 @@ export interface GroupItemResponse {
 export interface GroupListResponse {
   teamResponses: GroupItemResponse[];
 }
+
+// 마이페이지 - 진열장 조회 타입
+export interface MyShowcaseResponse {
+  eventToastId: number;
+  iconUrl: string;
+}
+
+export interface MyShowcaseListResponse extends MyShowcaseResponse {
+  title: string;
+  openedDate: string;
+  isShowcase: boolean;
+  showCaseId: number;
+}

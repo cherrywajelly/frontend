@@ -1,3 +1,5 @@
+import { MyShowcaseResponse } from './api/mypage';
+
 import { StaticImageData } from 'next/image';
 
 export type UserInfoProps = {
@@ -12,7 +14,8 @@ export type UserInfoProps = {
 // showcase props
 export type ShowcaseProps = {
   isMine: boolean;
-  nickname?: string;
+  nickname: string;
+  data: MyShowcaseResponse[];
 };
 
 export type MyEventToastItemProps = {
