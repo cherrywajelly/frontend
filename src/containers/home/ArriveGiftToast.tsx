@@ -5,12 +5,16 @@ import CustomSkeleton from '@/components/common-components/skeleton';
 import { useGetToastIncompleted } from '@/hooks/api/useGiftToast';
 import { useMyInfo } from '@/hooks/api/useLogin';
 
+import { memberIdState } from '@/atoms/userInfoAtom';
+
 import clsx from 'clsx';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { useRecoilState } from 'recoil';
 
 export default function ArriveGiftToast() {
   const router = useRouter();
+  const [memberId, setMemberId] = useRecoilState(memberIdState);
 
   const { data: myInfoData, isLoading: isLoadingNickname } = useMyInfo();
   const { data: incompletedToastData, isLoading: isLoadingToastData } =
@@ -21,6 +25,10 @@ export default function ArriveGiftToast() {
   };
 
   localStorage.setItem('nickname', myInfoData?.nickname ?? '');
+
+  if (myInfoData) {
+    setMemberId(myInfoData.memberId);
+  }
 
   return (
     <div>
