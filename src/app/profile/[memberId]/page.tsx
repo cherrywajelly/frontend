@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 
 import Button from '@/components/common-components/button';
 import TopBar from '@/components/common-components/top-bar';
@@ -10,6 +10,10 @@ import UserInfo from '@/components/mypage/UserInfo';
 import ToastBox, { ToastBoxProps } from '@/components/toast/ToastBox';
 
 import { useGetUserEventToastList } from '@/hooks/api/useEventToast';
+import {
+  useDeleteFollowingUser,
+  usePostFollowingUser,
+} from '@/hooks/api/useMyPage';
 import { useGetUserProfile, useGetUserShowcase } from '@/hooks/api/useSearch';
 import { EventToastItemResponse } from '@/types/api/eventToast';
 import { MyShowcaseResponse } from '@/types/api/mypage';
@@ -63,7 +67,7 @@ export default function UserProfilePage({ params }: { params: PageProps }) {
             iconUrl: item.iconUrl,
           }) as MyShowcaseResponse,
       ) ?? [],
-    [data],
+    [showcaseData],
   );
 
   const { data: userEventToastData } = useGetUserEventToastList(memberId);
@@ -85,7 +89,38 @@ export default function UserProfilePage({ params }: { params: PageProps }) {
     [data],
   );
 
-  console.log(userEventToastDataList);
+  const [isFollow, setIsFollow] = useState(data?.isFollow ?? false);
+
+  // 등록 및 취소(삭제)
+  const { mutate: postFollowMutate, isPending: isPendingPostFollowingUser } =
+    usePostFollowingUser();
+
+  const {
+    mutate: deleteFollowingMutate,
+    isPending: isPendingDeleteFollowingUser,
+  } = useDeleteFollowingUser();
+
+  const handleFollowClick = () => {
+    if (isFollow) {
+      deleteFollowingMutate(memberId, {
+        onSuccess: () => {
+          setIsFollow(false);
+        },
+        onError: (error) => {
+          console.error('언팔로우 실패:', error);
+        },
+      });
+    } else {
+      postFollowMutate(memberId, {
+        onSuccess: () => {
+          setIsFollow(true);
+        },
+        onError: (error) => {
+          console.error('팔로우 실패:', error);
+        },
+      });
+    }
+  };
 
   return (
     <div className="w-full h-lvh">
@@ -101,14 +136,13 @@ export default function UserProfilePage({ params }: { params: PageProps }) {
             group={data?.teamCount ?? 0}
           >
             <div className="w-full flex justify-between gap-[10px]">
-              {data?.isFollow ? (
+              {isFollow ? (
                 <Button
                   size="sm"
                   className="w-full h-[36px]"
                   color="disabled"
-                  onClick={() => {
-                    //
-                  }}
+                  onClick={handleFollowClick}
+                  disabled={isPendingDeleteFollowingUser}
                 >
                   팔로잉
                 </Button>
@@ -117,9 +151,8 @@ export default function UserProfilePage({ params }: { params: PageProps }) {
                   size="sm"
                   className="w-full h-[36px]"
                   color="primary"
-                  onClick={() => {
-                    //
-                  }}
+                  onClick={handleFollowClick}
+                  disabled={isPendingPostFollowingUser}
                 >
                   팔로우
                 </Button>
