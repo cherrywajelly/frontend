@@ -80,8 +80,8 @@ export default function FollowTab() {
   } = useDeleteFollowerUser();
 
   return (
-    <>
-      <div className="mt-6 w-full flex border-b border-gray-10">
+    <div className="flex flex-col h-full w-full">
+      <div className="mt-6 w-full flex border-b border-gray-10 flex-none">
         {tabList.map((item) => {
           return (
             <div
@@ -97,112 +97,114 @@ export default function FollowTab() {
           );
         })}
       </div>
+      <div className="flex flex-col flex-grow overflow-y-auto hide-scrollbar">
+        <div className="px-6 w-full mt-6 flex items-center">
+          <Input
+            placeholder="검색어를 입력하세요."
+            size="sm"
+            search
+            value={searchValue}
+            onChange={(e) => setSearchValue(e.target.value)}
+            onFocus={() => setIsFocused(true)}
+            onBlur={() => {
+              if (!searchValue) {
+                setIsFocused(false);
+              }
+            }}
+            className={`transition-all duration-300 ${
+              isFocused ? 'w-[calc(100%-30px)]' : 'w-full'
+            }`}
+          />
+          {isFocused && (
+            <span
+              onClick={handleCancel}
+              className="whitespace-nowrap text-body1 text-gray-40 transition-opacity duration-300 opacity-100"
+            >
+              취소
+            </span>
+          )}
+        </div>
 
-      <div className="px-6 w-full mt-6 flex items-center flex-none">
-        <Input
-          placeholder="검색어를 입력하세요."
-          size="sm"
-          search
-          value={searchValue}
-          onChange={(e) => setSearchValue(e.target.value)}
-          onFocus={() => setIsFocused(true)}
-          onBlur={() => {
-            if (!searchValue) {
-              setIsFocused(false);
-            }
-          }}
-          className={`transition-all duration-300 ${
-            isFocused ? 'w-[calc(100%-30px)]' : 'w-full'
-          }`}
-        />
-        {isFocused && (
-          <span
-            onClick={handleCancel}
-            className="whitespace-nowrap text-body1 text-gray-40 transition-opacity duration-300 opacity-100"
-          >
-            취소
-          </span>
-        )}
-      </div>
+        <div className="px-6 w-full h-full my-6">
+          {/* <div className="px-6 w-full h-full flex-grow my-6 overflow-y-auto hide-scrollbar"> */}
+          <div className="flex flex-col gap-4">
+            {activeTab === 0 &&
+              followersData?.followResponses?.map((item: any) => {
+                const isFollowing = followingSet.has(item.nickname);
 
-      <div className="px-6 w-full h-full flex-grow my-6 overflow-y-auto hide-scrollbar">
-        <div className="flex flex-col gap-4">
-          {activeTab === 0 &&
-            followersData?.followResponses?.map((item: any) => {
-              const isFollowing = followingSet.has(item.nickname);
+                return (
+                  <UserListItem
+                    key={item.nickname}
+                    profileImg={item.memberProfileUrl || temp}
+                    nickname={item.nickname}
+                    onClick={() => router.push(`/profile/${item.nickname}`)}
+                  >
+                    {isFollowing ? (
+                      <Button
+                        size="sm"
+                        color="active"
+                        className="w-[80px]"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          deleteFollowerMutate(item.memberId);
+                        }}
+                      >
+                        삭제
+                      </Button>
+                    ) : (
+                      <Button
+                        size="sm"
+                        color="primary"
+                        className="w-[80px]"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          postFollowMutate(item.memberId);
+                        }}
+                      >
+                        팔로우
+                      </Button>
+                    )}
+                  </UserListItem>
+                );
+              })}
 
-              return (
-                <UserListItem
-                  key={item.nickname}
-                  profileImg={item.memberProfileUrl || temp}
-                  nickname={item.nickname}
-                  onClick={() => router.push(`/profile/${item.nickname}`)}
-                >
-                  {isFollowing ? (
+            {activeTab === 1 &&
+              followingData?.followResponses?.map((item: any) => {
+                return (
+                  <UserListItem
+                    key={item.nickname}
+                    profileImg={item.memberProfileUrl || temp}
+                    nickname={item.nickname}
+                    onClick={() => router.push(`/profile/${item.nickname}`)}
+                  >
                     <Button
                       size="sm"
                       color="active"
                       className="w-[80px]"
                       onClick={(e) => {
                         e.stopPropagation();
-                        deleteFollowerMutate(item.memberId);
+                        deleteFollowingMutate(item.memberId);
                       }}
                     >
                       삭제
                     </Button>
-                  ) : (
-                    <Button
-                      size="sm"
-                      color="primary"
-                      className="w-[80px]"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        postFollowMutate(item.memberId);
-                      }}
-                    >
-                      팔로우
-                    </Button>
-                  )}
-                </UserListItem>
-              );
-            })}
+                  </UserListItem>
+                );
+              })}
 
-          {activeTab === 1 &&
-            followingData?.followResponses?.map((item: any) => {
-              return (
-                <UserListItem
-                  key={item.nickname}
-                  profileImg={item.memberProfileUrl || temp}
-                  nickname={item.nickname}
-                  onClick={() => router.push(`/profile/${item.nickname}`)}
-                >
-                  <Button
-                    size="sm"
-                    color="active"
-                    className="w-[80px]"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      deleteFollowingMutate(item.memberId);
-                    }}
-                  >
-                    삭제
-                  </Button>
-                </UserListItem>
-              );
-            })}
-
-          {activeTab === 2 &&
-            groupData?.teamResponses?.map((item: any) => {
-              return (
-                <UserListItem
-                  key={item.teamName}
-                  profileImg={item.teamProfileUrl || temp}
-                  nickname={item.teamName}
-                />
-              );
-            })}
+            {activeTab === 2 &&
+              groupData?.teamResponses?.map((item: any) => {
+                return (
+                  <UserListItem
+                    key={item.teamName}
+                    profileImg={item.teamProfileUrl || temp}
+                    nickname={item.teamName}
+                  />
+                );
+              })}
+          </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }

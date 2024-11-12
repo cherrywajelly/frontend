@@ -34,7 +34,7 @@ export default function MyPage() {
     <div className="w-full h-lvh">
       <TopBar title="마이페이지" isRight="setting" />
 
-      <div className="h-[calc(100vh-48px)] flex flex-col bg-gray-05">
+      <div className="h-[calc(100vh-48px)] flex flex-grow flex-col bg-gray-05 overflow-y-auto">
         <MyInfo />
         <Showcase
           isMine={true}
@@ -44,7 +44,6 @@ export default function MyPage() {
         <MyFeed />
       </div>
 
-      <div className="pt-[96px]" />
       <BottomBar />
     </div>
   );
