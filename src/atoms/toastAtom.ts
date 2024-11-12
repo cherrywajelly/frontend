@@ -51,3 +51,18 @@ export const jamDataState = atom<pieceData | ToastData>({
     imgList: [],
   },
 });
+
+export const toastPieceStepState = atom<number>({
+  key: `toastPieceStepState`,
+  default: 0,
+});
+
+export const toastPieceDataState = atom<pieceData | ToastData>({
+  key: 'toastPieceDataState',
+  default: {
+    deco: defaultImg,
+    title: '',
+    contents: '',
+    imgList: [],
+  },
+});
