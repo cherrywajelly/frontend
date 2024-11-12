@@ -16,6 +16,8 @@ export default function UserInfo(props: UserInfoProps) {
   const { nickname, profileImg, follower, following, group, children } = props;
   const router = useRouter();
 
+  const localStorageNickname = localStorage.getItem('nickname');
+
   return (
     <>
       <div className="flex flex-col items-center gap-3">
@@ -32,7 +34,10 @@ export default function UserInfo(props: UserInfoProps) {
         <div className="flex gap-6 items-center">
           <span
             className={variants.container}
-            onClick={() => router.push('/mypage/follow?tab=follower')}
+            onClick={() => {
+              if (localStorageNickname === nickname)
+                router.push('/mypage/follow?tab=follower');
+            }}
           >
             <span className={variants.count}>{follower ?? 0}</span>
             <span className={variants.text}>팔로워</span>
@@ -42,7 +47,10 @@ export default function UserInfo(props: UserInfoProps) {
 
           <span
             className={variants.container}
-            onClick={() => router.push('/mypage/follow?tab=following')}
+            onClick={() => {
+              if (localStorageNickname === nickname)
+                router.push('/mypage/follow?tab=following');
+            }}
           >
             <span className={variants.count}>{following ?? 0}</span>
             <span className={variants.text}>팔로잉</span>
@@ -52,7 +60,10 @@ export default function UserInfo(props: UserInfoProps) {
 
           <span
             className={variants.container}
-            onClick={() => router.push('/mypage/follow?tab=group')}
+            onClick={() => {
+              if (localStorageNickname === nickname)
+                router.push('/mypage/follow?tab=group');
+            }}
           >
             <span className={variants.count}>{group ?? 0}</span>
             <span className={variants.text}>그룹</span>
