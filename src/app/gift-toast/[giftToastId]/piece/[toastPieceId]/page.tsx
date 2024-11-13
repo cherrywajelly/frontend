@@ -13,6 +13,10 @@ type PageParams = {
 };
 
 export default function GiftToastPiecePage({ params }: { params: PageParams }) {
+  // TODO: 선물토스트 기본 정보 조회
+
+  // TODO: 토스트조각 단일 조회
+
   return (
     <div className="w-full h-lvh">
       <TopBar title="선물토스트 이름" />
