@@ -19,8 +19,8 @@ export default function GiftToastNameForm() {
     setgiftData((prev) => ({ ...prev, toastName: e.target.value }));
   };
 
-  // TODO: to get global-state nickname by using recoil
-  const nickname = '채민';
+  const nickname =
+    typeof window !== 'undefined' && localStorage.getItem('nickname');
 
   const handleSubmit = () => {
     setStep((prev) => prev + 1);

@@ -56,8 +56,8 @@ export default function GiftToastPage() {
     if (giftData.type === 'group') {
       mutateGiftToastGroup(
         {
-          iconId: 5,
-          groupId: giftData.id as number,
+          iconId: giftData.iconId as number,
+          teamId: giftData.id as number,
           memorizedDate: formatMemoryDate,
           openedDate: formatOpenDate,
           title: giftData.toastName as string,
@@ -69,7 +69,7 @@ export default function GiftToastPage() {
     } else if (giftData.type === 'friend') {
       mutateGiftToastFriend(
         {
-          iconId: 5,
+          iconId: giftData.iconId as number,
           friendId: giftData.id as number,
           memorizedDate: formatMemoryDate,
           openedDate: formatOpenDate,
@@ -82,7 +82,7 @@ export default function GiftToastPage() {
     } else if (giftData.type === 'mine') {
       mutateGiftToastMine(
         {
-          iconId: 5,
+          iconId: giftData.iconId as number,
           memorizedDate: formatMemoryDate,
           openedDate: formatOpenDate,
           title: giftData.toastName as string,

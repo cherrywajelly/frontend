@@ -25,56 +25,70 @@ export default function JamPage({ params }: { params: PageParams }) {
     router.back();
   };
 
-  console.log(data);
+  const localStorageNickname =
+    typeof window !== 'undefined' && localStorage.getItem('nickname');
+
+  const isMine = localStorageNickname === data?.nickname;
 
   return (
     <div className="w-full h-lvh">
-      <TopBar onBack={handleBack} title="잼 바르기" />
+      <TopBar onBack={handleBack} title={data?.title} />
 
-      <div className="h-[calc(100vh-144px)] flex flex-col gap-1 bg-gray-05">
+      <div className="h-[calc(100vh-144px)] flex flex-grow flex-col bg-gray-05 p-6 overflow-y-auto">
         {data && (
           <>
             <ToastBox
-              title="sss"
+              title={data.title}
               toastImg={data.iconImageUrl}
               profileImg={data?.memberProfileUrl}
               nickname={data.nickname}
               openDate={data.openedDate}
             >
-              <Button size="sm" color="primary">
-                잼 바르기
-              </Button>
-
-              <Button
-                size="sm"
-                color={data.isOpened ? 'disabled' : 'primary'}
-                disabled={data.isOpened}
-                onClick={() => {
-                  if (!data.isOpened)
-                    router.push(`/event-toast/${data.eventToastId}/write`);
-                }}
-              >
-                {data.isOpened ? '토스트가 오픈되었어요' : '잼 바르기'}
-              </Button>
+              {data.isOpened ? (
+                <Button
+                  size="sm"
+                  color={data.isOpened ? 'disabled' : 'primary'}
+                  disabled={data.isOpened}
+                  onClick={() => {
+                    if (!data.isOpened)
+                      router.push(`/event-toast/${data.eventToastId}/write`);
+                  }}
+                >
+                  토스트가 오픈되었어요
+                </Button>
+              ) : isMine ? (
+                <></>
+              ) : (
+                <Button
+                  size="sm"
+                  color={data.isOpened ? 'disabled' : 'primary'}
+                  disabled={data.isOpened}
+                  onClick={() => {
+                    if (!data.isOpened)
+                      router.push(`/event-toast/${data.eventToastId}/write`);
+                  }}
+                >
+                  잼 바르기
+                </Button>
+              )}
             </ToastBox>
 
-            <div className="w-full h-full mt-4 flex flex-col justify-center items-center border-2">
-              <span className="text-black-main text-subtitle3">
-                현재 {data.jamCount}명의 친구들이 잼을 발라줬어요.
-              </span>
+            <span className="mt-6 text-black-main text-subtitle3">
+              현재 {data.jamCount}명의 친구들이 잼을 발라줬어요.
+            </span>
+
+            <div className="w-full h-full mt-4 flex flex-col justify-center items-center">
               <Image
                 src={lockedToast}
                 alt=""
                 className="opacity-50 w-[240px] h-[240px]"
               />
-              {/* TODO: api response에 맞게 넣기 */}
               <div>D-{data.dDay}</div>
             </div>
           </>
         )}
       </div>
 
-      <div className="pt-[96px]" />
       <BottomBar />
     </div>
   );

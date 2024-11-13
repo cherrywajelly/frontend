@@ -73,6 +73,7 @@ export const usePostFollowingUser = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['followers'] });
       queryClient.invalidateQueries({ queryKey: ['followings'] });
+      queryClient.invalidateQueries({ queryKey: ['userEventToastList'] });
     },
     onError: (error) => {
       console.log(error);

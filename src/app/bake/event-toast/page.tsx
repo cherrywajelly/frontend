@@ -44,10 +44,10 @@ export default function EventToastPage() {
       router.push('/');
     };
 
-    console.log(eventToastData);
+    console.log('eventToastData', eventToastData);
     mutate(
       {
-        iconId: 5,
+        iconId: eventToastData.iconId as number,
         openedDate: formatOpenDate,
         title: eventToastData.toastName as string,
       },

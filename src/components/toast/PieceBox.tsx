@@ -20,7 +20,6 @@ export type PieceBoxProps = {
 
 export default function PieceBox(props: PieceBoxProps) {
   const { handleDelete, isList = false, onClick, data } = props;
-  console.log(data.contentsUrl);
 
   const [fileContent, setFileContent] = useState<string>('');
 

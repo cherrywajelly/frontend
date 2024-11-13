@@ -1,8 +1,7 @@
 'use client';
 
-import { useEffect } from 'react';
-
 import BottomBar from '@/components/common-components/bottom-bar';
+import Button from '@/components/common-components/button';
 import TopBar from '@/components/common-components/top-bar';
 
 import ArriveEventToast from '@/containers/home/ArriveEventToast';
@@ -11,22 +10,17 @@ import ArriveGiftToast from '@/containers/home/ArriveGiftToast';
 import { useRouter } from 'next/navigation';
 
 export default function Home() {
-  const router = useRouter();
-
   const accessToken =
     typeof window !== 'undefined' && sessionStorage.getItem('accessToken');
+  const router = useRouter();
 
-  const handleLogout = () => {
-    sessionStorage.clear();
-    localStorage.clear();
-    window.location.href = '/';
-  };
-
-  const handleLogin = () => {
-    router.push('/login');
-  };
-
-  useEffect(() => {}, []);
+  if (!accessToken) {
+    return (
+      <div className="w-full h-screen flex items-center justify-center">
+        <Button onClick={() => router.push('/login')}>로그인하러가기</Button>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full h-screen">
@@ -36,17 +30,7 @@ export default function Home() {
         <ArriveGiftToast />
         <ArriveEventToast />
       </div>
-      {accessToken ? (
-        <button className="border rounded p-2" onClick={handleLogout}>
-          로그아웃
-        </button>
-      ) : (
-        <button className="border rounded p-2" onClick={handleLogin}>
-          로그인
-        </button>
-      )}
-      {/* TODO: 빼기 */}
-      <div className="pt-[100px]" />
+
       <BottomBar />
     </div>
   );
