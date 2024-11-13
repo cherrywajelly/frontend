@@ -13,11 +13,11 @@ import { useGetMyProfile } from '@/hooks/api/useMyPage';
 import { usePostProfileImage } from '@/hooks/api/useSetting';
 import { useNicknameSignUp, useNicknameValid } from '@/hooks/api/useSignUp';
 
-import { getNicknameValid } from '@/api/signup';
 import { useQueryClient } from '@tanstack/react-query';
 
 import temp from '../../../../public/images/default-toast.png';
 
+import clsx from 'clsx';
 import Image, { StaticImageData } from 'next/image';
 import { useRouter } from 'next/navigation';
 
@@ -29,7 +29,6 @@ const SettingProfilePage = () => {
 
   const { data, isLoading, refetch: refetchMyInfo } = useMyInfo();
   const { refetch: refetchMyProfile } = useGetMyProfile();
-  console.log('hihi', data);
   const prevNickname = data && data.nickname;
   const prevProfileImg = data && data.profileUrl;
 
@@ -60,7 +59,7 @@ const SettingProfilePage = () => {
   // nickname valid
   const [isValid, setIsValid] = useState<boolean>(false);
   const [validMessage, setValidMessage] = useState<string>(
-    '닉네임은 1자 이상 10자 이하의 영/문/숫자 조합으로? 입력해주세요.',
+    '닉네임은 1자 이상 10자 이하의 영/문/숫자 조합으로 입력해주세요.',
   );
 
   const handleFileUploadClick = () => {
@@ -96,7 +95,7 @@ const SettingProfilePage = () => {
   const { mutate: mutateProfileImage, isPending: isPendingProfileImage } =
     usePostProfileImage();
 
-  const handleValidNickname = () => {
+  const handleValidNickname = async () => {
     // nicknameRegx: 1자 이상 10자 이하의 한글, 영문, 숫자 조합만 허용
     const nicknameRegex = /^[a-zA-Z0-9가-힣]{1,10}$/;
     const isNicknameValid = nicknameRegex.test(nickname);
@@ -110,8 +109,18 @@ const SettingProfilePage = () => {
       return;
     }
 
-    if (nicknameValidData) {
-      refetch();
+    try {
+      const data = await refetch();
+      console.log(data);
+      if (data.status === 'success') {
+        setIsValid(true);
+        setValidMessage('사용 가능한 닉네임입니다.');
+      } else {
+        setIsValid(false);
+        setValidMessage(data.error?.message ?? '');
+      }
+    } catch (error) {
+      console.error('중복 확인 실패:', error);
     }
   };
 
@@ -120,7 +129,7 @@ const SettingProfilePage = () => {
       mutateNicknameSignUp(undefined, {
         onSuccess: () => {
           console.log('닉네임 변경 성공');
-          // alert('프로필 정보가 수정되었습니다.');
+          alert('프로필 정보가 수정되었습니다.');
           setIsValid(false);
           console.log(isValid);
           localStorage.setItem('nickname', nickname ?? '');
@@ -205,6 +214,14 @@ const SettingProfilePage = () => {
                   중복확인
                 </Button>
               </div>
+              <span
+                className={clsx(
+                  'px-2 text-body5',
+                  isValid ? 'text-success-main' : 'text-error-main',
+                )}
+              >
+                {validMessage}
+              </span>
             </div>
           </div>
 
