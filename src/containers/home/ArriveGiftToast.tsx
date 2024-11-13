@@ -31,7 +31,7 @@ export default function ArriveGiftToast() {
       if (typeof window !== 'undefined')
         localStorage.setItem('nickname', myInfoData?.nickname ?? '');
     }
-  }, []);
+  }, [myInfoData]);
 
   return (
     <div>
