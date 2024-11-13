@@ -12,6 +12,7 @@ export interface ToastData {
   title?: string;
   contents?: string;
   imgList?: File[];
+  iconId: number | null;
 }
 
 export interface pieceData {
@@ -19,5 +20,6 @@ export interface pieceData {
   title: string;
   contents: string;
   imgList?: File[];
+  iconId: number | null;
   submitAble?: boolean;
 }

@@ -48,14 +48,14 @@ export const postGiftToastGroup = async ({
   memorizedDate,
   openedDate,
   title,
-  groupId,
+  teamId,
 }: GiftToastGroupRequestBody) => {
   await apiRequest(`/api/v1/giftToasts/group`, 'POST', {
     iconId,
     memorizedDate,
     openedDate,
     title,
-    groupId,
+    teamId,
   })
     .then((res) => {
       if (res.status === 500) {
@@ -165,6 +165,35 @@ export const postToastPieces = async ({
   formData.append('toastPieceRequest', requestBlob);
 
   await apiRequest(`/api/v1/toastPieces`, 'POST', formData)
+    .then((res) => {
+      if (res.status === 500) {
+        throw new Error('Internal Server Error');
+      }
+
+      if (res.status === 200) {
+        return res;
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+// 토스트 조각 단일 조회
+export const getToastPieceItem = async (toastPieceId: number) => {
+  const res = await apiRequest(`/api/v1/toastPieces/${toastPieceId}`);
+
+  if (!res.ok) {
+    throw new Error(`HTTP error in Google! Status: ${res.status}`);
+  }
+
+  const data = await res.json();
+  return data;
+};
+
+// 토스트 조각 삭제
+export const deleteToastPiece = async (toastPieceId: number) => {
+  await apiRequest(`/api/v1/toastPieces/${toastPieceId}`, 'DELETE')
     .then((res) => {
       if (res.status === 500) {
         throw new Error('Internal Server Error');

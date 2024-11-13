@@ -27,8 +27,7 @@ export default function ArriveEventToast() {
               <ToastBox
                 key={item.eventToastId}
                 title={item.title}
-                //   TODO: profile img로 바꾸기
-                profileImg={item.icon.iconImageUrl}
+                profileImg={item.memberProfileUrl}
                 toastImg={item.icon.iconImageUrl}
                 nickname={item.nickname}
                 openDate={item.openedDate}
