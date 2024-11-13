@@ -22,7 +22,7 @@ export default function ToastBox(props: ToastBoxProps) {
           alt=""
           width={80}
           height={80}
-          className="object-cover"
+          className="object-cover w-[80px] h-[80px]"
         />
 
         <div className="flex flex-col gap-1 flex-1">
@@ -33,7 +33,7 @@ export default function ToastBox(props: ToastBoxProps) {
               alt="profile"
               width={24}
               height={24}
-              className="object-cover rounded-full"
+              className="object-cover rounded-full w-[24px] h-[24px]"
             />
             <span className="text-gray-80 text-body4">
               {nickname === null ? '나에게' : nickname}
