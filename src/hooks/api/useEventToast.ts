@@ -25,11 +25,14 @@ export const useGetEventToastList = () => {
 
 // 특정 사용자의 이벤트 토스트 목록 조회
 export const useGetUserEventToastList = (memberId: number) => {
-  const { data, isLoading, error } = useQuery<EventToastItemResponse[]>({
+  const { data, isLoading, error, refetch } = useQuery<
+    EventToastItemResponse[]
+  >({
     queryKey: ['userEventToastList'],
     queryFn: () => getUserEventToastList(memberId),
+    enabled: true,
   });
-  return { data, isLoading, error };
+  return { data, isLoading, error, refetch };
 };
 
 // 사용자 이벤트 토스트 상세 조회
