@@ -16,13 +16,17 @@ export interface ToastPieceResponses {
   toastPieceResponses: ToastPieceItemResponses[];
 }
 
+export interface ToastPieceResponse {
+  giftToastInfo: GiftToastInfoResponse;
+  toastPieceResponse: ToastPieceItemResponses;
+}
+
 // 선물토스트 - 토스트조각 아이템
 export interface ToastPieceItemResponses {
   toastPieceId: number;
   memberId: number;
   nickname: string;
   profileUrl: string;
-  iconId: number;
   iconImageUrl: string;
   title: string;
   contentsUrl: string;
@@ -30,12 +34,17 @@ export interface ToastPieceItemResponses {
   toastPieceImages: string[];
 }
 
-// 선물토스트 - 조회 response
-export interface GiftToastResponses extends GiftToastItemResponse {
+export interface GiftToastInfoResponse extends GiftToastItemResponse {
   memorizedDate: string;
   openedDate: string;
   createdDate: string;
+  profileImageUrl: string;
+}
+
+// 선물토스트 - 조회 response
+export interface GiftToastResponses {
   dDay: number;
+  giftToastInfo: GiftToastInfoResponse;
   toastPieceResponses: ToastPieceResponses;
 }
 
@@ -48,7 +57,7 @@ export interface GiftToastRequestBody {
 }
 
 export interface GiftToastGroupRequestBody extends GiftToastRequestBody {
-  groupId: number;
+  teamId: number;
 }
 
 export interface GiftToastFriendRequestBody extends GiftToastRequestBody {

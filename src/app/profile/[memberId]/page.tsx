@@ -1,13 +1,13 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import Button from '@/components/common-components/button';
 import TopBar from '@/components/common-components/top-bar';
 
 import Showcase from '@/components/mypage/Showcase';
 import UserInfo from '@/components/mypage/UserInfo';
-import ToastBox, { ToastBoxProps } from '@/components/toast/ToastBox';
+import ToastBox from '@/components/toast/ToastBox';
 
 import { useGetUserEventToastList } from '@/hooks/api/useEventToast';
 import {
@@ -17,34 +17,8 @@ import {
 import { useGetUserProfile, useGetUserShowcase } from '@/hooks/api/useSearch';
 import { EventToastItemResponse } from '@/types/api/eventToast';
 import { MyShowcaseResponse } from '@/types/api/mypage';
-import { UserProfileResponse } from '@/types/api/search';
-import { UserProfilePageProps } from '@/types/mypage';
 
 import tempImg from '../../../../public/images/timetoast.png';
-
-const tempData: ToastBoxProps[] = [
-  {
-    title: '토토토리리리',
-    profileImg: tempImg,
-    toastImg: tempImg,
-    nickname: 'chaemin',
-    openDate: '2024-11-11',
-  },
-  {
-    title: '토토토리리리',
-    profileImg: tempImg,
-    toastImg: tempImg,
-    nickname: 'chaemin',
-    openDate: '2024-11-11',
-  },
-  {
-    title: '토토토리리리',
-    profileImg: tempImg,
-    toastImg: tempImg,
-    nickname: 'chaemin',
-    openDate: '2024-11-11',
-  },
-];
 
 export type PageProps = {
   memberId: number;
@@ -70,7 +44,25 @@ export default function UserProfilePage({ params }: { params: PageProps }) {
     [showcaseData],
   );
 
-  const { data: userEventToastData } = useGetUserEventToastList(memberId);
+  const { data: userEventToastData, refetch } =
+    useGetUserEventToastList(memberId);
+
+  const [isFollow, setIsFollow] = useState(data?.isFollow ?? false);
+
+  useEffect(() => {
+    if (data?.isFollow !== undefined) {
+      setIsFollow(data.isFollow);
+    }
+  }, [data]);
+
+  // 등록 및 취소(삭제)
+  const { mutate: postFollowMutate, isPending: isPendingPostFollowingUser } =
+    usePostFollowingUser();
+
+  const {
+    mutate: deleteFollowingMutate,
+    isPending: isPendingDeleteFollowingUser,
+  } = useDeleteFollowingUser();
 
   const userEventToastDataList = useMemo(
     () =>
@@ -86,25 +78,15 @@ export default function UserProfilePage({ params }: { params: PageProps }) {
             icon: item.icon,
           }) as EventToastItemResponse,
       ) ?? [],
-    [data],
+    [userEventToastData],
   );
-
-  const [isFollow, setIsFollow] = useState(data?.isFollow ?? false);
-
-  // 등록 및 취소(삭제)
-  const { mutate: postFollowMutate, isPending: isPendingPostFollowingUser } =
-    usePostFollowingUser();
-
-  const {
-    mutate: deleteFollowingMutate,
-    isPending: isPendingDeleteFollowingUser,
-  } = useDeleteFollowingUser();
 
   const handleFollowClick = () => {
     if (isFollow) {
       deleteFollowingMutate(memberId, {
         onSuccess: () => {
           setIsFollow(false);
+          refetch();
         },
         onError: (error) => {
           console.error('언팔로우 실패:', error);
@@ -114,6 +96,7 @@ export default function UserProfilePage({ params }: { params: PageProps }) {
       postFollowMutate(memberId, {
         onSuccess: () => {
           setIsFollow(true);
+          refetch();
         },
         onError: (error) => {
           console.error('팔로우 실패:', error);
@@ -172,17 +155,16 @@ export default function UserProfilePage({ params }: { params: PageProps }) {
             <span className="text-body1 text-gray-80">
               {data.nickname}님이 구운 토스트
             </span>
-            {!isLoading &&
-            data.isFollow &&
-            userEventToastDataList.length > 0 ? (
+
+            {!isLoading && isFollow && userEventToastDataList.length > 0 ? (
               <div className="pt-4 flex flex-col gap-4">
                 {userEventToastDataList.map((item) => (
                   <ToastBox
-                    key={item.nickname}
+                    key={item.eventToastId}
                     title={item.title}
                     profileImg={item.memberProfileUrl}
                     nickname={item.nickname}
-                    openDate={item.nickname}
+                    openDate={item.openedDate}
                     toastImg={item.icon.iconImageUrl}
                   >
                     <Button size="sm" color="primary">
@@ -193,7 +175,13 @@ export default function UserProfilePage({ params }: { params: PageProps }) {
               </div>
             ) : (
               <div className="mt-4 w-full text-center text-body4 bg-white border border-gray-10 p-4 rounded-[10px]">
-                {data.nickname}님이 아직 토스트를 굽지 않았어요!
+                {isFollow ? (
+                  <>{data.nickname}님이 아직 토스트를 굽지 않았어요!</>
+                ) : (
+                  <>
+                    <b>{data.nickname}</b>님을 팔로우하면 토스트를 볼 수 있어요!
+                  </>
+                )}
               </div>
             )}
           </div>

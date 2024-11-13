@@ -6,13 +6,16 @@ import {
   GiftToastPiecePostRequestBody,
   GiftToastRequestBody,
   GiftToastResponses,
+  ToastPieceResponse,
 } from '@/types/api/giftToast';
 
 import {
   deleteGiftToast,
+  deleteToastPiece,
   getGiftToastIncompleted,
   getGiftToastItem,
   getGiftToastList,
+  getToastPieceItem,
   postGiftToastFriend,
   postGiftToastGroup,
   postGiftToastMine,
@@ -109,5 +112,30 @@ export const usePostToastPieces = () => {
     },
   });
 
+  return { mutate, isPending, error };
+};
+
+// 토스트 조각 단일 조회
+export const useGetToastPieceItem = (toastPieceId: number) => {
+  const { data, isLoading, error } = useQuery<ToastPieceResponse>({
+    queryKey: ['toastPieceItem'],
+    queryFn: () => getToastPieceItem(toastPieceId),
+  });
+  return { data, isLoading, error };
+};
+
+// 토스트 조각 삭제
+export const useDeleteToastPiece = () => {
+  const queryClient = useQueryClient();
+
+  const { mutate, isPending, error } = useMutation({
+    mutationFn: (toastPieceId: number) => deleteToastPiece(toastPieceId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['giftToastList'] });
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
   return { mutate, isPending, error };
 };

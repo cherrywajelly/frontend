@@ -134,7 +134,7 @@ export default function GenerateGroup({
                 alt=""
                 width={48}
                 height={48}
-                className="object-cover rounded-full"
+                className="object-cover rounded-full w-[48px] h-[48px]"
               />
               <span className="text-body2 text-black-main">
                 {item.nickname}
