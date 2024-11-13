@@ -16,7 +16,8 @@ export default function UserInfo(props: UserInfoProps) {
   const { nickname, profileImg, follower, following, group, children } = props;
   const router = useRouter();
 
-  const localStorageNickname = localStorage.getItem('nickname');
+  const localStorageNickname =
+    typeof window !== 'undefined' && localStorage.getItem('nickname');
 
   return (
     <>

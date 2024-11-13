@@ -76,7 +76,8 @@ export default function ToastDecoForm(props: ToastFormProps) {
     if (topic) setButtonTopic(topic);
   };
 
-  const nickname = localStorage.getItem('nickname');
+  const nickname =
+    typeof window !== 'undefined' && localStorage.getItem('nickname');
 
   const toastBoxRef = useRef<HTMLDivElement>(null);
 

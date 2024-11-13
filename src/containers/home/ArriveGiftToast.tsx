@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import Skeleton from 'react-loading-skeleton';
 
 import CustomSkeleton from '@/components/common-components/skeleton';
@@ -24,11 +25,13 @@ export default function ArriveGiftToast() {
     router.push(`/gift-toast/${id}`);
   };
 
-  localStorage.setItem('nickname', myInfoData?.nickname ?? '');
-
-  if (myInfoData) {
-    setMemberId(myInfoData.memberId);
-  }
+  useEffect(() => {
+    if (myInfoData) {
+      setMemberId(myInfoData.memberId);
+      if (typeof window !== 'undefined')
+        localStorage.setItem('nickname', myInfoData?.nickname ?? '');
+    }
+  }, []);
 
   return (
     <div>

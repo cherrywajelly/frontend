@@ -28,7 +28,8 @@ export default function MyPage() {
     [data],
   );
 
-  const nickname = localStorage.getItem('nickname');
+  const nickname =
+    typeof window !== 'undefined' && localStorage.getItem('accesstoken');
 
   return (
     <div className="w-full h-lvh">
