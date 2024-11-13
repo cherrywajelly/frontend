@@ -4,7 +4,7 @@ import { HiMiniUserGroup } from 'react-icons/hi2';
 
 import TopBar from '@/components/common-components/top-bar';
 
-import tempImg from '../../../../../public/images/default-toast.png';
+import tempImg from '../../../../../../public/images/default-toast.png';
 
 import Image from 'next/image';
 
