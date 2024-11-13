@@ -18,13 +18,15 @@ export interface ToastPieceResponses {
 
 // 선물토스트 - 토스트조각 아이템
 export interface ToastPieceItemResponses {
+  toastPieceId: number;
   memberId: number;
   nickname: string;
   profileUrl: string;
   iconId: number;
+  iconImageUrl: string;
   title: string;
   contentsUrl: string;
-  createdDate: string;
+  createdAt: string;
   toastPieceImages: string[];
 }
 
