@@ -9,14 +9,14 @@ import Input from '@/components/common-components/input';
 
 import UserListItem from '@/components/search/UserListItem';
 
+import { useGetFollowings } from '@/hooks/api/useMyPage';
+import { FollowingItemResponse } from '@/types/api/mypage';
 import { UserDefaultProps } from '@/types/user';
-
-import { tempUserList } from './GenerateGroup';
 
 export type AddGroupUserProps = {
   setStep: Dispatch<SetStateAction<number>>;
-  selectedUsers: UserDefaultProps[];
-  setSelectedUsers: Dispatch<SetStateAction<UserDefaultProps[]>>;
+  selectedUsers: FollowingItemResponse[];
+  setSelectedUsers: Dispatch<SetStateAction<FollowingItemResponse[]>>;
 };
 
 export default function AddGroupUser({
@@ -27,12 +27,18 @@ export default function AddGroupUser({
   const [isFocused, setIsFocused] = useState<boolean>(false);
   const [searchValue, setSearchValue] = useState<string>('');
 
+  // 팔로잉 목록 조회
+  const { data: followingData, isLoading: isLoadingFollowings } =
+    useGetFollowings();
+
+  // console.log(followingData);
+
   const handleCancel = () => {
     setSearchValue('');
     setIsFocused(false);
   };
 
-  const toggleUserSelection = (item: UserDefaultProps) => {
+  const toggleUserSelection = (item: FollowingItemResponse) => {
     setSelectedUsers((prev) => {
       if (prev.includes(item)) {
         return prev.filter((user) => user !== item);
@@ -80,20 +86,27 @@ export default function AddGroupUser({
 
       <div className="flex-grow my-6 overflow-y-auto hide-scrollbar">
         <div className="flex flex-col gap-4">
-          {tempUserList.map((item, idx) => (
-            <UserListItem
-              key={idx}
-              profileImg={item.profileImg}
-              nickname={item.nickname}
-              onClick={() => toggleUserSelection(item)}
-            >
-              {selectedUsers.includes(item) ? (
-                <RiCheckboxCircleFill className="text-primary-main" size={24} />
-              ) : (
-                <RiCheckboxBlankCircleLine className="text-gray-40" size={24} />
-              )}
-            </UserListItem>
-          ))}
+          {followingData &&
+            followingData.followResponses.map((item) => (
+              <UserListItem
+                key={item.memberId}
+                profileImg={item.memberProfileUrl}
+                nickname={item.nickname}
+                onClick={() => toggleUserSelection(item)}
+              >
+                {selectedUsers.includes(item) ? (
+                  <RiCheckboxCircleFill
+                    className="text-primary-main"
+                    size={24}
+                  />
+                ) : (
+                  <RiCheckboxBlankCircleLine
+                    className="text-gray-40"
+                    size={24}
+                  />
+                )}
+              </UserListItem>
+            ))}
         </div>
       </div>
 

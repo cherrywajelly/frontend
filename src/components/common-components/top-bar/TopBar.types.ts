@@ -3,6 +3,7 @@ export type TopBarProps = {
   isBackBtn?: boolean;
   isRight?: boolean | RightType;
   submitAble?: boolean;
+  handleSubmit?: () => void;
 };
 
 export const rightTypes = {

@@ -2,10 +2,18 @@ import { API_METHOD_TYPE } from '@/types';
 
 export const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 
-export const getHeaders = (): HeadersInit => ({
-  Authorization: `Bearer ${sessionStorage.accessToken}`,
-  'Content-Type': 'application/json',
-});
+export const getHeaders = (isFormData: boolean): HeadersInit => {
+  if (isFormData) {
+    return {
+      Authorization: `Bearer ${sessionStorage.accessToken}`,
+    };
+  } else {
+    return {
+      Authorization: `Bearer ${sessionStorage.accessToken}`,
+      'Content-Type': 'application/json',
+    };
+  }
+};
 
 export const apiRequest = async <T>(
   endpoint: string,
@@ -15,12 +23,15 @@ export const apiRequest = async <T>(
   const accessToken =
     typeof window !== 'undefined' && sessionStorage.getItem('accessToken');
 
-  const options = {
+  const isFormData = body instanceof FormData;
+
+  const options: RequestInit = {
     method,
     headers: accessToken
-      ? getHeaders()
+      ? getHeaders(isFormData)
       : { 'Content-Type': 'application/json' },
-    body: body ? JSON.stringify(body) : undefined,
+    body:
+      body instanceof FormData ? body : body ? JSON.stringify(body) : undefined,
   };
 
   try {

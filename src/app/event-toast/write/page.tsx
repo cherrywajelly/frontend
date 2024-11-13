@@ -37,9 +37,9 @@ export default function JamWritePage() {
         {step === 0 && (
           <ToastDecoForm stepState={jamStepState} dataState={jamDataState} />
         )}
-        {step === 1 && (
+        {/* {step === 1 && (
           <WriteToastForm stepState={jamStepState} dataState={jamDataState} />
-        )}
+        )} */}
       </div>
     </div>
   );

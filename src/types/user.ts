@@ -1,7 +1,7 @@
 import { StaticImageData } from 'next/image';
 
 export interface UserDefaultProps {
-  profileImg: string | StaticImageData;
+  profileImg: string | null;
   nickname: string;
   memberId?: number;
 }

@@ -1,3 +1,5 @@
+import { EventToastPostReqBody } from '@/types/api/eventToast';
+
 import { apiRequest } from '.';
 
 // 개인 이벤트 토스트 목록 조회
@@ -49,9 +51,15 @@ export const getFollowingUserEventToast = async () => {
 };
 
 // 이벤트 토스트 등록
-export const postEventToast = async (item: any) => {
+export const postEventToast = async ({
+  iconId,
+  title,
+  openedDate,
+}: EventToastPostReqBody) => {
   await apiRequest(`/api/v1/eventToasts`, 'POST', {
-    item,
+    iconId,
+    title,
+    openedDate,
   })
     .then((res) => {
       if (res.status === 500) {

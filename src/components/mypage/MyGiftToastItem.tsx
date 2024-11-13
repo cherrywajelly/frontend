@@ -13,7 +13,7 @@ export default function MyGiftToastItem(props: MyGiftToastItemProps) {
   return (
     <div className="flex gap-4 py-2 bg-white" onClick={onClick}>
       <Image
-        src={image}
+        src={image ?? ''}
         alt=""
         width={56}
         height={56}

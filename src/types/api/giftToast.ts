@@ -18,13 +18,15 @@ export interface ToastPieceResponses {
 
 // 선물토스트 - 토스트조각 아이템
 export interface ToastPieceItemResponses {
+  toastPieceId: number;
   memberId: number;
   nickname: string;
   profileUrl: string;
   iconId: number;
+  iconImageUrl: string;
   title: string;
   contentsUrl: string;
-  createdDate: string;
+  createdAt: string;
   toastPieceImages: string[];
 }
 
@@ -33,5 +35,33 @@ export interface GiftToastResponses extends GiftToastItemResponse {
   memorizedDate: string;
   openedDate: string;
   createdDate: string;
+  dDay: number;
   toastPieceResponses: ToastPieceResponses;
+}
+
+// 선물 토스트 등록 (그룹)
+export interface GiftToastRequestBody {
+  iconId: number;
+  memorizedDate: string;
+  openedDate: string;
+  title: string;
+}
+
+export interface GiftToastGroupRequestBody extends GiftToastRequestBody {
+  groupId: number;
+}
+
+export interface GiftToastFriendRequestBody extends GiftToastRequestBody {
+  friendId: number;
+}
+
+// 토스트 조각 관련 타입
+export interface GiftToastPiecePostRequestBody {
+  toastPieceContents: File;
+  toastPieceImages: File[];
+  toastPieceRequest: {
+    giftToastId: number;
+    iconId: number;
+    title: string;
+  };
 }

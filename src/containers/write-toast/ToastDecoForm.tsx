@@ -51,14 +51,15 @@ const toastTopic = [
   { title: '설날', imgArr: defaultToastOptions },
 ];
 
-export type TostFormProps = {
+export type ToastFormProps = {
   stepState: RecoilState<number>;
   dataState: RecoilState<pieceData | ToastData>;
   handleSubmit?: () => void;
+  isMainToast?: boolean;
 };
 
-export default function ToastDecoForm(props: TostFormProps) {
-  const { stepState, dataState, handleSubmit } = props;
+export default function ToastDecoForm(props: ToastFormProps) {
+  const { stepState, dataState, handleSubmit, isMainToast = true } = props;
 
   const [buttonTopic, setButtonTopic] = useState<any>(toastTopic[0]);
   const [selectedTopic, setSelectedTopic] = useState<string>(
@@ -75,8 +76,8 @@ export default function ToastDecoForm(props: TostFormProps) {
     if (topic) setButtonTopic(topic);
   };
 
-  // TODO: to get nickname global-state
-  const nickname = '채민';
+  const nickname =
+    typeof window !== 'undefined' && localStorage.getItem('nickname');
 
   const toastBoxRef = useRef<HTMLDivElement>(null);
 
@@ -85,10 +86,6 @@ export default function ToastDecoForm(props: TostFormProps) {
       toastBoxRef.current.scrollTo(0, 0);
     }
   };
-
-  // const handleSubmit = () => {
-  //   // setStep((prev) => prev + 1);
-  // };
 
   return (
     <div className="w-full h-full pt-6 flex flex-col justify-between">
@@ -107,10 +104,10 @@ export default function ToastDecoForm(props: TostFormProps) {
       <div className="bg-white w-full h-full pt-6 pb-12 max-h-[405px] flex flex-col justify-between px-6 border-t-2 border-gray-10 rounded-t-[20px]">
         <div>
           <div className="w-full flex justify-between gap-3">
-            {toastTopic.map((item) => {
+            {toastTopic.map((item, idx) => {
               return (
                 <Button
-                  key={item.title}
+                  key={idx}
                   size="sm"
                   onClick={() => handleButtonClick(item.title)}
                   color={selectedTopic === item.title ? 'primary' : 'disabled'}
@@ -151,7 +148,7 @@ export default function ToastDecoForm(props: TostFormProps) {
           onClick={handleSubmit}
           disabled={toastData.deco == defaultImg}
         >
-          토스트 생성
+          {isMainToast ? '토스트 생성' : '다음'}
         </Button>
       </div>
     </div>

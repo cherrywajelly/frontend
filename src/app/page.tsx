@@ -30,9 +30,9 @@ export default function Home() {
 
   return (
     <div className="w-full h-screen">
-      <TopBar title="Time Toast" />
+      <TopBar title="Time Toast" isBackBtn={false} />
 
-      <div className="w-full h-[calc(100vh-48px)] p-6 bg-gray-05">
+      <div className="w-full h-[calc(100vh-144px)] flex flex-grow flex-col overflow-y-auto p-6 bg-gray-05">
         <ArriveGiftToast />
         <ArriveEventToast />
       </div>
@@ -45,7 +45,8 @@ export default function Home() {
           로그인
         </button>
       )}
-      <div className="pt-[96px]" />
+      {/* TODO: 빼기 */}
+      <div className="pt-[100px]" />
       <BottomBar />
     </div>
   );

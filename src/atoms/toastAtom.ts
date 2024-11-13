@@ -27,11 +27,13 @@ export const giftToastStepState = atom<number>({
 export const giftToastDataState = atom<ToastData>({
   key: 'giftToastDataState',
   default: {
+    id: null,
     isAgree: false,
     memoryDate: null,
     openDate: null,
     toastName: '',
     deco: defaultImg,
+    type: null,
   },
 });
 
@@ -47,5 +49,21 @@ export const jamDataState = atom<pieceData | ToastData>({
     title: '',
     contents: '',
     imgList: [],
+  },
+});
+
+export const toastPieceStepState = atom<number>({
+  key: `toastPieceStepState`,
+  default: 0,
+});
+
+export const toastPieceDataState = atom<pieceData | ToastData>({
+  key: 'toastPieceDataState',
+  default: {
+    deco: defaultImg,
+    title: '',
+    contents: '',
+    imgList: [],
+    submitAble: false,
   },
 });

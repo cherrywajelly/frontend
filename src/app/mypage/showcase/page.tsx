@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
   RiCheckboxCircleFill,
   RiCheckboxBlankCircleLine,
@@ -11,27 +11,113 @@ import TopBar from '@/components/common-components/top-bar';
 
 import MyEventToastItem from '@/components/mypage/MyEventToastItem';
 
-import { useGetEventToastList } from '@/hooks/api/useEventToast';
+import {
+  useDeleteMyShowcaseItem,
+  useGetMyShowcaseList,
+  usePostMyShowcaseList,
+} from '@/hooks/api/useMyPage';
+import { MyShowcaseListResponse } from '@/types/api/mypage';
+
+import { useRouter } from 'next/navigation';
 
 export default function ShowcaseEdit() {
-  const [selectedToast, setSelectedToast] = useState(['']);
+  const router = useRouter();
 
-  // TODO: 진열장 목록 조회 api로 바꾸기
-  const { data: eventToastListData, isLoading: isLoadingEventToastList } =
-    useGetEventToastList();
+  const { data: showcaseListData, isLoading: isLoadingShowcaseListData } =
+    useGetMyShowcaseList();
 
-  const toggleToastSelection = (item: any) => {
+  const showcaseList = useMemo(
+    () =>
+      showcaseListData?.map(
+        (item) =>
+          ({
+            eventToastId: item.eventToastId,
+            iconUrl: item.iconUrl,
+            title: item.title,
+            openedDate: item.openedDate,
+            isShowcase: item.isShowcase,
+            showCaseId: item.showCaseId,
+          }) as MyShowcaseListResponse,
+      ) ?? [],
+    [showcaseListData],
+  );
+
+  const initialShowcaseIds = useMemo(
+    () =>
+      showcaseList
+        .filter((item) => item.isShowcase)
+        .map((item) => item.eventToastId),
+    [showcaseList],
+  );
+
+  console.log('initialShowcaseIds', initialShowcaseIds);
+
+  const [selectedToast, setSelectedToast] =
+    useState<number[]>(initialShowcaseIds);
+
+  useEffect(() => {
+    if (initialShowcaseIds.length > 0) {
+      setSelectedToast(initialShowcaseIds);
+    }
+  }, [initialShowcaseIds]);
+
+  const toggleToastSelection = (item: MyShowcaseListResponse) => {
     setSelectedToast((prev) => {
-      if (prev.includes(item)) {
-        return prev.filter((user) => user !== item);
+      if (prev.includes(item.eventToastId)) {
+        return prev.filter((id) => id !== item.eventToastId);
       } else {
-        return [...prev, item];
+        return prev.length < 3 ? [...prev, item.eventToastId] : prev;
       }
     });
   };
 
+  const { mutate: postMutate, isPending: isPosting } = usePostMyShowcaseList();
+  const { mutate: deleteMutate, isPending: isDeleting } =
+    useDeleteMyShowcaseItem();
+
+  console.log('showcaseList', showcaseList);
+  console.log('selectedToast', selectedToast);
+
   const handleSubmit = () => {
-    // TODO: connect api
+    const toAdd = selectedToast.filter(
+      (id) => !initialShowcaseIds.includes(id),
+    );
+    const toDeleteItem = initialShowcaseIds.filter(
+      (id) => !selectedToast.includes(id),
+    );
+
+    // 해당 eventToastId에 해당하는 showcaseId 찾기
+    const toDeleteShowcaseIds = showcaseList
+      .filter((item) => toDeleteItem.includes(item.eventToastId))
+      .map((item) => item.showCaseId);
+
+    console.log('삭제할 아이템:', toDeleteShowcaseIds);
+    console.log('추가할 아이템:', toAdd);
+
+    if (toDeleteShowcaseIds.length > 0) {
+      Promise.all(
+        toDeleteShowcaseIds.map(
+          (id) =>
+            new Promise<void>((resolve) =>
+              deleteMutate(id, {
+                onSuccess: () => resolve(),
+              }),
+            ),
+        ),
+      ).then(() => {
+        if (toAdd.length > 0) {
+          postMutate(toAdd);
+        }
+
+        router.push('/mypage');
+      });
+    } else {
+      if (toAdd.length > 0) {
+        postMutate(toAdd);
+      }
+
+      router.push('/mypage');
+    }
   };
 
   return (
@@ -49,19 +135,18 @@ export default function ShowcaseEdit() {
         <div className="w-full h-[calc(100vh-154px)] flex flex-col justify-between flex-grow bg-white px-6 py-4 border-t-2 border-gray-10 rounded-t-[20px]">
           <div className="flex-grow mb-6 overflow-y-auto hide-scrollbar">
             <div className="flex flex-col gap-4">
-              {eventToastListData &&
-                eventToastListData?.map((item) => {
+              {showcaseList &&
+                showcaseList?.map((item) => {
                   return (
                     <MyEventToastItem
                       key={item.eventToastId}
-                      image={item.memberProfileUrl}
+                      image={item.iconUrl}
                       title={item.title}
                       date={item.openedDate}
                       isSetting={false}
                       onClick={() => toggleToastSelection(item)}
                     >
-                      {/* TODO: response type에 맞춰서 다시 상태 로직 수정하기 */}
-                      {selectedToast.includes(item.title) ? (
+                      {selectedToast.includes(item.eventToastId) ? (
                         <RiCheckboxCircleFill
                           className="text-primary-main my-auto"
                           size={24}
