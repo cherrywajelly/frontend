@@ -5,13 +5,12 @@ import { useEffect, useState } from 'react';
 import BottomBar from '@/components/common-components/bottom-bar';
 import TopBar from '@/components/common-components/top-bar';
 
-import { usePutFCM } from '@/hooks/api/useFcm';
+import { usePostFCMTest, usePutFCM } from '@/hooks/api/useFcm';
 
 import ArriveEventToast from '@/containers/home/ArriveEventToast';
 import ArriveGiftToast from '@/containers/home/ArriveGiftToast';
 import { firebaseApp } from '@/firebase';
 
-import { error } from 'console';
 import {
   getMessaging,
   onMessage,
@@ -40,6 +39,7 @@ export default function Home() {
   const [token, setToken] = useState<string | null>(null);
 
   const { mutate: mutateFCM, isPending } = usePutFCM();
+  const { mutate: mutateFCMTest } = usePostFCMTest();
 
   const requestPermission = async () => {
     const messagingResolve = await messaging();
@@ -53,6 +53,7 @@ export default function Home() {
       mutateFCM(token, {
         onSuccess: (data) => {
           console.log(data);
+          mutateFCMTest();
         },
         onError: (error) => {
           console.log(error);
@@ -61,11 +62,11 @@ export default function Home() {
     }
 
     // const permission = Notification.permission;
-    // if (permission === "granted") {
+    // if (permission === 'granted') {
     //   return;
     // } else {
     //   Notification.requestPermission().then((permission) => {
-    //     console.log("permission", permission);
+    //     console.log('permission', permission);
     //   });
     //   return;
     // }
@@ -74,6 +75,7 @@ export default function Home() {
   useEffect(() => {
     const onMessageListener = async () => {
       const messagingResolve = await messaging();
+      navigator.serviceWorker.register('/firebase-messaging-sw.js');
       if (messagingResolve) {
         onMessage(messagingResolve, (payload) => {
           if (!('Notification' in window)) {
@@ -81,19 +83,19 @@ export default function Home() {
           }
           const permission = Notification.permission;
           const title = payload.notification?.title + ' foreground';
-          const redirectUrl = '/';
           const body = payload.notification?.body;
+          const icon = '/';
+          const data = payload.data;
+
           if (permission === 'granted') {
             console.log('payload', payload);
-            if (payload.data) {
-              const notification = new Notification(title, {
+            navigator.serviceWorker.ready.then((registration) => {
+              registration.showNotification(title, {
                 body,
-                icon: '/icons/icon-96.png',
+                icon,
+                data,
               });
-              notification.onclick = () => {
-                window.open(redirectUrl, '_blank')?.focus();
-              };
-            }
+            });
           }
         });
       }
