@@ -137,7 +137,7 @@ export default function FollowTab() {
                     key={item.nickname}
                     profileImg={item.memberProfileUrl || temp}
                     nickname={item.nickname}
-                    onClick={() => router.push(`/profile/${item.nickname}`)}
+                    onClick={() => router.push(`/profile/${item.memberId}`)}
                   >
                     {isFollowing ? (
                       <Button
@@ -175,7 +175,7 @@ export default function FollowTab() {
                     key={item.nickname}
                     profileImg={item.memberProfileUrl || temp}
                     nickname={item.nickname}
-                    onClick={() => router.push(`/profile/${item.nickname}`)}
+                    onClick={() => router.push(`/profile/${item.memberId}`)}
                   >
                     <Button
                       size="sm"
