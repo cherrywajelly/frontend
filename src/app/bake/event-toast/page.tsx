@@ -69,6 +69,7 @@ export default function EventToastPage() {
             stepState={eventToastStepState}
             dataState={eventToastDataState}
             handleSubmit={handleSubmit}
+            type="toast"
           />
         )}
       </div>

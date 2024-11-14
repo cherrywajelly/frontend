@@ -40,8 +40,8 @@ const TopBar = ({
   const SettingCategories = [
     { label: '프로필 편집', onClick: () => router.push('/setting/profile') },
     { label: '그룹 관리', onClick: () => router.push('/setting/group') },
-    { label: '아이콘 마켓', onClick: () => router.push('/') },
-    { label: '구독 플랜', onClick: () => router.push('/') },
+    { label: '아이콘 마켓', onClick: () => router.push('/setting/market') },
+    { label: '구독 플랜', onClick: () => router.push('/setting/premiums') },
     { label: '로그아웃', onClick: () => handleLogout() },
   ];
 

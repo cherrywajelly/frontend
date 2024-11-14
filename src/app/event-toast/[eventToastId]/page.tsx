@@ -4,6 +4,7 @@ import BottomBar from '@/components/common-components/bottom-bar';
 import Button from '@/components/common-components/button';
 import TopBar from '@/components/common-components/top-bar';
 
+import JamItem from '@/components/toast/JamItem';
 import ToastBox from '@/components/toast/ToastBox';
 
 import { useGetEventToastItem } from '@/hooks/api/useEventToast';
@@ -17,7 +18,7 @@ type PageParams = {
   eventToastId: number;
 };
 
-export default function JamPage({ params }: { params: PageParams }) {
+export default function EventToastPage({ params }: { params: PageParams }) {
   const router = useRouter();
   const { data, isLoading } = useGetEventToastItem(params.eventToastId);
 
@@ -77,14 +78,32 @@ export default function JamPage({ params }: { params: PageParams }) {
               현재 {data.jamCount}명의 친구들이 잼을 발라줬어요.
             </span>
 
-            <div className="w-full h-full mt-4 flex flex-col justify-center items-center">
-              <Image
-                src={lockedToast}
-                alt=""
-                className="opacity-50 w-[240px] h-[240px]"
-              />
-              <div>D-{data.dDay}</div>
-            </div>
+            {data.dDay !== 0 ? (
+              <div className="w-full h-full mt-4 flex flex-col justify-center items-center">
+                <Image
+                  src={lockedToast}
+                  alt=""
+                  className="opacity-50 w-[240px] h-[240px]"
+                />
+                <div>D-{data.dDay}</div>
+              </div>
+            ) : (
+              <div className="w-full mt-4 grid grid-cols-3 gap-3">
+                {data.jams &&
+                  data.jams.map((item, index) => (
+                    <JamItem
+                      key={index}
+                      nickname={item.nickname}
+                      iconImageUrl={item.iconImageUrl}
+                      onClick={() =>
+                        router.push(
+                          `/event-toast/${params.eventToastId}/jam/${item.jamId}`,
+                        )
+                      }
+                    />
+                  ))}
+              </div>
+            )}
           </>
         )}
       </div>
