@@ -91,3 +91,61 @@ export const deleteEventToast = async (eventToastId: number) => {
       console.log(err);
     });
 };
+
+// 잼 목록 조회
+export const getJamList = async (eventToastId: number) => {
+  const res = await apiRequest(`/api/v1/jams/eventToast/${eventToastId}`);
+
+  if (!res.ok) {
+    throw new Error(`HTTP error in Google! Status: ${res.status}`);
+  }
+
+  const data = await res.json();
+  return data;
+};
+
+// 잼 상세 조회
+export const getJamDetail = async (jamId: number) => {
+  const res = await apiRequest(`/api/v1/jams/${jamId}`);
+
+  if (!res.ok) {
+    throw new Error(`HTTP error in Google! Status: ${res.status}`);
+  }
+
+  const data = await res.json();
+  return data;
+};
+
+// 잼 삭제
+export const deleteJamItem = async (jamId: number) => {
+  await apiRequest(`/api/v1/jams/${jamId}`, 'DELETE')
+    .then((res) => {
+      if (res.status === 500) {
+        throw new Error('Internal Server Error');
+      }
+
+      if (res.status === 200) {
+        return res;
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+// 잼 저장
+export const postJamItemToEventToast = async (eventToastId: number) => {
+  await apiRequest(`/api/v1/jams/${eventToastId}`, 'POST')
+    .then((res) => {
+      if (res.status === 500) {
+        throw new Error('Internal Server Error');
+      }
+
+      if (res.status === 200) {
+        return res;
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};

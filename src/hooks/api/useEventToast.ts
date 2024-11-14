@@ -2,15 +2,21 @@ import {
   EventToastItemResponse,
   EventToastPostReqBody,
   EventToastResponse,
+  JamItemDetailResponse,
+  JamItemResponse,
 } from '@/types/api/eventToast';
 
 import {
   deleteEventToast,
+  deleteJamItem,
   getEventToastItem,
   getEventToastList,
   getFollowingUserEventToast,
+  getJamDetail,
+  getJamList,
   getUserEventToastList,
   postEventToast,
+  postJamItemToEventToast,
 } from '@/api/eventToast';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
@@ -72,6 +78,56 @@ export const useDeleteEventToast = () => {
     mutationFn: (eventToastId: number) => deleteEventToast(eventToastId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['eventToastList'] });
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+  return { mutate, isPending, error };
+};
+
+// 잼 목록 조회
+export const useGetJamList = (eventToastId: number) => {
+  const { data, isLoading, error, refetch } = useQuery<JamItemResponse[]>({
+    queryKey: ['jamList'],
+    queryFn: () => getJamList(eventToastId),
+    enabled: true,
+  });
+  return { data, isLoading, error, refetch };
+};
+
+// 잼 상세 조회
+export const useGetJamDetail = (jamId: number) => {
+  const { data, isLoading, error, refetch } = useQuery<JamItemDetailResponse>({
+    queryKey: ['jamDetail'],
+    queryFn: () => getJamDetail(jamId),
+    enabled: true,
+  });
+  return { data, isLoading, error, refetch };
+};
+
+// 잼 삭제
+export const useDeleteJamItem = () => {
+  const queryClient = useQueryClient();
+  const { mutate, isPending, error } = useMutation({
+    mutationFn: (jamId: number) => deleteJamItem(jamId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['jamList'] });
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+  return { mutate, isPending, error };
+};
+
+// 잼 저장
+export const usePostJamItemToEventToast = () => {
+  const queryClient = useQueryClient();
+  const { mutate, isPending, error } = useMutation({
+    mutationFn: (eventToastId: number) => postJamItemToEventToast(eventToastId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['jamList'] });
     },
     onError: (error) => {
       console.log(error);
