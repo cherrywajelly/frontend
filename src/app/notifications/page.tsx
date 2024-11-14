@@ -7,7 +7,12 @@ import NotiDefaultItem from '@/components/notifications/NotiDefaultItem';
 import NotiFollowItem from '@/components/notifications/NotiFollowItem';
 import NotiPieceJamItem from '@/components/notifications/NotiPieceJamItem';
 
+import { useGetNotificationsList } from '@/hooks/api/useFcm';
+
 export default function NotificationsPage() {
+  const { data, isLoading } = useGetNotificationsList();
+  console.log(data);
+
   return (
     <div className="w-full h-screen">
       <TopBar title="알림" isBackBtn={false} />
