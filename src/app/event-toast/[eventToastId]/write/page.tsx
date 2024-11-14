@@ -25,17 +25,29 @@ export default function JamWritePage() {
     }
   };
 
+  const handleNext = () => {
+    setStep((prev) => prev + 1);
+  };
+
   return (
     <div className="w-full h-lvh">
       <TopBar
         onBack={handleBack}
         title="잼 바르기"
         isRight={step === 1 ? 'submit' : false}
+        //  submitAble={toastPieceData.submitAble}
+        // handleSubmit={handleSubmit}
       />
 
       <div className="h-[calc(100vh-48px)] flex flex-col gap-1 bg-gray-05">
         {step === 0 && (
-          <ToastDecoForm stepState={jamStepState} dataState={jamDataState} />
+          <ToastDecoForm
+            stepState={jamStepState}
+            dataState={jamDataState}
+            handleSubmit={handleNext}
+            type="jam"
+            isMainToast={false}
+          />
         )}
         {/* {step === 1 && (
           <WriteToastForm stepState={jamStepState} dataState={jamDataState} />

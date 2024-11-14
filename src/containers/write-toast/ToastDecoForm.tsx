@@ -1,19 +1,19 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
 import Button from '@/components/common-components/button';
 
 import InputForm from '@/components/input-form/InputForm';
 
-import { useGetIconGroups } from '@/hooks/api/useIconGroups';
+import {
+  useGetIconGroupsJams,
+  useGetIconGroupsToasts,
+} from '@/hooks/api/useIconGroups';
 import { pieceData, ToastData } from '@/types/atoms/toastAtom';
 
 import defaultImg from '../../../public/images/default-toast.png';
 import tempImg from '../../../public/images/timetoast.png';
 
-import {
-  StaticImageData,
-  StaticImport,
-} from 'next/dist/shared/lib/get-img-props';
+import { StaticImageData } from 'next/dist/shared/lib/get-img-props';
 import Image from 'next/image';
 import { RecoilState, useRecoilState, useSetRecoilState } from 'recoil';
 
@@ -22,65 +22,25 @@ export type ToastOptionsProps = {
   src: StaticImageData;
 };
 
-const defaultToastOptions = [
-  { name: 'red', src: defaultImg },
-  { name: 'asd', src: tempImg },
-  { name: 'sdf', src: defaultImg },
-  { name: 'cc', src: defaultImg },
-  { name: 'cc', src: defaultImg },
-  { name: 'cc', src: defaultImg },
-  { name: 'cc', src: defaultImg },
-  { name: 'cc', src: defaultImg },
-  { name: 'cc', src: defaultImg },
-];
-
-const christmasToastOptions = [
-  { name: 'red', src: tempImg },
-  { name: 'asd', src: tempImg },
-  { name: 'sdf', src: tempImg },
-  { name: 'cc', src: tempImg },
-  { name: 'cc', src: tempImg },
-  { name: 'cc', src: defaultImg },
-  { name: 'cc', src: defaultImg },
-  { name: 'cc', src: defaultImg },
-  { name: 'cc', src: defaultImg },
-];
-
-const toastTopic = [
-  { title: '기본', imgArr: defaultToastOptions },
-  { title: '크리스마스', imgArr: christmasToastOptions },
-  { title: '설날', imgArr: defaultToastOptions },
-];
-
 export type ToastFormProps = {
   stepState: RecoilState<number>;
   dataState: RecoilState<pieceData | ToastData>;
   handleSubmit?: () => void;
   isMainToast?: boolean;
+  type: 'toast' | 'jam';
 };
 
 export default function ToastDecoForm(props: ToastFormProps) {
-  const { stepState, dataState, handleSubmit, isMainToast = true } = props;
+  const {
+    stepState,
+    dataState,
+    handleSubmit,
+    isMainToast = true,
+    type,
+  } = props;
 
-  const [buttonTopic, setButtonTopic] = useState<any>(toastTopic[0]);
-  const [selectedTopic, setSelectedTopic] = useState<string>(
-    toastTopic[0].title,
-  );
-
-  const setStep = useSetRecoilState(stepState);
+  const [selectedTopic, setSelectedTopic] = useState<string>();
   const [toastData, setToastData] = useRecoilState(dataState);
-  const [iconList, setIconList] = useState<any[]>([]);
-
-  const handleButtonClick = (name: string) => {
-    scrollToTop();
-    setSelectedTopic(name);
-    const selectedGroup = data?.find((group) => group.name === name);
-    console.log('selectedGroup', selectedGroup);
-    if (selectedGroup) {
-      setIconList(selectedGroup.icon || []);
-    }
-    console.log('iconList', iconList);
-  };
 
   const nickname =
     typeof window !== 'undefined' && localStorage.getItem('nickname');
@@ -93,23 +53,32 @@ export default function ToastDecoForm(props: ToastFormProps) {
     }
   };
 
-  const { data } = useGetIconGroups();
+  const { data: jamIconsData } = useGetIconGroupsJams();
+  const { data: toastIconsData } = useGetIconGroupsToasts();
 
-  console.log('data', data);
+  const data = type === 'jam' ? jamIconsData : toastIconsData;
 
-  const selectedTemp = data && data.length > 0 ? data[0].name : '';
+  const filteredIcons = useMemo(() => {
+    return data?.find((group) => group.name === selectedTopic)?.icon || [];
+  }, [data, selectedTopic]);
 
-  const filteredIcons =
-    data?.find((group) => group.name === selectedTemp)?.icon || [];
+  useEffect(() => {
+    if (data && data.length > 0) {
+      setSelectedTopic(data[0].name);
+    }
+  }, [data]);
 
-  console.log('filteredIcons', filteredIcons);
+  const handleButtonClick = (name: string) => {
+    scrollToTop();
+    setSelectedTopic(name);
+  };
 
   return (
     <div className="w-full h-full pt-6 flex flex-col justify-between">
       <div className="px-6">
         <InputForm title={`${nickname}님의 토스트를 꾸며보세요!`}>
           <Image
-            className="mx-auto mt-8 border-2"
+            className="mx-auto mt-8 border-2 w-[200px] h-[200px] object-cover"
             src={toastData.deco as string}
             alt=""
             width={200}
@@ -120,21 +89,7 @@ export default function ToastDecoForm(props: ToastFormProps) {
 
       <div className="bg-white w-full h-full pt-6 pb-12 max-h-[405px] flex flex-col justify-between px-6 border-t-2 border-gray-10 rounded-t-[20px]">
         <div>
-          <div className="w-full flex justify-between gap-3">
-            {/* {toastTopic.map((item, idx) => {
-              return (
-                <Button
-                  key={idx}
-                  size="sm"
-                  onClick={() => handleButtonClick(item.title)}
-                  color={selectedTopic === item.title ? 'primary' : 'disabled'}
-                  className="max-w-[111px] flex-1 rounded-[20px] !h-[36px]"
-                >
-                  {item.title}
-                </Button>
-              );
-            })} */}
-
+          <div className="w-full flex gap-3">
             {data?.map((item) => {
               return (
                 <Button
@@ -154,24 +109,6 @@ export default function ToastDecoForm(props: ToastFormProps) {
             ref={toastBoxRef}
             className="w-full h-full grid grid-cols-3 mt-6 gap-x-4 gap-y-6 max-h-[200px] overflow-y-auto"
           >
-            {/* {buttonTopic.imgArr.map((option: ToastOptionsProps) => (
-              <div
-                key={option.name}
-                className="flex items-center justify-center"
-              >
-                <Image
-                  src={option.src}
-                  alt={option.name}
-                  width={80}
-                  height={80}
-                  className="cursor-pointer"
-                  onClick={() =>
-                    setToastData((prev) => ({ ...prev, deco: option.src }))
-                  }
-                />
-              </div>
-            ))} */}
-
             {filteredIcons &&
               filteredIcons.map((icon) => (
                 <div

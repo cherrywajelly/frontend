@@ -107,6 +107,7 @@ export default function GiftToastPage() {
             stepState={giftToastStepState}
             dataState={giftToastDataState}
             handleSubmit={handleSubmit}
+            type="toast"
           />
         )}
       </div>
