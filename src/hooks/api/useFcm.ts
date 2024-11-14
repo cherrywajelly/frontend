@@ -3,6 +3,7 @@ import { NotificationsListResponse, NotiItemResponse } from '@/types/api/fcm';
 import {
   getMoveNotificationsPage,
   getNotificationsList,
+  postFCMTest,
   putFCMToken,
 } from '@/api/fcm';
 import { useMutation, useQuery } from '@tanstack/react-query';
@@ -39,4 +40,16 @@ export const useGetMoveNotificationsPage = (fcmId: number) => {
     enabled: true,
   });
   return { data, isLoading, error, refetch };
+};
+
+// 알림 테스트
+export const usePostFCMTest = () => {
+  const { mutate, isPending, error } = useMutation({
+    mutationFn: () => postFCMTest(),
+    onSuccess: () => {},
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+  return { mutate, isPending, error };
 };

@@ -40,3 +40,25 @@ export const getMoveNotificationsPage = async (fcmId: number) => {
   const data = await res.json();
   return data;
 };
+
+// 알림 테스트
+export const postFCMTest = async () => {
+  await apiRequest(`/api/v1/fcm/send`, 'POST', {
+    fcmConstant: 'EVENTTOASTOPENED',
+    nickname: '카카오채민이다',
+    toastName: 'toastName',
+    param: 2,
+  })
+    .then((res) => {
+      if (res.status === 500) {
+        throw new Error('Internal Server Error');
+      }
+
+      if (res.status === 200) {
+        return res;
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
