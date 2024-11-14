@@ -1,4 +1,4 @@
-FROM yny.ocir.io/axmpikvsv3z9/node:dev AS base
+FROM yny.ocir.io/axmpikvsv3z9/node AS base
 
 FROM base AS deps
 RUN apk add --no-cache libc6-compat
