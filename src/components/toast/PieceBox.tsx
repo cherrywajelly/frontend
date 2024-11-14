@@ -1,6 +1,10 @@
+import { useEffect, useState } from 'react';
+
 import Dropdown from '@/components/common-components/dropdown/Dropdown';
 
 import { ToastPieceItemResponses } from '@/types/api/giftToast';
+
+import { formatDate } from '@/utils';
 
 import temp from '../../../public/images/lcm.jpeg';
 
@@ -16,17 +20,35 @@ export type PieceBoxProps = {
 
 export default function PieceBox(props: PieceBoxProps) {
   const { handleDelete, isList = false, onClick, data } = props;
-  // console.log(data);
+
+  const [fileContent, setFileContent] = useState<string>('');
+
+  const readFileContent = (blobUrl: string) => {
+    fetch(blobUrl)
+      .then((res) => res.blob())
+      .then((blob) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          setFileContent(reader.result as string);
+        };
+        reader.readAsText(blob);
+      })
+      .catch((error) => console.error('파일 읽기 오류:', error));
+  };
+
+  useEffect(() => {
+    readFileContent(data.contentsUrl);
+    console.log(fileContent);
+  }, [fileContent, data]);
 
   return (
     <div
       onClick={onClick}
-      className="flex flex-col gap-4 py-6 px-5 bg-white rounded-[10px] border border-gray-10"
+      className="w-full flex flex-col gap-4 py-6 px-5 bg-white rounded-[10px] border border-gray-10"
     >
       <div className="flex gap-4">
         <Image
-          // TOFIX
-          src={temp}
+          src={data.iconImageUrl || temp}
           alt=""
           width={56}
           height={56}
@@ -62,22 +84,18 @@ export default function PieceBox(props: PieceBoxProps) {
           'text-body2 text-black-main',
           isList ? 'line-clamp-3' : '',
         )}
-      >
-        뭐 써야되는지 고민하고 있었는데 도휘가 하니 예브다 라고 해서 뭔가 웃긴데
-        그렇다고 막 빵터질 정도는 아닌데 약간 자기 전에 생각날 것 같은 그런뭐
-        써야되는지 고민하고 있었는데 도휘가 하니 예브다 라고 해서 뭔가 웃긴데
-        그렇다고 막 빵터질 정도는 아닌데 약간 자기 전에 생각날 것 같은 그런헤헤
-        {data.contentsUrl}
-      </div>
+        dangerouslySetInnerHTML={{ __html: fileContent }}
+      />
 
       {/* images */}
-
       {data.toastPieceImages && (
         <div className="flex flex-col gap-2">
           <div className="w-full flex gap-1">
             <Image
               src={data.toastPieceImages[0] || temp}
               alt=""
+              width={100}
+              height={154}
               className="w-1/2 h-[154px] object-cover rounded-[8px] border border-gray-10"
             />
             <div
@@ -89,6 +107,8 @@ export default function PieceBox(props: PieceBoxProps) {
               <Image
                 src={data.toastPieceImages[1] || temp}
                 alt=""
+                width={100}
+                height={100}
                 className={clsx(
                   'object-cover w-full h-full',
                   isList ? 'opacity-40' : '',
@@ -105,15 +125,16 @@ export default function PieceBox(props: PieceBoxProps) {
             <Image
               src={data.toastPieceImages[2] || temp}
               alt=""
+              width={100}
+              height={154}
               className="w-full h-[154px] object-cover rounded-[8px] border border-gray-10"
             />
           )}
         </div>
       )}
-
       {/* date */}
       <span className="text-gray-60 text-body4 text-right">
-        2024년 11월 11일
+        {data && formatDate(data.createdAt)}
       </span>
     </div>
   );

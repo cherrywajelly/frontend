@@ -7,14 +7,8 @@ import tempImg from '../../../public/images/default-toast.png';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
-const tempData = [
-  { img: tempImg, title: '' },
-  { img: tempImg, title: '' },
-  { img: tempImg, title: '' },
-];
-
 export default function Showcase(props: ShowcaseProps) {
-  const { isMine, nickname = 'timetoast' } = props;
+  const { isMine, nickname, data } = props;
   const router = useRouter();
 
   const handleEdit = () => {
@@ -38,16 +32,28 @@ export default function Showcase(props: ShowcaseProps) {
         )}
       </div>
       <div className="w-full flex gap-[9px] pt-4">
-        {tempData.map((item) => {
-          return (
+        {data &&
+          data.length > 0 &&
+          data.map((item) => (
             <div
-              className="bg-white border border-gray-10 p-4 rounded-[10px]"
-              key={item.title}
+              className="w-1/3 bg-white border border-gray-10 p-4 rounded-[10px]"
+              key={item.eventToastId}
             >
-              <Image src={item.img} alt={item.title} />
+              <Image
+                src={item.iconUrl || tempImg}
+                alt="진열 아이콘"
+                width={100}
+                height={100}
+                className="object-cover w-full h-auto"
+              />
             </div>
-          );
-        })}
+          ))}
+
+        {data && !data.length && (
+          <div className="w-full text-center text-body4 bg-white border border-gray-10 p-4 rounded-[10px]">
+            진열장이 비어있어요.
+          </div>
+        )}
       </div>
     </div>
   );

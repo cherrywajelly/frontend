@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CgHome } from 'react-icons/cg';
 import { FaRegSquarePlus } from 'react-icons/fa6';
 import { FiSearch, FiUser } from 'react-icons/fi';
@@ -50,6 +50,8 @@ const BottomBar = () => {
   const handleCloseBackdrop = () => {
     setSelectedItem(previousItem);
   };
+
+  useEffect(() => {}, [selectedItem]);
 
   return (
     <div className="relative">

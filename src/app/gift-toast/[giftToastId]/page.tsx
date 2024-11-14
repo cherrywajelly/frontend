@@ -25,59 +25,67 @@ export default function GiftToastItemPage({ params }: { params: PageParams }) {
 
   return (
     <div className="w-full h-lvh">
-      <TopBar title={data?.title} />
+      <TopBar title={data?.giftToastInfo.title} />
 
-      {data && (
-        <div className="h-[calc(100vh-144px)] flex flex-col gap-1 bg-gray-05 p-6">
+      <div className="h-[calc(100vh-144px)] flex flex-grow flex-col gap-1 bg-gray-05 p-6 overflow-y-auto">
+        {data && (
           <ToastBox
-            title={data.title}
-            toastImg={data.iconImageUrl}
-            profileImg={tempImg}
-            nickname={data.giftToastOwner}
-            openDate={data.openedDate}
+            title={data.giftToastInfo.title}
+            toastImg={data.giftToastInfo.iconImageUrl ?? ''}
+            profileImg={data.giftToastInfo.profileImageUrl}
+            nickname={data.giftToastInfo.giftToastOwner}
+            openDate={data.giftToastInfo.openedDate}
           >
             <Button
               size="sm"
-              color={data.isOpened ? 'disabled' : 'primary'}
-              disabled={data.isOpened}
+              color={data.giftToastInfo.isOpened ? 'disabled' : 'primary'}
+              disabled={data.giftToastInfo.isOpened}
               onClick={() => {
-                if (!data.isOpened)
-                  router.push(`/gift-toast/${data.giftToastId}/write`);
+                if (!data.giftToastInfo.isOpened)
+                  router.push(
+                    `/gift-toast/${data.giftToastInfo.giftToastId}/write`,
+                  );
               }}
             >
-              {data.isOpened ? '토스트가 오픈되었어요' : '토스트 조각 쌓기'}
+              {data.giftToastInfo.isOpened
+                ? '토스트가 오픈되었어요'
+                : '토스트 조각 쌓기'}
             </Button>
           </ToastBox>
+        )}
 
-          <div className="w-full h-full mt-4 flex flex-col gap-4 justify-center items-center border-2">
-            {data.toastPieceResponses.toastPieceResponses.length > 0 ? (
-              data.toastPieceResponses.toastPieceResponses.map((item, idx) => {
-                return (
-                  <PieceBox
-                    key={idx}
-                    handleDelete={() => {
-                      console.log('hi');
-                    }}
-                    data={item}
-                    onClick={() => router.push('/')}
-                    isList
-                  />
-                );
-              })
-            ) : (
+        <div className="mt-4 flex flex-col gap-4 justify-center items-center">
+          {data && data.toastPieceResponses.toastPieceResponses.length > 0 ? (
+            data.toastPieceResponses.toastPieceResponses.map((item, idx) => {
+              return (
+                <PieceBox
+                  key={item.toastPieceId}
+                  handleDelete={() => {
+                    console.log('hi');
+                  }}
+                  data={item}
+                  onClick={() =>
+                    router.push(
+                      `/gift-toast/${data.giftToastInfo.giftToastId}/piece/${item.toastPieceId}`,
+                    )
+                  }
+                  isList
+                />
+              );
+            })
+          ) : (
+            <>
               <Image
                 src={lockedToast}
                 alt=""
                 className="opacity-50 w-[240px] h-[240px]"
               />
-            )}
-            {/* TODO: api response에 맞게 넣기 */}
-            <div>D-104</div>
-          </div>
+              <div>D-{data?.dDay}</div>
+            </>
+          )}
         </div>
-      )}
+      </div>
 
-      <div className="pt-[96px]" />
       <BottomBar />
     </div>
   );

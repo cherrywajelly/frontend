@@ -21,12 +21,20 @@ const TopBar = ({
   isRight,
   submitAble = false,
   onBack,
+  handleSubmit,
 }: TopBarProps & { onBack?: () => void }) => {
   const [isActive, setIsActive] = useState<boolean>(submitAble ?? false);
+  // console.log(isActive);
   const router = useRouter();
 
   const handleBackBtn = () => {
     router.back();
+  };
+
+  const handleLogout = () => {
+    sessionStorage.clear();
+    localStorage.clear();
+    window.location.href = '/';
   };
 
   const SettingCategories = [
@@ -34,6 +42,7 @@ const TopBar = ({
     { label: '그룹 관리', onClick: () => router.push('/setting/group') },
     { label: '아이콘 마켓', onClick: () => router.push('/') },
     { label: '구독 플랜', onClick: () => router.push('/') },
+    { label: '로그아웃', onClick: () => handleLogout() },
   ];
 
   return (
@@ -61,6 +70,7 @@ const TopBar = ({
               variants.base,
               isActive ? variants.active : variants.disabled,
             )}
+            onClick={handleSubmit}
           >
             등록
           </span>

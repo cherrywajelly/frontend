@@ -4,34 +4,36 @@ import { FiCamera } from 'react-icons/fi';
 import Button from '@/components/common-components/button';
 import Input from '@/components/common-components/input';
 
-import { useGroupTeam } from '@/hooks/api/useSetting';
+import { useGroupTeam, usePostGroupImage } from '@/hooks/api/useSetting';
+import { FollowingItemResponse } from '@/types/api/mypage';
 import { UserDefaultProps } from '@/types/user';
 
 import temp from '../../../public/images/default-toast.png';
 
 import Image from 'next/image';
 
-export const tempUserList: UserDefaultProps[] = [
-  { profileImg: temp, nickname: '채민이', memberId: 1 },
-  { profileImg: temp, nickname: 'chchch', memberId: 2 },
-  { profileImg: temp, nickname: '정채연', memberId: 3 },
-  { profileImg: temp, nickname: '에스파', memberId: 4 },
-  { profileImg: temp, nickname: 'asdf', memberId: 5 },
-  { profileImg: temp, nickname: 'cccx', memberId: 6 },
-  { profileImg: temp, nickname: 'cswd', memberId: 7 },
-  { profileImg: temp, nickname: 'xvew', memberId: 8 },
-  { profileImg: temp, nickname: 'asdfaefg', memberId: 9 },
-  { profileImg: temp, nickname: 'vdsefs', memberId: 10 },
-];
+// export const tempUserList: UserDefaultProps[] = [
+//   { profileImg: temp, nickname: '채민이', memberId: 1 },
+//   { profileImg: temp, nickname: 'chchch', memberId: 2 },
+//   { profileImg: temp, nickname: '정채연', memberId: 3 },
+//   { profileImg: temp, nickname: '에스파', memberId: 4 },
+//   { profileImg: temp, nickname: 'asdf', memberId: 5 },
+//   { profileImg: temp, nickname: 'cccx', memberId: 6 },
+//   { profileImg: temp, nickname: 'cswd', memberId: 7 },
+//   { profileImg: temp, nickname: 'xvew', memberId: 8 },
+//   { profileImg: temp, nickname: 'asdfaefg', memberId: 9 },
+//   { profileImg: temp, nickname: 'vdsefs', memberId: 10 },
+// ];
 
 export default function GenerateGroup({
   selectedUsers,
 }: {
-  selectedUsers: UserDefaultProps[];
+  selectedUsers: FollowingItemResponse[];
 }) {
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [profileImg, setProfileImg] = useState<File | null>(null);
 
-  const [profileImg, setProfileImg] = useState<string>('');
+  // const [profileImg, setProfileImg] = useState<string>('');
   const [groupName, setGroupName] = useState<string>('');
 
   const handleFileUploadClick = () => {
@@ -42,24 +44,43 @@ export default function GenerateGroup({
     const file = event.target.files?.[0];
 
     if (file) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        if (reader.result) {
-          setProfileImg(reader.result as string);
-        }
-      };
-      reader.readAsDataURL(file);
+      setProfileImg(file);
     }
+    // const file = event.target.files?.[0];
+
+    // if (file) {
+    //   const reader = new FileReader();
+    //   reader.onload = () => {
+    //     if (reader.result) {
+    //       setProfileImg(reader.result as string);
+    //     }
+    //   };
+    //   reader.readAsDataURL(file);
+    // }
   };
 
-  const { mutate, isPending } = useGroupTeam({
+  const { mutate, isPending, data, mutateAsync } = useGroupTeam({
     teamName: groupName,
     teamMembers: selectedUsers.map((user) => user.memberId as number),
   });
 
-  const handleSubmit = () => {
-    //
-    mutate();
+  const { mutate: mutateGroupImg } = usePostGroupImage();
+
+  const handleSubmit = async () => {
+    try {
+      const responseData = await mutateAsync();
+      console.log('responseData', responseData);
+
+      if (responseData?.teamId && profileImg) {
+        console.log('herererere');
+        await mutateGroupImg({
+          teamId: responseData.teamId,
+          teamImage: profileImg,
+        });
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -67,7 +88,7 @@ export default function GenerateGroup({
       <div className="flex flex-col items-center flex-none">
         <div className="relative">
           <Image
-            src={profileImg || temp}
+            src={profileImg ? URL.createObjectURL(profileImg) : temp}
             alt=""
             width={120}
             height={120}
@@ -109,11 +130,11 @@ export default function GenerateGroup({
           {selectedUsers.map((item) => (
             <div className="flex gap-4 items-center" key={item.nickname}>
               <Image
-                src={item.profileImg}
+                src={item.memberProfileUrl ?? ''}
                 alt=""
                 width={48}
                 height={48}
-                className="object-cover rounded-full"
+                className="object-cover rounded-full w-[48px] h-[48px]"
               />
               <span className="text-body2 text-black-main">
                 {item.nickname}

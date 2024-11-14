@@ -1,21 +1,24 @@
-import { putNicknameSignUp, postNicknameValid } from '@/api/signup';
-import { useMutation } from '@tanstack/react-query';
+import { getNicknameValid, putNicknameSignUp } from '@/api/signup';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 export const useNicknameValid = (nickname: string) => {
-  const { mutate, isPending, error } = useMutation({
-    mutationFn: () => postNicknameValid(nickname),
-    onSuccess: () => {},
-    onError: (error) => {
-      console.log(error);
-    },
+  const { data, error, isLoading, refetch } = useQuery({
+    queryKey: ['nicknameValid'],
+    queryFn: () => getNicknameValid(nickname),
+    enabled: false,
   });
-  return { mutate, isPending, error };
+
+  return { data, error, isLoading, refetch };
 };
 
 export const useNicknameSignUp = (nickname: string) => {
+  const queryClient = useQueryClient();
   const { mutate, isPending, error } = useMutation({
     mutationFn: () => putNicknameSignUp(nickname),
-    onSuccess: () => {},
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['myProfile'] });
+      queryClient.invalidateQueries({ queryKey: ['myInfo'] });
+    },
     onError: (error) => {
       console.log(error);
     },

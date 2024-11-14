@@ -17,7 +17,7 @@ export default function SignUpPage() {
   const [isValid, setIsValid] = useState<boolean>(false);
 
   const [validMessage, setValidMessage] = useState<string>(
-    '닉네임은 1자 이상 10자 이하의 영/문/숫자 조합으로? 입력해주세요.',
+    '닉네임은 1자 이상 10자 이하의 영/문/숫자 조합으로 입력해주세요.',
   );
 
   const router = useRouter();
@@ -27,12 +27,16 @@ export default function SignUpPage() {
     setIsValid(false);
   };
 
-  const { mutate: mutateNicknameValid, isPending: isPendingValid } =
-    useNicknameValid(nickname);
+  const {
+    data: nicknameValidData,
+    isLoading: isLoadingNicknameValid,
+    refetch,
+  } = useNicknameValid(nickname);
+
   const { mutate: mutateNicknameSignUp, isPending: isPendingSignUp } =
     useNicknameSignUp(nickname);
 
-  const handleValidNickname = () => {
+  const handleValidNickname = async () => {
     // nicknameRegx: 1자 이상 10자 이하의 한글, 영문, 숫자 조합만 허용
     const nicknameRegex = /^[a-zA-Z0-9가-힣]{1,10}$/;
     const isNicknameValid = nicknameRegex.test(nickname);
@@ -46,16 +50,19 @@ export default function SignUpPage() {
       return;
     }
 
-    mutateNicknameValid(undefined, {
-      onSuccess: () => {
+    try {
+      const data = await refetch();
+      console.log(data);
+      if (data.status === 'success') {
         setIsValid(true);
         setValidMessage('사용 가능한 닉네임입니다.');
-      },
-      onError: () => {
+      } else {
         setIsValid(false);
-        setValidMessage('이미 사용 중인 닉네임입니다.');
-      },
-    });
+        setValidMessage(data.error?.message ?? '');
+      }
+    } catch (error) {
+      console.error('중복 확인 실패:', error);
+    }
   };
 
   const handleSubmit = () => {

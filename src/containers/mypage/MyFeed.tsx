@@ -38,7 +38,7 @@ export default function MyFeed() {
     useDeleteEventToast();
 
   return (
-    <>
+    <div>
       <div className="w-full flex border-b border-gray-10 px-6">
         <div
           className={clsx(
@@ -61,43 +61,49 @@ export default function MyFeed() {
         </div>
       </div>
 
-      <div className="bg-white p-6 h-full">
-        <div className="flex flex-col gap-4">
-          {activeTab === 0
-            ? eventToastListData?.map((item) => {
-                return (
-                  <MyEventToastItem
-                    key={item.eventToastId}
-                    image={item.icon.iconImageUrl}
-                    title={item.title}
-                    date={item.openedDate}
-                    handleDelete={() => {
-                      deleteEventToast(item.eventToastId);
-                    }}
-                    onClick={() =>
-                      router.push(`/event-toast/${item.eventToastId}`)
-                    }
-                  />
-                );
-              })
-            : giftToastListData?.map((item) => {
-                return (
-                  <MyGiftToastItem
-                    key={item.giftToastId}
-                    image={item.iconImageUrl}
-                    title={item.title}
-                    groupUser={item.giftToastOwner}
-                    onClick={() =>
-                      router.push(`/gift-toast/${item.giftToastId}`)
-                    }
-                    handleDelete={() => {
-                      deleteGiftToast(item.giftToastId);
-                    }}
-                  />
-                );
-              })}
-        </div>
+      <div
+        className={clsx(
+          'flex flex-col gap-4 p-6 box-border',
+          (activeTab === 0 &&
+            (!eventToastListData || eventToastListData.length === 0)) ||
+            (activeTab === 1 &&
+              (!giftToastListData || giftToastListData.length === 0))
+            ? ''
+            : 'bg-white',
+        )}
+      >
+        {activeTab === 0
+          ? eventToastListData?.map((item) => {
+              return (
+                <MyEventToastItem
+                  key={item.eventToastId}
+                  image={item.icon.iconImageUrl}
+                  title={item.title}
+                  date={item.openedDate}
+                  handleDelete={() => {
+                    deleteEventToast(item.eventToastId);
+                  }}
+                  onClick={() =>
+                    router.push(`/event-toast/${item.eventToastId}`)
+                  }
+                />
+              );
+            })
+          : giftToastListData?.map((item) => {
+              return (
+                <MyGiftToastItem
+                  key={item.giftToastId}
+                  image={item.iconImageUrl}
+                  title={item.title}
+                  groupUser={item.giftToastOwner}
+                  onClick={() => router.push(`/gift-toast/${item.giftToastId}`)}
+                  handleDelete={() => {
+                    deleteGiftToast(item.giftToastId);
+                  }}
+                />
+              );
+            })}
       </div>
-    </>
+    </div>
   );
 }

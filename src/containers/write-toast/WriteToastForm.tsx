@@ -1,17 +1,17 @@
 import 'react-quill/dist/quill.snow.css';
 
-import { ChangeEvent, useRef, useState } from 'react';
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { IoCameraOutline } from 'react-icons/io5';
 import { MdCancel } from 'react-icons/md';
 
 import Button from '@/components/common-components/button';
 import Input from '@/components/common-components/input';
 
-import { TostFormProps } from './ToastDecoForm';
+import { pieceData, ToastData } from '@/types/atoms/toastAtom';
 
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
-import { RecoilState, useRecoilState, useSetRecoilState } from 'recoil';
+import { RecoilState, useRecoilState } from 'recoil';
 
 const QuillWrapper = dynamic(() => import('react-quill'), {
   ssr: false,
@@ -42,13 +42,22 @@ const formats = [
   // 'video',
 ];
 
-export default function WriteToastForm(props: TostFormProps) {
+export type WriteToastFormProps<T> = {
+  stepState: RecoilState<number>;
+  dataState: RecoilState<T>;
+  handleSubmit?: () => void;
+  isMainToast?: boolean;
+};
+
+export default function WriteToastForm<T extends pieceData | ToastData>(
+  props: WriteToastFormProps<T>,
+) {
   const { dataState } = props;
 
-  const [title, setTitle] = useState<string>('');
-  const [contents, setContents] = useState<string>('');
-
   const [toastData, setToastData] = useRecoilState(dataState);
+
+  const [title, setTitle] = useState<string>(toastData?.title || '');
+  const [contents, setContents] = useState<string>(toastData?.contents || '');
 
   const handleWriteTitle = (e: ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
@@ -67,21 +76,28 @@ export default function WriteToastForm(props: TostFormProps) {
     const files = event.target.files;
     if (!files) return;
 
-    // 10개 이상의 파일은 추가하지 않도록 제한
-    if (filePreviews.length + files.length > 10) {
-      alert('이미지는 최대 10개까지 첨부할 수 있습니다.');
+    // 3개 이상의 파일은 추가하지 않도록 제한
+    if (filePreviews.length + files.length > 3) {
+      alert('이미지는 최대 3개까지 첨부할 수 있습니다.');
       return;
     }
 
     const newPreviews: string[] = [];
+    const newFiles: File[] = [];
 
     Array.from(files).forEach((file) => {
       const reader = new FileReader();
       reader.onload = () => {
         if (typeof reader.result === 'string') {
           newPreviews.push(reader.result);
+          newFiles.push(file);
+
           if (newPreviews.length === files.length) {
             setFilePreviews((prev) => [...prev, ...newPreviews]);
+            setToastData((prev) => ({
+              ...prev,
+              imgList: [...(prev.imgList || []), ...newFiles],
+            }));
           }
         }
       };
@@ -92,7 +108,24 @@ export default function WriteToastForm(props: TostFormProps) {
   // 사진 제거
   const handleCancelClick = (index: number) => {
     setFilePreviews((prev) => prev.filter((_, idx) => idx !== index));
+
+    setToastData((prev) => ({
+      ...prev,
+      imgList: prev.imgList?.filter((_, idx) => idx !== index),
+    }));
   };
+
+  useEffect(() => {
+    const plainText = contents.replace(/<[^>]*>/g, '').trim();
+    const isSubmitAble = title.length > 0 && plainText.length > 0;
+
+    setToastData((prev) => ({
+      ...prev,
+      title,
+      contents,
+      submitAble: isSubmitAble,
+    }));
+  }, [title, contents, setToastData]);
 
   return (
     <div className="h-full">

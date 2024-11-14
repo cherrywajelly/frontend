@@ -1,6 +1,7 @@
 'use client';
 
-import { ChangeEvent, useRef, useState } from 'react';
+import { ChangeEvent, useEffect, useMemo, useRef, useState } from 'react';
+import { isValid, set } from 'react-datepicker/dist/date_utils';
 import { FiCamera } from 'react-icons/fi';
 
 import Button from '@/components/common-components/button';
@@ -8,10 +9,15 @@ import Input from '@/components/common-components/input';
 import TopBar from '@/components/common-components/top-bar';
 
 import { useMyInfo } from '@/hooks/api/useLogin';
+import { useGetMyProfile } from '@/hooks/api/useMyPage';
+import { usePostProfileImage } from '@/hooks/api/useSetting';
 import { useNicknameSignUp, useNicknameValid } from '@/hooks/api/useSignUp';
+
+import { useQueryClient } from '@tanstack/react-query';
 
 import temp from '../../../../public/images/default-toast.png';
 
+import clsx from 'clsx';
 import Image, { StaticImageData } from 'next/image';
 import { useRouter } from 'next/navigation';
 
@@ -19,20 +25,41 @@ const SettingProfilePage = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
 
-  const { data, isLoading } = useMyInfo();
+  const queryClient = useQueryClient();
 
-  const prevNickname = data?.nickname ?? '';
-  const prevProfileImg = data?.profileUrl ?? '';
+  const { data, isLoading, refetch: refetchMyInfo } = useMyInfo();
+  const { refetch: refetchMyProfile } = useGetMyProfile();
+  const prevNickname = data && data.nickname;
+  const prevProfileImg = data && data.profileUrl;
 
-  const [nickname, setNickname] = useState<string>(data?.nickname);
-  const [profileImg, setProfileImg] = useState<string | StaticImageData>(
-    prevProfileImg,
-  );
+  const [nickname, setNickname] = useState<string>(data?.nickname ?? '');
+
+  // 업로드할 파일
+  const [profileImg, setProfileImg] = useState<File | null>(null);
+  // preview image
+  const [profileImgPreview, setProfileImgPreview] = useState<
+    string | StaticImageData
+  >(data?.profileUrl || temp);
+
+  const profileImgPreviewItem = useMemo(() => {
+    return profileImg
+      ? URL.createObjectURL(profileImg)
+      : data?.profileUrl || temp;
+  }, [profileImg, data?.profileUrl]);
+
+  useEffect(() => {
+    if (data) {
+      console.log(data);
+      setNickname(data.nickname);
+      // setProfileImgPreview(data.profileUrl);
+      refetchMyInfo();
+    }
+  }, [data, router, profileImgPreviewItem]);
 
   // nickname valid
   const [isValid, setIsValid] = useState<boolean>(false);
   const [validMessage, setValidMessage] = useState<string>(
-    '닉네임은 1자 이상 10자 이하의 영/문/숫자 조합으로? 입력해주세요.',
+    '닉네임은 1자 이상 10자 이하의 영/문/숫자 조합으로 입력해주세요.',
   );
 
   const handleFileUploadClick = () => {
@@ -43,22 +70,32 @@ const SettingProfilePage = () => {
     const file = event.target.files?.[0];
 
     if (file) {
+      setProfileImg(file);
+
       const reader = new FileReader();
       reader.onload = () => {
         if (reader.result) {
-          setProfileImg(reader.result as string);
+          setProfileImgPreview(reader.result as string);
         }
       };
       reader.readAsDataURL(file);
     }
   };
 
-  const { mutate: mutateNicknameValid, isPending: isPendingValid } =
-    useNicknameValid(nickname);
+  const {
+    data: nicknameValidData,
+    isLoading: isLoadingNicknameValid,
+    refetch,
+  } = useNicknameValid(nickname);
+
   const { mutate: mutateNicknameSignUp, isPending: isPendingSignUp } =
     useNicknameSignUp(nickname);
 
-  const handleValidNickname = () => {
+  // image 등록
+  const { mutate: mutateProfileImage, isPending: isPendingProfileImage } =
+    usePostProfileImage();
+
+  const handleValidNickname = async () => {
     // nicknameRegx: 1자 이상 10자 이하의 한글, 영문, 숫자 조합만 허용
     const nicknameRegex = /^[a-zA-Z0-9가-힣]{1,10}$/;
     const isNicknameValid = nicknameRegex.test(nickname);
@@ -72,30 +109,62 @@ const SettingProfilePage = () => {
       return;
     }
 
-    mutateNicknameValid(undefined, {
-      onSuccess: () => {
+    try {
+      const data = await refetch();
+      console.log(data);
+      if (data.status === 'success') {
         setIsValid(true);
         setValidMessage('사용 가능한 닉네임입니다.');
-      },
-      onError: () => {
+      } else {
         setIsValid(false);
-        setValidMessage('이미 사용 중인 닉네임입니다.');
-      },
-    });
+        setValidMessage(data.error?.message ?? '');
+      }
+    } catch (error) {
+      console.error('중복 확인 실패:', error);
+    }
   };
 
   const handleSubmit = () => {
-    mutateNicknameSignUp(undefined, {
-      onSuccess: () => {
-        // alert('회원가입 완료');
-        router.push('/');
-      },
-      onError: () => {
-        alert('예기치 못한 에러가 발생했습니다.');
-        router.push('/login');
-      },
-    });
+    if (nickname !== prevNickname) {
+      mutateNicknameSignUp(undefined, {
+        onSuccess: () => {
+          console.log('닉네임 변경 성공');
+          alert('프로필 정보가 수정되었습니다.');
+          setIsValid(false);
+          console.log(isValid);
+          localStorage.setItem('nickname', nickname ?? '');
+        },
+        onError: () => {
+          alert('예기치 못한 에러가 발생했습니다.');
+        },
+      });
+    }
+
+    if (profileImg && profileImgPreview !== prevProfileImg) {
+      mutateProfileImage(profileImg, {
+        onSuccess: () => {
+          // alert('프로필 정보가 수정되었습니다.');
+          console.log('프로필 이미지 변경 성공');
+          queryClient.invalidateQueries({ queryKey: ['myProfile'] });
+          queryClient.invalidateQueries({ queryKey: ['myInfo'] });
+          // refetchMyInfo();
+          // refetchMyProfile();
+          router.replace('/mypage');
+        },
+        onError: () => {
+          alert('예기치 못한 에러가 발생했습니다.');
+        },
+      });
+    }
   };
+
+  if (isLoading) {
+    return (
+      <div className="w-full h-full flex justify-center items-center">
+        <span>로딩 중...</span>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full h-lvh">
@@ -106,7 +175,7 @@ const SettingProfilePage = () => {
           <div className="flex flex-col items-center flex-none">
             <div className="relative">
               <Image
-                src={profileImg || temp}
+                src={profileImgPreviewItem}
                 alt=""
                 width={120}
                 height={120}
@@ -145,16 +214,25 @@ const SettingProfilePage = () => {
                   중복확인
                 </Button>
               </div>
+              <span
+                className={clsx(
+                  'px-2 text-body5',
+                  isValid ? 'text-success-main' : 'text-error-main',
+                )}
+              >
+                {validMessage}
+              </span>
             </div>
           </div>
 
           <Button
             size="md"
-            color={
-              profileImg !== prevProfileImg || isValid ? 'active' : 'disabled'
-            }
+            // color={
+            //   isValid || profileImg !== prevProfileImg ? 'active' : 'disabled'
+            // }
+            color="active"
             onClick={handleSubmit}
-            disabled={profileImg === prevProfileImg && !isValid}
+            // disabled={profileImg === prevProfileImg && !isValid}
             className="flex-none mb-4"
           >
             변경사항 저장
