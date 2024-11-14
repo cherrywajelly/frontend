@@ -54,7 +54,7 @@ export default function GiftToastItemPage({ params }: { params: PageParams }) {
           </ToastBox>
         )}
 
-        <div className="mt-4 flex flex-col gap-4 justify-center items-center">
+        <div className="mt-4 flex flex-col gap-4 justify-center items-center h-full">
           {data && data.toastPieceResponses.toastPieceResponses.length > 0 ? (
             data.toastPieceResponses.toastPieceResponses.map((item, idx) => {
               return (

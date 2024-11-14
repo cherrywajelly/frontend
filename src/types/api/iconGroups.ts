@@ -8,3 +8,20 @@ export interface IconGroupItemResponse {
   name: string;
   icon: IconProps[];
 }
+
+export interface IconGroupMarketResponse {
+  iconGroupId: number;
+  title: string;
+  creatorNickname: string;
+  iconType: string;
+  isBuy: boolean;
+  thumnailImageUrl: string;
+}
+
+export interface IconGroupsDetailResponse {
+  thumnailImageUrl: string;
+  title: string;
+  creatorNickname: string;
+  price: number;
+  iconResponses: IconProps[];
+}

@@ -91,6 +91,7 @@ export default function GiftWritePage() {
             dataState={toastPieceDataState}
             handleSubmit={handleNext}
             isMainToast={false}
+            type="toast"
           />
         )}
         {step === 1 && (
