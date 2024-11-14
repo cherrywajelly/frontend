@@ -12,6 +12,7 @@ import { useGetGiftToastItem } from '@/hooks/api/useGiftToast';
 import tempImg from '../../../../public/images/timetoast.png';
 import lockedToast from '../../../../public/images/toast/lockedToast.png';
 
+import clsx from 'clsx';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
@@ -54,7 +55,12 @@ export default function GiftToastItemPage({ params }: { params: PageParams }) {
           </ToastBox>
         )}
 
-        <div className="mt-4 flex flex-col gap-4 justify-center items-center h-full">
+        <div
+          className={clsx(
+            'mt-4 flex flex-col gap-4 justify-center items-center',
+            data?.dDay !== 0 ? 'h-full' : '',
+          )}
+        >
           {data && data.toastPieceResponses.toastPieceResponses.length > 0 ? (
             data.toastPieceResponses.toastPieceResponses.map((item, idx) => {
               return (

@@ -11,11 +11,14 @@ import { toastPieceDataState, toastPieceStepState } from '@/atoms/toastAtom';
 import ToastDecoForm from '@/containers/write-toast/ToastDecoForm';
 import WriteToastForm from '@/containers/write-toast/WriteToastForm';
 
-import { useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { useRecoilState } from 'recoil';
 
 export default function GiftWritePage() {
   const router = useRouter();
+
+  const params = useParams();
+  const giftToastId = Number(params.giftToastId);
 
   const [step, setStep] = useRecoilState(toastPieceStepState);
   const [toastPieceData, setToastPieceData] =
@@ -52,8 +55,8 @@ export default function GiftWritePage() {
     if (toastPieceData.submitAble) {
       //
       const toastPieceRequest = {
-        giftToastId: 7,
-        iconId: 5,
+        giftToastId: giftToastId,
+        iconId: toastPieceData.iconId as number,
         title: toastPieceData.title ?? 'testrequ',
       };
 
