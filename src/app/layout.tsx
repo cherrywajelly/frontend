@@ -7,6 +7,7 @@ import Providers from './providers';
 
 import type { Metadata } from 'next';
 import Head from 'next/head';
+import Script from 'next/script';
 
 export const metadata: Metadata = {
   title: 'TimeToast',
@@ -37,6 +38,7 @@ export default function RootLayout({
         <body
           className={`${pretendard.variable} font-pretendard antialiased m-auto`}
         >
+          <Script src="/service-worker.js" />
           <Providers>{children}</Providers>
         </body>
       </RecoilRootWrapper>
