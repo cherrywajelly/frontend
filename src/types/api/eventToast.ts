@@ -32,3 +32,21 @@ export interface EventToastResponse extends EventToastDefaultResponse {
   iconImageUrl: string;
   isOpened: boolean;
 }
+
+export interface JamItemDetailResponse {
+  eventToastDataResponse: {
+    eventToastTitle: string;
+    eventToastMemberProfile: string;
+    eventToastNickname: string;
+    eventToastIconImageUrl: string;
+  };
+  jamDataResponse: {
+    jamIconImageUrl: string;
+    jamTitle: string;
+    jamMemberProfileUrl: string;
+    jamNickname: string;
+    jamContentsUrl: string;
+    jamImageUrl: string;
+    jamCreatedDate: string;
+  };
+}
