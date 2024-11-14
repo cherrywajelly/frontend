@@ -22,7 +22,7 @@ export interface EventToastPostReqBody {
 
 export interface JamItemResponse {
   jamId: number;
-  iconImageUrl: number;
+  iconImageUrl: string;
   nickname: string;
 }
 export interface EventToastResponse extends EventToastDefaultResponse {
@@ -33,6 +33,16 @@ export interface EventToastResponse extends EventToastDefaultResponse {
   isOpened: boolean;
 }
 
+export interface JamDataItemResponse {
+  jamIconImageUrl: string;
+  jamTitle: string;
+  jamMemberProfileUrl: string;
+  jamNickname: string;
+  jamContentsUrl: string;
+  jamImageUrl: string;
+  jamCreatedDate: string;
+}
+
 export interface JamItemDetailResponse {
   eventToastDataResponse: {
     eventToastTitle: string;
@@ -40,13 +50,15 @@ export interface JamItemDetailResponse {
     eventToastNickname: string;
     eventToastIconImageUrl: string;
   };
-  jamDataResponse: {
-    jamIconImageUrl: string;
-    jamTitle: string;
-    jamMemberProfileUrl: string;
-    jamNickname: string;
-    jamContentsUrl: string;
-    jamImageUrl: string;
-    jamCreatedDate: string;
+  jamDataResponse: JamDataItemResponse;
+}
+
+// 잼 타입 관련
+export interface jamPostRequestBody {
+  jamContents: File;
+  jamImages: File[];
+  jamRequest: {
+    iconId: number;
+    title: string;
   };
 }

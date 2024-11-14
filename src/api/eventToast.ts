@@ -1,4 +1,7 @@
-import { EventToastPostReqBody } from '@/types/api/eventToast';
+import {
+  EventToastPostReqBody,
+  jamPostRequestBody,
+} from '@/types/api/eventToast';
 
 import { apiRequest } from '.';
 
@@ -134,8 +137,25 @@ export const deleteJamItem = async (jamId: number) => {
 };
 
 // 잼 저장
-export const postJamItemToEventToast = async (eventToastId: number) => {
-  await apiRequest(`/api/v1/jams/${eventToastId}`, 'POST')
+export const postJamItemToEventToast = async (
+  eventToastId: number,
+  { jamContents, jamImages, jamRequest }: jamPostRequestBody,
+) => {
+  const formData = new FormData();
+
+  formData.append('jamContents', jamContents);
+
+  jamImages.forEach((item) => {
+    formData.append('jamImages', item);
+  });
+
+  const requestBlob = new Blob([JSON.stringify(jamRequest)], {
+    type: 'application/json',
+  });
+
+  formData.append('jamRequest', requestBlob);
+
+  await apiRequest(`/api/v1/jams/${eventToastId}`, 'POST', formData)
     .then((res) => {
       if (res.status === 500) {
         throw new Error('Internal Server Error');
@@ -147,5 +167,6 @@ export const postJamItemToEventToast = async (eventToastId: number) => {
     })
     .catch((err) => {
       console.log(err);
+      alert(err.message);
     });
 };

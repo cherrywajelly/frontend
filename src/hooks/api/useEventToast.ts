@@ -4,6 +4,7 @@ import {
   EventToastResponse,
   JamItemDetailResponse,
   JamItemResponse,
+  jamPostRequestBody,
 } from '@/types/api/eventToast';
 
 import {
@@ -125,13 +126,20 @@ export const useDeleteJamItem = () => {
 export const usePostJamItemToEventToast = () => {
   const queryClient = useQueryClient();
   const { mutate, isPending, error } = useMutation({
-    mutationFn: (eventToastId: number) => postJamItemToEventToast(eventToastId),
+    mutationFn: ({
+      eventToastId,
+      item,
+    }: {
+      eventToastId: number;
+      item: jamPostRequestBody;
+    }) => postJamItemToEventToast(eventToastId, item),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['jamList'] });
     },
     onError: (error) => {
-      console.log(error);
+      console.error(error);
     },
   });
+
   return { mutate, isPending, error };
 };
