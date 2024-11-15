@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 
+import { navItem } from '@/components/common-components/bottom-bar/BottomBar';
 import TopBar from '@/components/common-components/top-bar';
 
 import {
@@ -11,6 +12,7 @@ import {
 } from '@/hooks/api/useGiftToast';
 import useFormatDate from '@/hooks/useFormat';
 
+import { bottomBarItemState } from '@/atoms/componentAtom';
 import { giftToastDataState, giftToastStepState } from '@/atoms/toastAtom';
 import ToastDecoForm from '@/containers/write-toast/ToastDecoForm';
 import GiftToastNameForm from '@/containers/write-toast/gift-toast/GiftToastNameForm';
@@ -26,6 +28,7 @@ export default function GiftToastPage() {
   const [giftData, setGiftData] = useRecoilState(giftToastDataState);
 
   const router = useRouter();
+  const [selectedItem, setSelectedItem] = useRecoilState(bottomBarItemState);
 
   const [isSubmitAble, setIsSubmitAble] = useState<boolean>(false);
 
@@ -42,15 +45,16 @@ export default function GiftToastPage() {
   const { mutate: mutateGiftToastFriend } = usePostGiftToastFriend();
   const { mutate: mutateGiftToastMine } = usePostGiftToastMine();
 
-  console.log('giftData', giftData);
+  // console.log('giftData', giftData);
 
   const formatMemoryDate = useFormatDate(giftData.memoryDate as Date);
   const formatOpenDate = useFormatDate(giftData.openDate as Date);
 
   const handleSubmit = () => {
     const handleSuccess = () => {
-      // TODO: 임의로 홈으로 리다이렉트, 모달 추가 후 로직 변경
-      router.push('/');
+      alert('토스트가 구워졌어요!');
+      setSelectedItem(navItem[0]);
+      router.replace('/');
     };
 
     if (giftData.type === 'group') {
