@@ -69,7 +69,7 @@ export default function JamWritePage() {
         },
         {
           onSuccess: () => {
-            alert('성공적으로 잼을 발랐어요!');
+            // alert('성공적으로 잼을 발랐어요!');
             router.back();
             setStep(0);
             resetJamData();

@@ -69,7 +69,7 @@ export default function GiftWritePage() {
         },
         {
           onSuccess: () => {
-            alert('성공적으로 토스트조각을 쌓았어요!');
+            // alert('성공적으로 토스트조각을 쌓았어요!');
             router.back();
             setStep(0);
             resetToastPieceData();
