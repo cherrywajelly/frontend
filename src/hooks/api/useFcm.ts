@@ -1,4 +1,8 @@
-import { NotificationsListResponse, NotiItemResponse } from '@/types/api/fcm';
+import {
+  FCMTestRequestBody,
+  NotificationsListResponse,
+  NotiItemResponse,
+} from '@/types/api/fcm';
 
 import {
   getMoveNotificationsPage,
@@ -45,7 +49,7 @@ export const useGetMoveNotificationsPage = (fcmId: number) => {
 // 알림 테스트
 export const usePostFCMTest = () => {
   const { mutate, isPending, error } = useMutation({
-    mutationFn: () => postFCMTest(),
+    mutationFn: (item: FCMTestRequestBody) => postFCMTest(item),
     onSuccess: () => {},
     onError: (error) => {
       console.log(error);

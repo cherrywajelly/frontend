@@ -1,3 +1,5 @@
+import { FCMTestRequestBody } from '@/types/api/fcm';
+
 import { apiRequest } from '.';
 
 // fcm 토큰 저장
@@ -42,12 +44,17 @@ export const getMoveNotificationsPage = async (fcmId: number) => {
 };
 
 // 알림 테스트
-export const postFCMTest = async () => {
+export const postFCMTest = async ({
+  fcmConstant,
+  nickname,
+  toastName,
+  param,
+}: FCMTestRequestBody) => {
   await apiRequest(`/api/v1/fcm/send`, 'POST', {
-    fcmConstant: 'EVENTTOASTOPENED',
-    nickname: '카카오채민이다',
-    toastName: 'toastName',
-    param: 2,
+    fcmConstant,
+    nickname,
+    toastName,
+    param,
   })
     .then((res) => {
       if (res.status === 500) {
