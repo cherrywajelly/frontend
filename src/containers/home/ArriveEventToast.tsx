@@ -20,7 +20,11 @@ export default function ArriveEventToast() {
       </span>
       <div className="mt-4 flex flex-col gap-4">
         {isLoading ? (
-          <CustomSkeleton height={178} />
+          <>
+            <CustomSkeleton height={178} />
+            <CustomSkeleton height={178} />
+            <CustomSkeleton height={178} />
+          </>
         ) : data ? (
           data.map((item) => {
             return (

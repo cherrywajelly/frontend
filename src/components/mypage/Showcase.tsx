@@ -3,12 +3,13 @@ import { IoIosArrowForward } from 'react-icons/io';
 import { ShowcaseProps } from '@/types/mypage';
 
 import tempImg from '../../../public/images/default-toast.png';
+import CustomSkeleton from '../common-components/skeleton';
 
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 export default function Showcase(props: ShowcaseProps) {
-  const { isMine, nickname, data } = props;
+  const { isMine, nickname, data, isLoading } = props;
   const router = useRouter();
 
   const handleEdit = () => {
@@ -18,9 +19,14 @@ export default function Showcase(props: ShowcaseProps) {
   return (
     <div className="px-6 pt-2 pb-6">
       <div className="flex justify-between items-center ">
-        <span className="text-body1 text-gray-80">
-          {isMine ? '나의 진열장' : `${nickname}님의 진열장`}
-        </span>
+        {isLoading ? (
+          <CustomSkeleton height={24} containerClassName="w-full" />
+        ) : (
+          <span className="text-body1 text-gray-80">
+            {isMine ? '나의 진열장' : `${nickname}님의 진열장`}
+          </span>
+        )}
+
         {isMine && (
           <button
             onClick={handleEdit}
@@ -32,7 +38,10 @@ export default function Showcase(props: ShowcaseProps) {
         )}
       </div>
       <div className="w-full flex gap-[9px] pt-4">
-        {data &&
+        {isLoading ? (
+          <CustomSkeleton height={50} containerClassName="w-full" />
+        ) : (
+          data &&
           data.length > 0 &&
           data.map((item) => (
             <div
@@ -47,9 +56,10 @@ export default function Showcase(props: ShowcaseProps) {
                 className="object-cover w-full h-auto"
               />
             </div>
-          ))}
+          ))
+        )}
 
-        {data && !data.length && (
+        {!isLoading && data && !data.length && (
           <div className="w-full text-center text-body4 bg-white border border-gray-10 p-4 rounded-[10px]">
             진열장이 비어있어요.
           </div>
