@@ -22,6 +22,8 @@ export const apiRequest = async <T>(
 ) => {
   const accessToken =
     typeof window !== 'undefined' && sessionStorage.getItem('accessToken');
+  const refreshToken =
+    typeof window !== 'undefined' && sessionStorage.getItem('refreshToken'); // refreshToken 가져오기
 
   const isFormData = body instanceof FormData;
 
@@ -35,11 +37,41 @@ export const apiRequest = async <T>(
   };
 
   try {
-    const response = await fetch(`${BASE_URL}${endpoint}`, options);
+    let response = await fetch(`${BASE_URL}${endpoint}`, options);
+
+    if (response.status === 401 && refreshToken) {
+      const refreshResponse = await fetch(
+        `${BASE_URL}/api/v1/members/refreshToken?refreshToken=${refreshToken}`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ refreshToken }),
+        },
+      );
+
+      if (refreshResponse.ok) {
+        const refreshData = await refreshResponse.json();
+        const newAccessToken = refreshData.accessToken;
+
+        sessionStorage.setItem('accessToken', newAccessToken);
+
+        options.headers = {
+          ...options.headers,
+          Authorization: `Bearer ${newAccessToken}`,
+        };
+        response = await fetch(`${BASE_URL}${endpoint}`, options);
+      } else {
+        throw new Error('Failed to refresh access token');
+      }
+    }
+
     if (!response.ok) {
       const errorData = await response.json();
       throw new Error(errorData.message || 'Failed to fetch data');
     }
+
     return response;
   } catch (error) {
     console.error('Error fetching data:', error);
