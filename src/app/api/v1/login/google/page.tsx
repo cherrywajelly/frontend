@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from 'react';
 
+import Spinner from '@/components/common-components/spinner';
+
 import { useGoogleLogin } from '@/hooks/api/useLogin';
 
 import { useRouter } from 'next/navigation';
@@ -48,8 +50,7 @@ export default function GoogleCallback() {
   return isLoading ? (
     <div className="h-screen">
       <div className="w-full h-full flex justify-center items-center">
-        {/* <Spinner /> */}
-        기다리는중..
+        <Spinner />
       </div>
     </div>
   ) : (
