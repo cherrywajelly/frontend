@@ -36,11 +36,11 @@ export const getMoveNotificationsPage = async (fcmId: number) => {
   const res = await apiRequest(`/api/v1/fcm/opened/${fcmId}`);
 
   if (!res.ok) {
-    throw new Error(`HTTP error in Google! Status: ${res.status}`);
+    throw new Error(`status: ${res.status}`);
   }
 
-  const data = await res.json();
-  return data;
+  // const data = await res.json();
+  return res;
 };
 
 // 알림 테스트
