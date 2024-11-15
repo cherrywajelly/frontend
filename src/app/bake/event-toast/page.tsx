@@ -2,11 +2,13 @@
 
 import { useState } from 'react';
 
+import { navItem } from '@/components/common-components/bottom-bar/BottomBar';
 import TopBar from '@/components/common-components/top-bar';
 
 import { usePostEventToast } from '@/hooks/api/useEventToast';
 import useFormatDate from '@/hooks/useFormat';
 
+import { bottomBarItemState } from '@/atoms/componentAtom';
 import { eventToastDataState, eventToastStepState } from '@/atoms/toastAtom';
 import ToastDecoForm from '@/containers/write-toast/ToastDecoForm';
 import EventToastNameForm from '@/containers/write-toast/event-toast/EventToastNameForm';
@@ -22,7 +24,7 @@ export default function EventToastPage() {
     useRecoilState(eventToastDataState);
   const router = useRouter();
 
-  const [isSubmitAble, setIsSubmitAble] = useState<boolean>(false);
+  const [selectedItem, setSelectedItem] = useRecoilState(bottomBarItemState);
 
   const handleBack = () => {
     if (step > 0) {
@@ -38,10 +40,10 @@ export default function EventToastPage() {
   const formatOpenDate = useFormatDate(eventToastData.openDate as Date);
 
   const handleSubmit = () => {
-    //
     const handleSuccess = () => {
-      // TODO: 임의로 홈으로 리다이렉트, 모달 추가 후 로직 변경
-      router.push('/');
+      alert('토스트가 구워졌어요!');
+      setSelectedItem(navItem[0]);
+      router.replace('/home');
     };
 
     console.log('eventToastData', eventToastData);
@@ -53,6 +55,10 @@ export default function EventToastPage() {
       },
       {
         onSuccess: handleSuccess,
+        onError: (error) => {
+          setStep(0);
+          alert('예기치 못한 에러가 발생했습니다.');
+        },
       },
     );
   };

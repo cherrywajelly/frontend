@@ -7,6 +7,7 @@ export interface NotificationsListResponse {
   toastName: string;
   isOpened: boolean;
   time: string;
+  param: number;
 }
 
 export interface NotiItemResponse {

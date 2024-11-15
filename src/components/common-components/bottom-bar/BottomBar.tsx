@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { CgHome } from 'react-icons/cg';
 import { FaRegSquarePlus } from 'react-icons/fa6';
 import { FiSearch, FiUser } from 'react-icons/fi';
@@ -15,7 +15,7 @@ import { useRouter } from 'next/navigation';
 import { useRecoilState } from 'recoil';
 
 export const navItem: NavItem[] = [
-  { icon: <CgHome />, title: '홈', url: '/' },
+  { icon: <CgHome />, title: '홈', url: '/home' },
   { icon: <FiSearch />, title: '검색', url: '/search' },
   { icon: <FaRegSquarePlus />, title: '토스트', url: '' },
   { icon: <PiBellBold />, title: '알림', url: '/notifications' },
@@ -34,7 +34,29 @@ const navVariants = {
 };
 const BottomBar = () => {
   const [selectedItem, setSelectedItem] = useRecoilState(bottomBarItemState);
-  const [previousItem, setPreviousItem] = useState(navItem[0]); // 이전 아이템을 저장할 상태
+  const [previousItem, setPreviousItem] = useState(selectedItem); // 이전 아이템을 저장할 상태
+
+  const backdropRef = useRef<HTMLDivElement>(null);
+
+  // useEffect(() => {
+  //   const handleClickOutside = (event: MouseEvent) => {
+  //     if (
+  //       backdropRef.current &&
+  //       !backdropRef.current.contains(event.target as Node)
+  //     ) {
+  //       handleCloseBackdrop();
+  //     }
+  //   };
+
+  //   // '토스트' 선택 시에만 이벤트 리스너 추가
+  //   if (selectedItem.title === '토스트') {
+  //     document.addEventListener('mousedown', handleClickOutside);
+  //   }
+
+  //   return () => {
+  //     document.removeEventListener('mousedown', handleClickOutside);
+  //   };
+  // }, [selectedItem]);
 
   const router = useRouter();
 
@@ -85,6 +107,7 @@ const BottomBar = () => {
 
       {selectedItem.title === '토스트' && (
         <div
+          // ref={backdropRef}
           className="px-6 fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-10"
           onClick={handleCloseBackdrop}
         >

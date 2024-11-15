@@ -9,6 +9,7 @@ export type UserInfoProps = {
   following: number;
   group: number;
   children?: React.ReactNode;
+  isLoading?: boolean;
 };
 
 // showcase props
@@ -16,6 +17,7 @@ export type ShowcaseProps = {
   isMine: boolean;
   nickname: string;
   data: MyShowcaseResponse[];
+  isLoading?: boolean;
 };
 
 export type MyEventToastItemProps = {

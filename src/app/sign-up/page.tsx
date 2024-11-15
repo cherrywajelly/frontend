@@ -69,7 +69,7 @@ export default function SignUpPage() {
     mutateNicknameSignUp(undefined, {
       onSuccess: () => {
         // alert('회원가입 완료');
-        router.push('/');
+        router.push('/home');
       },
       onError: () => {
         alert('예기치 못한 에러가 발생했습니다.');

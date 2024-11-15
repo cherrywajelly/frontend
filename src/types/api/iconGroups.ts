@@ -15,11 +15,11 @@ export interface IconGroupMarketResponse {
   creatorNickname: string;
   iconType: string;
   isBuy: boolean;
-  thumnailImageUrl: string;
+  thumbnailImageUrl: string;
 }
 
 export interface IconGroupsDetailResponse {
-  thumnailImageUrl: string;
+  thumbnailImageUrl: string;
   title: string;
   creatorNickname: string;
   price: number;

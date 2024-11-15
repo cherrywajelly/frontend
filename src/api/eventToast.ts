@@ -144,10 +144,7 @@ export const postJamItemToEventToast = async (
   const formData = new FormData();
 
   formData.append('jamContents', jamContents);
-
-  jamImages.forEach((item) => {
-    formData.append('jamImages', item);
-  });
+  formData.append('jamImages', jamImages);
 
   const requestBlob = new Blob([JSON.stringify(jamRequest)], {
     type: 'application/json',

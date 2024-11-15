@@ -23,8 +23,6 @@ const TopBar = ({
   onBack,
   handleSubmit,
 }: TopBarProps & { onBack?: () => void }) => {
-  const [isActive, setIsActive] = useState<boolean>(submitAble ?? false);
-  // console.log(isActive);
   const router = useRouter();
 
   const handleBackBtn = () => {
@@ -68,7 +66,7 @@ const TopBar = ({
           <span
             className={clsx(
               variants.base,
-              isActive ? variants.active : variants.disabled,
+              submitAble ? variants.active : variants.disabled,
             )}
             onClick={handleSubmit}
           >

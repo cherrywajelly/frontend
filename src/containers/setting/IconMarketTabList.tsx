@@ -55,7 +55,7 @@ export default function IconMarketTabList() {
                 }
               >
                 <Image
-                  src={item.thumnailImageUrl ?? ''}
+                  src={item.thumbnailImageUrl ?? ''}
                   alt=""
                   width={56}
                   height={56}

@@ -3,6 +3,7 @@
 import { useState } from 'react';
 
 import BottomBar from '@/components/common-components/bottom-bar';
+import Spinner from '@/components/common-components/spinner';
 import TopBar from '@/components/common-components/top-bar';
 
 import NotiDefaultItem from '@/components/notifications/NotiDefaultItem';
@@ -15,10 +16,11 @@ import {
 } from '@/hooks/api/useFcm';
 
 import clsx from 'clsx';
+import { useRouter } from 'next/navigation';
 
 export default function NotificationsPage() {
   const { data, isLoading } = useGetNotificationsList();
-
+  const router = useRouter();
   const [selectedFcmId, setSelectedFcmId] = useState<number | null>(null);
 
   const { data: moveData, refetch } = useGetMoveNotificationsPage(
@@ -41,18 +43,32 @@ export default function NotificationsPage() {
       <TopBar title="알림" isBackBtn={false} />
 
       <div className="w-full h-[calc(100vh-144px)] flex flex-grow flex-col overflow-y-auto bg-gray-05">
-        {isLoading && <div>로딩 중...</div>}
+        {isLoading && <Spinner />}
         {data &&
           data.map((item) => {
             switch (item.fcmConstant) {
               case 'EVENTTOASTSPREAD':
+                return (
+                  <NotiPieceJamItem
+                    key={item.fcmId}
+                    item={item}
+                    className={clsx(!item.isOpened ? '!bg-[#E3D1B7]' : '')}
+                    onClick={() => {
+                      handleNotificationClick(item.fcmId);
+                      router.push(`/event-toast/${item.param}`);
+                    }}
+                  />
+                );
               case 'GIFTTOASTBAKED':
                 return (
                   <NotiPieceJamItem
                     key={item.fcmId}
                     item={item}
                     className={clsx(!item.isOpened ? '!bg-[#E3D1B7]' : '')}
-                    onClick={() => handleNotificationClick(item.fcmId)}
+                    onClick={() => {
+                      handleNotificationClick(item.fcmId);
+                      router.push(`/gift-toast/${item.param}`);
+                    }}
                   />
                 );
               case 'FOLLOW':
@@ -61,7 +77,22 @@ export default function NotificationsPage() {
                     key={item.fcmId}
                     item={item}
                     className={clsx(!item.isOpened ? '!bg-[#E3D1B7]' : '')}
-                    onClick={() => handleNotificationClick(item.fcmId)}
+                    onClick={() => {
+                      handleNotificationClick(item.fcmId);
+                      router.push(`/profile/${item.param}`);
+                    }}
+                  />
+                );
+              case 'EVENTTOASTOPENED':
+                return (
+                  <NotiDefaultItem
+                    key={item.fcmId}
+                    item={item}
+                    className={clsx(!item.isOpened ? '!bg-[#E3D1B7]' : '')}
+                    onClick={() => {
+                      handleNotificationClick(item.fcmId);
+                      router.push(`/event-toast/${item.param}`);
+                    }}
                   />
                 );
               default:
@@ -70,7 +101,10 @@ export default function NotificationsPage() {
                     key={item.fcmId}
                     item={item}
                     className={clsx(!item.isOpened ? '!bg-[#E3D1B7]' : '')}
-                    onClick={() => handleNotificationClick(item.fcmId)}
+                    onClick={() => {
+                      handleNotificationClick(item.fcmId);
+                      router.push(`/gift-toast/${item.param}`);
+                    }}
                   />
                 );
             }

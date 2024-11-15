@@ -7,17 +7,19 @@ import { SkeletonStyleProps } from '.';
 export interface SkeletonProps extends SkeletonStyleProps {
   count?: number;
   className?: string;
+  containerClassName?: string;
 }
 
 export const CustomSkeleton = ({
   count = 1,
   className,
+  containerClassName,
   width,
   height,
   borderRadius = 10,
 }: SkeletonProps) => {
   return (
-    <div className="">
+    <div className={containerClassName}>
       <SkeletonTheme baseColor="#ebebeb" highlightColor="#f5f5f5">
         <Skeleton
           count={count}

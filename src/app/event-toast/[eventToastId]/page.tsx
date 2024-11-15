@@ -59,6 +59,10 @@ export default function EventToastPage({ params }: { params: PageParams }) {
                 </Button>
               ) : isMine ? (
                 <></>
+              ) : data.isWritten ? (
+                <Button size="sm" color="disabled" disabled>
+                  잼을 발랐어요
+                </Button>
               ) : (
                 <Button
                   size="sm"
