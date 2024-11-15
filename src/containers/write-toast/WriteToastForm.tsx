@@ -78,6 +78,7 @@ export default function WriteToastForm<T extends pieceData | ToastData>(
 
     // 3개 이상의 파일은 추가하지 않도록 제한
     if (filePreviews.length + files.length > 3) {
+      // TODO: 분기 처리하기
       alert('이미지는 최대 3개까지 첨부할 수 있습니다.');
       return;
     }

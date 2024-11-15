@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from 'react';
 
+import BottomBar from '@/components/common-components/bottom-bar';
 import Button from '@/components/common-components/button';
 import CustomSkeleton from '@/components/common-components/skeleton';
 import TopBar from '@/components/common-components/top-bar';
@@ -110,7 +111,7 @@ export default function UserProfilePage({ params }: { params: PageProps }) {
     <div className="w-full h-lvh">
       <TopBar title={data?.nickname} />
 
-      <div className="flex flex-col bg-gray-05 h-[calc(100vh-48px)]">
+      <div className="flex flex-col bg-gray-05 h-[calc(100vh-144px)]">
         <div className="px-6 py-4">
           <UserInfo
             nickname={data?.nickname ?? ''}
@@ -198,6 +199,8 @@ export default function UserProfilePage({ params }: { params: PageProps }) {
           )}
         </div>
       </div>
+
+      <BottomBar />
     </div>
   );
 }
