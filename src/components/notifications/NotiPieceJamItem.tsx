@@ -1,12 +1,29 @@
+import { NotificationsListResponse } from '@/types/api/fcm';
+
 import temp from '../../../public/images/lcm.jpeg';
 
+import clsx from 'clsx';
 import Image from 'next/image';
 
-export default function NotiPieceJamItem() {
+export default function NotiPieceJamItem({
+  item,
+  className,
+  onClick,
+}: {
+  item: NotificationsListResponse;
+  className?: string;
+  onClick?: () => void;
+}) {
   return (
-    <div className="w-full border-b border-gray-10 py-5 px-6 flex items-center gap-4">
+    <div
+      className={clsx(
+        'w-full border-b border-gray-10 py-5 px-6 flex items-center gap-4',
+        className,
+      )}
+      onClick={onClick}
+    >
       <Image
-        src={temp}
+        src={item.imageUrl ?? temp}
         width={64}
         height={64}
         alt=""
@@ -15,13 +32,11 @@ export default function NotiPieceJamItem() {
 
       <div className="flex flex-1 flex-col">
         <span className="text-gray-80 text-body1">곰돌이</span>
-        <span className="text-gray-80 text-body4">
-          내 토스트에 잼을 발랐습니다
-        </span>
+        <span className="text-gray-80 text-body4">{item.text}</span>
         <span className="flex gap-[6px] items-center text-gray-60 text-body4">
-          <span>마루는강쥐</span>
+          <span>{item.nickname}</span>
           <span>·</span>
-          <span>25분 전</span>
+          <span>{item.time}</span>
         </span>
       </div>
     </div>
