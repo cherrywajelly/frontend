@@ -1,12 +1,15 @@
 import { useEffect } from 'react';
 import Skeleton from 'react-loading-skeleton';
 
+import Button from '@/components/common-components/button';
 import CustomSkeleton from '@/components/common-components/skeleton';
 
 import { useGetToastIncompleted } from '@/hooks/api/useGiftToast';
 import { useMyInfo } from '@/hooks/api/useLogin';
 
 import { memberIdState } from '@/atoms/userInfoAtom';
+
+import emptyImg from '../../../public/images/toast/emptyToast.png';
 
 import clsx from 'clsx';
 import Image from 'next/image';
@@ -36,15 +39,22 @@ export default function ArriveGiftToast() {
   return (
     <div>
       <span className="text-gray-80 text-subtitle1">
-        반가워요 🙌🏻
-        <br />
+        {isLoadingToastData ? (
+          <CustomSkeleton height={32} containerClassName="w-full" />
+        ) : (
+          <>
+            반가워요 🙌🏻
+            <br />
+          </>
+        )}
         <span className="flex">
-          {isLoadingNickname ? (
-            <CustomSkeleton width={130} height={24} />
+          {isLoadingToastData ? (
+            <CustomSkeleton height={32} containerClassName="w-full" />
+          ) : incompletedToastData && incompletedToastData?.length > 0 ? (
+            <span>{myInfoData?.nickname}님에게 도착한 토스트예요!</span>
           ) : (
-            <span>{myInfoData?.nickname}</span>
+            <span>{myInfoData?.nickname}님에게 도착한 토스트가 없어요!</span>
           )}
-          님에게 도착한 토스트예요!
         </span>
       </span>
 
@@ -80,7 +90,48 @@ export default function ArriveGiftToast() {
             );
           })
         ) : (
-          <div className="">도착한 토스트가 없어요 ㅠㅠ</div>
+          <div
+            className={clsx(
+              'w-full text-center bg-white px-4 py-5 flex flex-col justify-between gap-4 items-center rounded-[10px]',
+            )}
+          >
+            {/* <Image
+              src={emptyImg}
+              alt=""
+              width={250}
+              height={200}
+              className="w-[250px] object-cover"
+            />
+            <Button
+              color="primary"
+              size="sm"
+              className="w-full"
+              onClick={() => router.push('/bake/gift-toast')}
+            >
+              선물 토스트 굽기
+            </Button> */}
+
+            <Image
+              src={emptyImg}
+              alt=""
+              width={120}
+              height={120}
+              className="w-[120px] object-cover"
+            />
+
+            <span className="flex flex-1 items-center text-body4 text-gray-80">
+              친구들과 즐거운 추억을 공유할 수 있어요.
+            </span>
+
+            <Button
+              color="primary"
+              size="sm"
+              className="w-full h-[48px]"
+              onClick={() => router.push('/bake/gift-toast')}
+            >
+              선물 토스트 굽기
+            </Button>
+          </div>
         )}
       </div>
     </div>
