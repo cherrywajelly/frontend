@@ -57,7 +57,7 @@ export interface JamItemDetailResponse {
 // 잼 타입 관련
 export interface jamPostRequestBody {
   jamContents: File;
-  jamImages: File[];
+  jamImages: File;
   jamRequest: {
     iconId: number;
     title: string;

@@ -11,15 +11,15 @@ import { jamDataState, jamStepState } from '@/atoms/toastAtom';
 import ToastDecoForm from '@/containers/write-toast/ToastDecoForm';
 import WriteToastForm from '@/containers/write-toast/WriteToastForm';
 
-import { error } from 'console';
 import { useParams, useRouter } from 'next/navigation';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useResetRecoilState } from 'recoil';
 
 export default function JamWritePage() {
   const [step, setStep] = useRecoilState(jamStepState);
   const [jamData, setJamData] = useRecoilState(jamDataState);
   const params = useParams();
   const eventToastId = Number(params.eventToastId);
+  const resetJamData = useResetRecoilState(jamDataState);
 
   const router = useRouter();
 
@@ -27,6 +27,7 @@ export default function JamWritePage() {
     if (step > 0) {
       setStep((prev) => prev - 1); // move to previous step
     } else if (step === 0) {
+      resetJamData();
       router.back();
     }
   };
@@ -62,20 +63,29 @@ export default function JamWritePage() {
           eventToastId: eventToastId,
           item: {
             jamContents: jamContentsFile,
-            jamImages: jamData.imgList ?? [],
+            jamImages: (jamData.imgList ?? [])[0] as File,
             jamRequest: jamRequest,
           },
         },
         {
-          onSuccess: () => router.back(),
-          onError: (error) => alert(error.message),
+          onSuccess: () => {
+            alert('성공적으로 잼을 발랐어요!');
+            router.back();
+            setStep(0);
+            resetJamData();
+          },
+          onError: (error) => {
+            setStep(0);
+            alert('예기치 못한 에러가 발생했습니다.');
+            resetJamData();
+          },
         },
       );
     }
   };
 
   useEffect(() => {
-    console.log(jamData);
+    // console.log(jamData);
   }, [jamData]);
 
   return (
@@ -102,6 +112,7 @@ export default function JamWritePage() {
           <WriteToastForm<pieceData | ToastData>
             stepState={jamStepState}
             dataState={jamDataState}
+            type="jam"
           />
         )}
       </div>
