@@ -3,6 +3,7 @@
 import { useState } from 'react';
 
 import BottomBar from '@/components/common-components/bottom-bar';
+import Spinner from '@/components/common-components/spinner';
 import TopBar from '@/components/common-components/top-bar';
 
 import NotiDefaultItem from '@/components/notifications/NotiDefaultItem';
@@ -41,7 +42,7 @@ export default function NotificationsPage() {
       <TopBar title="알림" isBackBtn={false} />
 
       <div className="w-full h-[calc(100vh-144px)] flex flex-grow flex-col overflow-y-auto bg-gray-05">
-        {isLoading && <div>로딩 중...</div>}
+        {isLoading && <Spinner />}
         {data &&
           data.map((item) => {
             switch (item.fcmConstant) {

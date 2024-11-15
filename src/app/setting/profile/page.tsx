@@ -6,6 +6,7 @@ import { FiCamera } from 'react-icons/fi';
 
 import Button from '@/components/common-components/button';
 import Input from '@/components/common-components/input';
+import Spinner from '@/components/common-components/spinner';
 import TopBar from '@/components/common-components/top-bar';
 
 import { useMyInfo } from '@/hooks/api/useLogin';
@@ -161,7 +162,7 @@ const SettingProfilePage = () => {
   if (isLoading) {
     return (
       <div className="w-full h-full flex justify-center items-center">
-        <span>로딩 중...</span>
+        <Spinner />
       </div>
     );
   }
