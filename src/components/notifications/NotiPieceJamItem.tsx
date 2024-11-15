@@ -31,7 +31,7 @@ export default function NotiPieceJamItem({
       />
 
       <div className="flex flex-1 flex-col">
-        <span className="text-gray-80 text-body1">곰돌이</span>
+        <span className="text-gray-80 text-body1">{item.toastName}</span>
         <span className="text-gray-80 text-body4">{item.text}</span>
         <span className="flex gap-[6px] items-center text-gray-60 text-body4">
           <span>{item.nickname}</span>

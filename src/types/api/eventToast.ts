@@ -4,6 +4,7 @@ export interface EventToastDefaultResponse {
   openedDate: string;
   memberProfileUrl: string;
   nickname: string;
+  isWritten?: boolean;
 }
 
 export interface EventToastItemResponse extends EventToastDefaultResponse {
