@@ -6,6 +6,7 @@ import { LuCalendarDays } from 'react-icons/lu';
 import Button from '@/components/common-components/button';
 import Dropdown from '@/components/common-components/dropdown';
 import Input from '@/components/common-components/input';
+import Spinner from '@/components/common-components/spinner';
 
 import InputForm from '@/components/input-form/InputForm';
 import UserInfo from '@/components/mypage/UserInfo';
@@ -115,6 +116,12 @@ export default function LabPage() {
       </InputForm>
 
       <div className="pt-[140px]" />
+
+      <Spinner
+        className="p-2 py-4 border border-red-500"
+        isLoading={true}
+        messageStyle="text-body2"
+      />
 
       <InputForm
         title="토스트를 오픈할 특별한 날을 선택해주세요.."

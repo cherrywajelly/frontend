@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 
 import BottomBar from '@/components/common-components/bottom-bar';
+import Button from '@/components/common-components/button';
 import TopBar from '@/components/common-components/top-bar';
 
 import { usePostFCMTest, usePutFCM } from '@/hooks/api/useFcm';
@@ -11,7 +12,10 @@ import ArriveEventToast from '@/containers/home/ArriveEventToast';
 import ArriveGiftToast from '@/containers/home/ArriveGiftToast';
 import { firebaseApp } from '@/firebase';
 
+import Logo from '../../public/images/timetoast.png';
+
 import { getMessaging, onMessage, getToken } from 'firebase/messaging';
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 export default function Home() {
@@ -76,6 +80,25 @@ export default function Home() {
     requestPermission();
     listenForMessages();
   }, []);
+
+  if (!accessToken) {
+    return (
+      <div className="p-6 box-border w-full h-screen flex flex-col justify-center items-center">
+        <Image src={Logo} alt="timetoast" />
+        <h1 className="text-subtitle1">타임토스트</h1>
+        <h3>지속가능한 추억 아카이빙 서비스</h3>
+        <Button
+          color="active"
+          className="w-full mt-8"
+          onClick={() => {
+            router.push('/login');
+          }}
+        >
+          타임토스트 시작하기
+        </Button>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full h-screen">
