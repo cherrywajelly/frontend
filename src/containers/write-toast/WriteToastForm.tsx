@@ -46,13 +46,14 @@ export type WriteToastFormProps<T> = {
   stepState: RecoilState<number>;
   dataState: RecoilState<T>;
   handleSubmit?: () => void;
-  isMainToast?: boolean;
+  type?: 'jam' | 'toast';
 };
 
 export default function WriteToastForm<T extends pieceData | ToastData>(
   props: WriteToastFormProps<T>,
 ) {
-  const { dataState } = props;
+  const { dataState, type } = props;
+  const maxFileCount = type === 'jam' ? 1 : 3;
 
   const [toastData, setToastData] = useRecoilState(dataState);
 
@@ -76,10 +77,8 @@ export default function WriteToastForm<T extends pieceData | ToastData>(
     const files = event.target.files;
     if (!files) return;
 
-    // 3개 이상의 파일은 추가하지 않도록 제한
-    if (filePreviews.length + files.length > 3) {
-      // TODO: 분기 처리하기
-      alert('이미지는 최대 3개까지 첨부할 수 있습니다.');
+    if (filePreviews.length + files.length > maxFileCount) {
+      alert(`이미지는 최대 ${maxFileCount}개까지 첨부할 수 있습니다.`);
       return;
     }
 

@@ -12,7 +12,7 @@ import ToastDecoForm from '@/containers/write-toast/ToastDecoForm';
 import WriteToastForm from '@/containers/write-toast/WriteToastForm';
 
 import { useParams, useRouter } from 'next/navigation';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useResetRecoilState } from 'recoil';
 
 export default function GiftWritePage() {
   const router = useRouter();
@@ -23,11 +23,13 @@ export default function GiftWritePage() {
   const [step, setStep] = useRecoilState(toastPieceStepState);
   const [toastPieceData, setToastPieceData] =
     useRecoilState(toastPieceDataState);
+  const resetToastPieceData = useResetRecoilState(toastPieceDataState);
 
   const handleBack = () => {
     if (step > 0) {
       setStep((prev) => prev - 1); // move to previous step
     } else if (step === 0) {
+      resetToastPieceData();
       router.back();
     }
   };
@@ -53,7 +55,6 @@ export default function GiftWritePage() {
 
   const handleSubmit = () => {
     if (toastPieceData.submitAble) {
-      //
       const toastPieceRequest = {
         giftToastId: giftToastId,
         iconId: toastPieceData.iconId as number,
@@ -67,14 +68,24 @@ export default function GiftWritePage() {
           toastPieceRequest: toastPieceRequest,
         },
         {
-          onSuccess: () => router.back(),
+          onSuccess: () => {
+            alert('성공적으로 토스트조각을 쌓았어요!');
+            router.back();
+            setStep(0);
+            resetToastPieceData();
+          },
+          onError: (error) => {
+            setStep(0);
+            alert('예기치 못한 에러가 발생했습니다.');
+            resetToastPieceData();
+          },
         },
       );
     }
   };
 
   useEffect(() => {
-    console.log(toastPieceData);
+    // console.log(toastPieceData);
   }, [toastPieceData]);
 
   return (
@@ -101,6 +112,7 @@ export default function GiftWritePage() {
           <WriteToastForm<pieceData | ToastData>
             stepState={toastPieceStepState}
             dataState={toastPieceDataState}
+            type="toast"
           />
         )}
       </div>
