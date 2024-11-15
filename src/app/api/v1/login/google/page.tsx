@@ -40,7 +40,7 @@ export default function GoogleCallback() {
       if (data.isNew) {
         router.push('/sign-up');
       } else {
-        router.push('/');
+        router.push('/home');
       }
     } else {
       console.log(data);

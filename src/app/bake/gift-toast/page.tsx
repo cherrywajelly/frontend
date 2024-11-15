@@ -54,7 +54,7 @@ export default function GiftToastPage() {
     const handleSuccess = () => {
       alert('토스트가 구워졌어요!');
       setSelectedItem(navItem[0]);
-      router.replace('/');
+      router.replace('/home');
     };
 
     if (giftData.type === 'group') {

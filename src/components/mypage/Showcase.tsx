@@ -47,6 +47,7 @@ export default function Showcase(props: ShowcaseProps) {
             <div
               className="w-1/3 bg-white border border-gray-10 p-4 rounded-[10px]"
               key={item.eventToastId}
+              onClick={() => router.push(`/event-toast/${item.eventToastId}`)}
             >
               <Image
                 src={item.iconUrl || tempImg}

@@ -43,7 +43,7 @@ export default function EventToastPage() {
     const handleSuccess = () => {
       alert('토스트가 구워졌어요!');
       setSelectedItem(navItem[0]);
-      router.replace('/');
+      router.replace('/home');
     };
 
     console.log('eventToastData', eventToastData);

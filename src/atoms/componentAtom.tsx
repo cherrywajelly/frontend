@@ -5,7 +5,7 @@ import { recoilPersist } from 'recoil-persist';
 
 const { persistAtom } = recoilPersist({
   key: 'bottomBarItemState',
-  storage: localStorage,
+  storage: typeof window !== 'undefined' ? localStorage : undefined,
 });
 
 export const bottomBarItemState = atom({
@@ -13,7 +13,7 @@ export const bottomBarItemState = atom({
   default: {
     icon: <CgHome />,
     title: '홈',
-    url: '/',
+    url: '/home',
   },
   effects_UNSTABLE: [persistAtom],
 });
