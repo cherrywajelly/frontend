@@ -44,7 +44,7 @@ export default function IconDetailPage({ params }: { params: PageParams }) {
           {/* info */}
           <div className="flex flex-col justify-center items-center">
             <Image
-              src={data?.thumnailImageUrl ?? ''}
+              src={data?.thumbnailImageUrl ?? ''}
               alt=""
               width={120}
               height={120}
