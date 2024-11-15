@@ -1,106 +1,7 @@
-importScripts('https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js');
+importScripts('https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js');
 importScripts(
-  'https://www.gstatic.com/firebasejs/8.10.1/firebase-messaging.js',
+  'https://www.gstatic.com/firebasejs/8.10.0/firebase-messaging.js',
 );
-
-// const firebaseConfig = {
-//   apiKey: 'NEXT_PUBLIC_FIREBASE_API_KEY',
-//   authDomain: 'NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN',
-//   projectId: 'NEXT_PUBLIC_FIREBASE_PROJECT_ID',
-//   storageBucket: 'NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET',
-//   messagingSenderId: 'NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID',
-//   appId: 'NEXT_PUBLIC_FIREBASE_APP_ID',
-//   measurementId: 'NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID',
-// };
-
-// firebase.initializeApp(firebaseConfig);
-// const messaging = firebase.messaging();
-
-// messaging.onBackgroundMessage((payload) => {
-//   const title = payload.notification.title + ' (onBackgroundMessage)';
-//   const notificationOptions = {
-//     body: payload.notification.body,
-//   };
-
-//   self.registration.showNotification(title, notificationOptions);
-// });
-
-// self.addEventListener('push', function (event) {
-//   if (event.data) {
-//     // 알림 메세지일 경우엔 event.data.json().notification;
-//     const data = event.data.json().data;
-//     const options = {
-//       body: data.body,
-//       icon: data.image,
-//     };
-
-//     event.waitUntil(self.registration.showNotification(data.title, options));
-//   } else {
-//     console.log('This push event has no data.');
-//   }
-// });
-
-// // self.addEventListener('notificationclick', function (event) {
-// //   event.notification.close();
-
-// //   const redirectUrl = event?.notification?.data?.redirectUrl;
-
-// //   event.waitUntil(
-// //     clients
-// //       .matchAll({
-// //         type: 'window',
-// //       })
-// //       .then(function (clientList) {
-// //         for (const client of clientList) {
-// //           if (client.url === redirectUrl && 'focus' in client) {
-// //             return client.focus();
-// //           }
-// //         }
-// //         if (clients.openWindow) {
-// //           return clients.openWindow(redirectUrl);
-// //         }
-// //       }),
-// //   );
-// // });
-
-// self.addEventListener('notificationclick', function (event) {
-//   event.notification.close();
-
-//   const redirectUrl = event.notification.data?.redirectUrl || '/';
-
-//   event.waitUntil(
-//     clients
-//       .matchAll({
-//         type: 'window',
-//       })
-//       .then(function (clientList) {
-//         for (const client of clientList) {
-//           if (client.url === redirectUrl && 'focus' in client) {
-//             return client.focus();
-//           }
-//         }
-//         if (clients.openWindow) {
-//           return clients.openWindow(redirectUrl);
-//         }
-//       }),
-//   );
-// });
-
-/* 2트 */
-importScripts(
-  'https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js',
-);
-importScripts(
-  'https://www.gstatic.com/firebasejs/10.8.0/firebase-messaging-compat.js',
-);
-
-self.addEventListener('install', function (e) {
-  self.skipWaiting();
-});
-
-self.addEventListener('activate', function (e) {
-  console.log('fcm service worker가 실행되었습니다.');
-});
 
 const firebaseConfig = {
   apiKey: 'NEXT_PUBLIC_FIREBASE_API_KEY',
@@ -112,15 +13,101 @@ const firebaseConfig = {
   measurementId: 'NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID',
 };
 
+// Firebase 초기화
+// eslint-disable-next-line no-undef
 firebase.initializeApp(firebaseConfig);
-
+// eslint-disable-next-line no-undef
 const messaging = firebase.messaging();
 
-messaging.onBackgroundMessage((payload) => {
-  const notificationTitle = payload.title;
-  const notificationOptions = {
-    body: payload.body,
-    // icon: payload.icon
+// self.addEventListener('install', function (e) {
+//   console.log('Service Worker 설치');
+//   self.skipWaiting();
+// });
+
+// 활성화
+self.addEventListener('activate', function (e) {
+  console.log('fcm service worker가 실행되었습니다.');
+  e.waitUntil(clients.claim());
+});
+
+const sCacheName = 'practice-pwa';
+const aFilesToCache = [
+  './',
+  './index.html',
+  './manifest.json',
+  './icon-main.png',
+];
+
+// 서비스 워커 설치 및 캐싱
+self.addEventListener('install', (event) => {
+  console.log('Service Worker 설치');
+  event.waitUntil(
+    caches.open(sCacheName).then((cache) => {
+      console.log('파일을 캐시에 저장합니다.');
+      // return cache.addAll(aFilesToCache);
+    }),
+  );
+});
+
+// 푸시 알림 수신 처리
+self.addEventListener('push', (event) => {
+  console.log('푸시 이벤트 발생:', event);
+
+  if (!event.data) {
+    console.error('푸시 데이터가 없습니다.');
+    return;
+  }
+
+  const data = event.data.json();
+  const title = data.notification?.title || '알림';
+  const options = {
+    body: data.notification?.body || '새로운 메시지가 도착했습니다.',
   };
-  self.registration.showNotification(notificationTitle, notificationOptions);
+
+  event.waitUntil(
+    self.registration.showNotification(title, options).catch((error) => {
+      console.error('showNotification 에러:', error);
+    }),
+  );
+});
+
+// self.addEventListener('notificationclick', function (event) {
+//   console.log('notificationclick');
+//   const url = '/notifications';
+//   event.notification.close();
+//   event.waitUntil(clients.openWindow(url));
+// });
+
+self.addEventListener('notificationclick', function (event) {
+  event.preventDefault();
+  event.notification.close();
+
+  const urlToOpen = '/notifications';
+
+  // 클라이언트에 해당 사이트가 열려있는지 체크
+  const promiseChain = clients
+    .matchAll({
+      type: 'window',
+      includeUncontrolled: true,
+    })
+    .then(function (windowClients) {
+      let matchingClient = null;
+
+      for (let i = 0; i < windowClients.length; i++) {
+        const windowClient = windowClients[i];
+        if (windowClient.url.includes(urlToOpen)) {
+          matchingClient = windowClient;
+          break;
+        }
+      }
+
+      // 열려있다면 focus, 아니면 새로 open
+      if (matchingClient) {
+        return matchingClient.focus();
+      } else {
+        return clients.openWindow(urlToOpen);
+      }
+    });
+
+  event.waitUntil(promiseChain);
 });
