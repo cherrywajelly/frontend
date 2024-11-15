@@ -18,26 +18,25 @@ export default function MyInfo() {
 
   return (
     <div className="px-6 py-4">
-      {data && (
-        <UserInfo
-          nickname={data.nickname}
-          profileImg={data.profileUrl}
-          follower={data.followerCount}
-          following={data.followingCount}
-          group={data.teamCount}
-        >
-          <div className="w-full flex justify-between gap-[10px]">
-            <Button
-              size="sm"
-              className="w-full h-[36px]"
-              color="active"
-              onClick={() => router.push('/setting/profile')}
-            >
-              프로필 편집
-            </Button>
-          </div>
-        </UserInfo>
-      )}
+      <UserInfo
+        nickname={data?.nickname ?? ''}
+        profileImg={data?.profileUrl ?? ''}
+        follower={data?.followerCount ?? 0}
+        following={data?.followingCount ?? 0}
+        group={data?.teamCount ?? 0}
+        isLoading={isLoading}
+      >
+        <div className="w-full flex justify-between gap-[10px]">
+          <Button
+            size="sm"
+            className="w-full h-[36px]"
+            color="active"
+            onClick={() => router.push('/setting/profile')}
+          >
+            프로필 편집
+          </Button>
+        </div>
+      </UserInfo>
     </div>
   );
 }
