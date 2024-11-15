@@ -39,8 +39,8 @@ export const getMoveNotificationsPage = async (fcmId: number) => {
     throw new Error(`status: ${res.status}`);
   }
 
-  // const data = await res.json();
-  return res;
+  const data = await res.json();
+  return data;
 };
 
 // 알림 테스트
