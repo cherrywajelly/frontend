@@ -2,6 +2,7 @@
 
 import BottomBar from '@/components/common-components/bottom-bar';
 import Button from '@/components/common-components/button';
+import Spinner from '@/components/common-components/spinner';
 import TopBar from '@/components/common-components/top-bar';
 
 import PieceBox from '@/components/toast/PieceBox';
@@ -23,6 +24,14 @@ type PageParams = {
 export default function GiftToastItemPage({ params }: { params: PageParams }) {
   const { data, isLoading } = useGetGiftToastItem(params.giftToastId);
   const router = useRouter();
+
+  if (isLoading) {
+    return (
+      <div className="w-full h-lvh flex justify-center items-center">
+        <Spinner />
+      </div>
+    );
+  }
 
   return (
     <div className="w-full h-lvh">
@@ -79,7 +88,7 @@ export default function GiftToastItemPage({ params }: { params: PageParams }) {
                 />
               );
             })
-          ) : (
+          ) : !data?.giftToastInfo.isOpened ? (
             <>
               <Image
                 src={lockedToast}
@@ -88,7 +97,7 @@ export default function GiftToastItemPage({ params }: { params: PageParams }) {
               />
               <div>D-{data?.dDay}</div>
             </>
-          )}
+          ) : null}
         </div>
       </div>
 
