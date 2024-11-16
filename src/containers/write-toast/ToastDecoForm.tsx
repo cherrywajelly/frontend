@@ -73,10 +73,15 @@ export default function ToastDecoForm(props: ToastFormProps) {
     setSelectedTopic(name);
   };
 
+  const localTitle =
+    type === 'jam'
+      ? '당신의 잼을 꾸며보세요!'
+      : `${nickname}님의 토스트를 꾸며보세요!`;
+
   return (
     <div className="w-full h-full pt-6 flex flex-col justify-between">
       <div className="px-6">
-        <InputForm title={`${nickname}님의 토스트를 꾸며보세요!`}>
+        <InputForm title={localTitle}>
           <Image
             className="mx-auto mt-8 w-[200px] h-[200px] object-cover"
             src={toastData.deco as string}
