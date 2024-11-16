@@ -31,6 +31,10 @@ export default function EventToastOpenDateForm() {
     if (!isDateInput) e.preventDefault();
   };
 
+  const today = new Date();
+  const tomorrow = new Date(today);
+  tomorrow.setDate(today.getDate() + 1);
+
   return (
     <div className="w-full h-full px-6 py-6 flex flex-col justify-between">
       <div>
@@ -43,7 +47,7 @@ export default function EventToastOpenDateForm() {
             placeholderText="YYYY-MM-DD"
             dateFormat="yyyy-MM-dd"
             onChange={handleDate}
-            minDate={new Date()}
+            minDate={tomorrow}
             onChangeRaw={handleDateInput}
             customInput={<Input readOnly startIcon={<LuCalendarDays />} />}
           />

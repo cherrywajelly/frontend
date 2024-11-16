@@ -126,8 +126,8 @@ export default function PieceBox(props: PieceBoxProps) {
               src={data.toastPieceImages[2] || temp}
               alt=""
               width={100}
-              height={154}
-              className="w-full h-[154px] object-cover rounded-[8px] border border-gray-10"
+              height={100}
+              className="w-full object-cover rounded-[8px] border border-gray-10"
             />
           )}
         </div>

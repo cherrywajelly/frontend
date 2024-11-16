@@ -44,15 +44,21 @@ export default function ArriveEventToast() {
                 nickname={item.nickname}
                 openDate={item.openedDate}
               >
-                <Button
-                  size="sm"
-                  color="primary"
-                  onClick={() =>
-                    router.push(`/event-toast/${item.eventToastId}`)
-                  }
-                >
-                  잼 바르기
-                </Button>
+                {item.isWritten ? (
+                  <Button size="sm" color="disabled" disabled>
+                    잼을 발랐어요
+                  </Button>
+                ) : (
+                  <Button
+                    size="sm"
+                    color="primary"
+                    onClick={() => {
+                      router.push(`/event-toast/${item.eventToastId}`);
+                    }}
+                  >
+                    잼 바르기
+                  </Button>
+                )}
               </ToastBox>
             );
           })
@@ -72,12 +78,10 @@ export default function ArriveEventToast() {
             />
             <span className="flex items-start gap-1 flex-1 flex-col">
               <span className="text-body1 text-gray-80">
-                아직 친구가 없어요.
+                아직 토스트를 구운 친구가 없어요.
               </span>
               <span className="text-body4 text-gray-60">
-                검색을 통해 친구를 팔로우하면
-                <br />
-                귀여운 토스트가 생겨요.
+                검색을 통해 더 많은 친구를 팔로우해보세요!
               </span>
             </span>
 

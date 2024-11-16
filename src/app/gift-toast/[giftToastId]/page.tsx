@@ -89,14 +89,14 @@ export default function GiftToastItemPage({ params }: { params: PageParams }) {
                   },
                 )
               ) : !data?.giftToastInfo.isOpened ? (
-                <>
+                <div className="w-full h-full mt-4 flex flex-col justify-center items-center">
                   <Image
                     src={lockedToast}
                     alt=""
                     className="opacity-50 w-[240px] h-[240px]"
                   />
                   <div>D-{data?.dDay}</div>
-                </>
+                </div>
               ) : null}
             </div>
           </>

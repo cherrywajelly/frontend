@@ -78,7 +78,7 @@ export default function ToastDecoForm(props: ToastFormProps) {
       <div className="px-6">
         <InputForm title={`${nickname}님의 토스트를 꾸며보세요!`}>
           <Image
-            className="mx-auto mt-8 border-2 w-[200px] h-[200px] object-cover"
+            className="mx-auto mt-8 w-[200px] h-[200px] object-cover"
             src={toastData.deco as string}
             alt=""
             width={200}
