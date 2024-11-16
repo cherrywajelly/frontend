@@ -152,7 +152,7 @@ export const postToastPieces = async ({
 
   formData.append('toastPieceContents', toastPieceContents);
 
-  toastPieceImages.forEach((item) => {
+  toastPieceImages?.forEach((item) => {
     formData.append('toastPieceImages', item);
   });
 
