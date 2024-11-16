@@ -177,10 +177,7 @@ const SettingProfilePage = () => {
                   height={120}
                   className="object-cover rounded-full w-[120px] h-[120px]"
                 />
-                <div
-                  onClick={handleFileUploadClick}
-                  className="absolute bottom-[-12px] right-0 border-4 border-gray-05 bg-gray-10 w-[40px] h-[40px] rounded-full flex justify-center items-center"
-                >
+                <div className="absolute bottom-[-12px] right-0 border-4 border-gray-05 bg-gray-10 w-[40px] h-[40px] rounded-full flex justify-center items-center">
                   <FiCamera size={20} />
                 </div>
                 <input

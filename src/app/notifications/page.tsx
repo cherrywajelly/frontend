@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import BottomBar from '@/components/common-components/bottom-bar';
 import Spinner from '@/components/common-components/spinner';
@@ -19,7 +19,7 @@ import clsx from 'clsx';
 import { useRouter } from 'next/navigation';
 
 export default function NotificationsPage() {
-  const { data, isLoading } = useGetNotificationsList();
+  const { data, isLoading, refetch: refetchList } = useGetNotificationsList();
   const router = useRouter();
   const [selectedFcmId, setSelectedFcmId] = useState<number | null>(null);
 
@@ -32,11 +32,17 @@ export default function NotificationsPage() {
 
     const response = await refetch();
     if (response.data) {
-      console.log('moveData:', response.data);
+      refetchList();
     } else {
       console.error('Failed to fetch moveData');
     }
   };
+
+  useEffect(() => {
+    if (selectedFcmId !== null && selectedFcmId !== 0) {
+      refetch();
+    }
+  }, [selectedFcmId, refetch]);
 
   return (
     <div className="w-full h-screen">

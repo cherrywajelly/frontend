@@ -39,9 +39,9 @@ export const useGetNotificationsList = () => {
 // 알림 관련 페이지로 이동
 export const useGetMoveNotificationsPage = (fcmId: number) => {
   const { data, isLoading, error, refetch } = useQuery({
-    queryKey: ['moveNotificationsPage'],
+    queryKey: ['moveNotificationsPage', fcmId],
     queryFn: () => getMoveNotificationsPage(fcmId),
-    enabled: true,
+    enabled: !!fcmId,
   });
   return { data, isLoading, error, refetch };
 };
