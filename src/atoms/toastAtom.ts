@@ -1,6 +1,7 @@
 import { pieceData, ToastData } from '@/types/atoms/toastAtom';
 
 import defaultImg from '../../public/images/default-toast.png';
+import defaultJam from '../../public/images/defaultJam.png';
 
 import { StaticImageData } from 'next/image';
 import { atom } from 'recoil';
@@ -47,7 +48,7 @@ export const jamStepState = atom<number>({
 export const jamDataState = atom<pieceData | ToastData>({
   key: 'jamDataState',
   default: {
-    deco: defaultImg,
+    deco: defaultJam,
     title: '',
     contents: '',
     imgList: [],
