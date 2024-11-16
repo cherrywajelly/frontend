@@ -1,7 +1,5 @@
 import { NotificationsListResponse } from '@/types/api/fcm';
 
-import temp from '../../../public/images/lcm.jpeg';
-
 import clsx from 'clsx';
 import Image from 'next/image';
 
@@ -23,7 +21,7 @@ export default function NotiFollowItem({
       onClick={onClick}
     >
       <Image
-        src={item.imageUrl ?? temp}
+        src={item.imageUrl}
         width={64}
         height={64}
         alt=""

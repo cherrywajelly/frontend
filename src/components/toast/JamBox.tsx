@@ -80,7 +80,10 @@ export default function JamBox(props: JamBoxProps) {
 
       {/* contents */}
       <div
-        className={clsx('text-body2 text-black-main')}
+        className={clsx(
+          'text-body2 text-black-main',
+          'whitespace-pre-wrap break-words',
+        )}
         dangerouslySetInnerHTML={{ __html: fileContent }}
       />
 
@@ -91,8 +94,8 @@ export default function JamBox(props: JamBoxProps) {
             src={data.jamImageUrl || temp}
             alt=""
             width={100}
-            height={154}
-            className="w-full h-[154px] object-cover rounded-[8px] border border-gray-10"
+            height={100}
+            className="w-full object-cover rounded-[8px] border border-gray-10"
           />
         </div>
       )}

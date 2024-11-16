@@ -36,7 +36,7 @@ export default function GoogleCallback() {
       const refreshToken: string | undefined = data.refreshToken;
       if (accessToken && refreshToken) {
         window.sessionStorage.setItem('accessToken', accessToken);
-        window.sessionStorage.setItem('refreshToken', refreshToken);
+        window.localStorage.setItem('refreshToken', refreshToken);
       }
       if (data.isNew) {
         router.push('/sign-up');

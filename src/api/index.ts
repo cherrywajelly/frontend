@@ -23,7 +23,7 @@ export const apiRequest = async <T>(
   const accessToken =
     typeof window !== 'undefined' && sessionStorage.getItem('accessToken');
   const refreshToken =
-    typeof window !== 'undefined' && sessionStorage.getItem('refreshToken'); // refreshToken 가져오기
+    typeof window !== 'undefined' && localStorage.getItem('refreshToken');
 
   const isFormData = body instanceof FormData;
 

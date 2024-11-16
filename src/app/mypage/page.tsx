@@ -30,7 +30,7 @@ export default function MyPage() {
   );
 
   const nickname =
-    typeof window !== 'undefined' && localStorage.getItem('accesstoken');
+    typeof window !== 'undefined' && sessionStorage.getItem('accesstoken');
 
   return (
     <div className="w-full h-lvh">

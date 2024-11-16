@@ -100,7 +100,10 @@ export default function ShowcaseEdit() {
           (id) =>
             new Promise<void>((resolve) =>
               deleteMutate(id, {
-                onSuccess: () => resolve(),
+                onSuccess: () => {
+                  resolve();
+                  router.push('/mypage');
+                },
               }),
             ),
         ),
@@ -165,9 +168,10 @@ export default function ShowcaseEdit() {
 
           <Button
             size="md"
-            color={selectedToast.length ? 'active' : 'disabled'}
+            // color={selectedToast.length ? 'active' : 'disabled'}
+            color="active"
             onClick={handleSubmit}
-            disabled={!selectedToast.length}
+            // disabled={!selectedToast.length}
             className="flex-none mb-6 w-full"
           >
             전시하기

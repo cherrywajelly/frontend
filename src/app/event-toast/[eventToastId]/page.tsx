@@ -29,10 +29,10 @@ export default function EventToastPage({ params }: { params: PageParams }) {
     router.back();
   };
 
-  const localStorageNickname =
-    typeof window !== 'undefined' && localStorage.getItem('nickname');
+  const sessionStorageNickname =
+    typeof window !== 'undefined' && sessionStorage.getItem('nickname');
 
-  const isMine = localStorageNickname === data?.nickname;
+  const isMine = sessionStorageNickname === data?.nickname;
 
   return (
     <div className="w-full h-lvh">
@@ -71,11 +71,9 @@ export default function EventToastPage({ params }: { params: PageParams }) {
               ) : (
                 <Button
                   size="sm"
-                  color={data.isOpened ? 'disabled' : 'primary'}
-                  disabled={data.isOpened}
+                  color="primary"
                   onClick={() => {
-                    if (!data.isOpened)
-                      router.push(`/event-toast/${data.eventToastId}/write`);
+                    router.push(`/event-toast/${data.eventToastId}/write`);
                   }}
                 >
                   잼 바르기

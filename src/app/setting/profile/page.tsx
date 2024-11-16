@@ -133,7 +133,7 @@ const SettingProfilePage = () => {
           alert('프로필 정보가 수정되었습니다.');
           setIsValid(false);
           console.log(isValid);
-          localStorage.setItem('nickname', nickname ?? '');
+          sessionStorage.setItem('nickname', nickname ?? '');
         },
         onError: () => {
           alert('예기치 못한 에러가 발생했습니다.');
@@ -169,7 +169,7 @@ const SettingProfilePage = () => {
         ) : (
           <div className="w-full h-full p-6 flex flex-col justify-between bg-gray-05">
             <div className="flex flex-col items-center flex-none">
-              <div className="relative">
+              <div className="relative" onClick={handleFileUploadClick}>
                 <Image
                   src={profileImgPreviewItem}
                   alt=""
@@ -177,10 +177,7 @@ const SettingProfilePage = () => {
                   height={120}
                   className="object-cover rounded-full w-[120px] h-[120px]"
                 />
-                <div
-                  onClick={handleFileUploadClick}
-                  className="absolute bottom-[-12px] right-0 border-4 border-gray-05 bg-gray-10 w-[40px] h-[40px] rounded-full flex justify-center items-center"
-                >
+                <div className="absolute bottom-[-12px] right-0 border-4 border-gray-05 bg-gray-10 w-[40px] h-[40px] rounded-full flex justify-center items-center">
                   <FiCamera size={20} />
                 </div>
                 <input
