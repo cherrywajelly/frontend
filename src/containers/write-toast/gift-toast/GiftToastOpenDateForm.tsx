@@ -53,7 +53,6 @@ export default function GiftToastOpenDateForm() {
             dateFormat="yyyy-MM-dd"
             onChange={handleMemoryDate}
             onChangeRaw={handleDateInput}
-            maxDate={new Date()}
             customInput={<Input readOnly startIcon={<LuCalendarDays />} />}
           />
         </InputForm>

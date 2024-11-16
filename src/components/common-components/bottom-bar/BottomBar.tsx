@@ -38,6 +38,9 @@ const BottomBar = () => {
 
   const backdropRef = useRef<HTMLDivElement>(null);
 
+  console.log('selectedItem', selectedItem);
+  console.log('previousItem', previousItem);
+
   // useEffect(() => {
   //   const handleClickOutside = (event: MouseEvent) => {
   //     if (
@@ -135,7 +138,7 @@ const BottomBar = () => {
               }}
             >
               <span className="text-black-main text-body1">
-                선물토스트 굽기
+                캡슐토스트 굽기
               </span>
               <Image src={tempImg} alt="" />
               <p className="text-gray-80 text-body4">

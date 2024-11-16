@@ -22,14 +22,21 @@ import { MyShowcaseResponse } from '@/types/api/mypage';
 
 import tempImg from '../../../../public/images/timetoast.png';
 
+import { useRouter } from 'next/navigation';
+
 export type PageProps = {
   memberId: number;
 };
 
 export default function UserProfilePage({ params }: { params: PageProps }) {
   const memberId = params.memberId;
+  const router = useRouter();
 
-  const { data, isLoading: isLoadingUserProfile } = useGetUserProfile(memberId);
+  const {
+    data,
+    isLoading: isLoadingUserProfile,
+    refetch: refetchProfile,
+  } = useGetUserProfile(memberId);
 
   const { data: showcaseData, isLoading: isLoadingShowcaseData } =
     useGetUserShowcase(memberId);
@@ -89,6 +96,7 @@ export default function UserProfilePage({ params }: { params: PageProps }) {
         onSuccess: () => {
           setIsFollow(false);
           refetch();
+          refetchProfile();
         },
         onError: (error) => {
           console.error('언팔로우 실패:', error);
@@ -99,6 +107,7 @@ export default function UserProfilePage({ params }: { params: PageProps }) {
         onSuccess: () => {
           setIsFollow(true);
           refetch();
+          refetchProfile();
         },
         onError: (error) => {
           console.error('팔로우 실패:', error);
@@ -178,7 +187,13 @@ export default function UserProfilePage({ params }: { params: PageProps }) {
                   openDate={item.openedDate}
                   toastImg={item.icon.iconImageUrl}
                 >
-                  <Button size="sm" color="primary">
+                  <Button
+                    size="sm"
+                    color="primary"
+                    onClick={() =>
+                      router.push(`/event-toast/${item.eventToastId}`)
+                    }
+                  >
                     잼 바르기
                   </Button>
                 </ToastBox>
