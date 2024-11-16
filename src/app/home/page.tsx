@@ -79,10 +79,52 @@ export default function HomePage() {
     });
   };
 
+  // useEffect(() => {
+  //   requestPermission();
+  //   listenForMessages();
+  // }, []);
+
   useEffect(() => {
-    requestPermission();
-    // listenForMessages();
-  }, []);
+    const fetchTokenAndSave = async () => {
+      try {
+        const existingToken = sessionStorage.getItem('fcmToken');
+        if (existingToken) {
+          console.log('이미 저장된 토큰이 있습니다:', existingToken);
+          return;
+        }
+
+        const permission = await Notification.requestPermission();
+        if (permission !== 'granted') {
+          console.log('푸시 알림 권한이 거부되었습니다.');
+          return;
+        }
+
+        const messaging = getMessaging(firebaseApp);
+        const currentToken = await getToken(messaging, {
+          vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY,
+        });
+
+        if (!currentToken) {
+          console.log('토큰을 가져올 수 없습니다.');
+          return;
+        }
+
+        console.log('FCM Token:', currentToken);
+        setToken(currentToken);
+        sessionStorage.setItem('fcmToken', currentToken);
+
+        mutateFCM(currentToken, {
+          onSuccess: () => {
+            console.log('토큰 저장 성공');
+          },
+        });
+      } catch (error) {
+        console.error('푸시 알림 권한 요청 오류:', error);
+      }
+    };
+
+    fetchTokenAndSave();
+  }, [mutateFCM]);
 
   return (
     <div className="w-full h-screen">
