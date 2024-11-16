@@ -11,6 +11,7 @@ import { UserDefaultProps } from '@/types/user';
 import temp from '../../../public/images/default-toast.png';
 
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 // export const tempUserList: UserDefaultProps[] = [
 //   { profileImg: temp, nickname: '채민이', memberId: 1 },
@@ -59,6 +60,8 @@ export default function GenerateGroup({
     // }
   };
 
+  const router = useRouter();
+
   const { mutate, isPending, data, mutateAsync } = useGroupTeam({
     teamName: groupName,
     teamMembers: selectedUsers.map((user) => user.memberId as number),
@@ -72,11 +75,17 @@ export default function GenerateGroup({
       console.log('responseData', responseData);
 
       if (responseData?.teamId && profileImg) {
-        console.log('herererere');
-        await mutateGroupImg({
-          teamId: responseData.teamId,
-          teamImage: profileImg,
-        });
+        await mutateGroupImg(
+          {
+            teamId: responseData.teamId,
+            teamImage: profileImg,
+          },
+          {
+            onSuccess: () => {
+              router.replace('/setting/group');
+            },
+          },
+        );
       }
     } catch (error) {
       console.error(error);

@@ -49,6 +49,7 @@ export default function EventToastPage() {
       setIsDialogOpen(true);
       setStep(0);
       setSelectedItem(navItem[0]);
+      resetEventToastData();
     };
 
     mutate(
