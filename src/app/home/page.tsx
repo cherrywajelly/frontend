@@ -31,26 +31,28 @@ export default function HomePage() {
   const requestPermission = async () => {
     try {
       const permission = await Notification.requestPermission();
-      if (permission === 'granted') {
-        const messaging = getMessaging(firebaseApp);
-        const currentToken = await getToken(messaging, {
-          vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY,
-        });
-
-        if (currentToken) {
-          // console.log('FCM Token:', currentToken);
-          setToken(currentToken);
-          mutateFCM(currentToken, {
-            onSuccess: () => {
-              console.log('token성공');
-            },
-          });
-        } else {
-          console.log('토큰을 가져올 수 없습니다.');
-        }
-      } else {
+      if (permission !== 'granted') {
         console.log('푸시 알림 권한이 거부되었습니다.');
+        return;
       }
+
+      const messaging = getMessaging(firebaseApp);
+      const currentToken = await getToken(messaging, {
+        vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY,
+      });
+
+      if (!currentToken) {
+        console.log('토큰을 가져올 수 없습니다.');
+        return;
+      }
+
+      // console.log('FCM Token:', currentToken);
+      setToken(currentToken);
+      mutateFCM(currentToken, {
+        onSuccess: () => {
+          console.log('token성공');
+        },
+      });
     } catch (error) {
       console.error('푸시 알림 권한 요청 오류:', error);
     }

@@ -45,7 +45,7 @@ export default function GoogleCallback() {
       }
     } else {
       // console.log(data);
-      router.push('/');
+      // router.push('/');
     }
   }, [data, isLoading, error, router]);
 
