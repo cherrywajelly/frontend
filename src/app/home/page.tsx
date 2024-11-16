@@ -81,7 +81,7 @@ export default function HomePage() {
 
   useEffect(() => {
     requestPermission();
-    listenForMessages();
+    // listenForMessages();
   }, []);
 
   return (
