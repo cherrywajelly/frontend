@@ -19,6 +19,7 @@ export const postGroupTeamImage = async (teamId: number, teamImage: File) => {
     })
     .catch((err) => {
       console.log(err);
+      throw err;
     });
 };
 
@@ -66,5 +67,6 @@ export const postProfileImage = async (profileImage: File) => {
     })
     .catch((err) => {
       console.log(err);
+      throw err;
     });
 };

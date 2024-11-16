@@ -75,6 +75,7 @@ export const postEventToast = async ({
     })
     .catch((err) => {
       console.log(err);
+      throw err;
     });
 };
 
@@ -92,6 +93,7 @@ export const deleteEventToast = async (eventToastId: number) => {
     })
     .catch((err) => {
       console.log(err);
+      throw err;
     });
 };
 
@@ -133,6 +135,7 @@ export const deleteJamItem = async (jamId: number) => {
     })
     .catch((err) => {
       console.log(err);
+      throw err;
     });
 };
 
@@ -164,6 +167,6 @@ export const postJamItemToEventToast = async (
     })
     .catch((err) => {
       console.log(err);
-      alert(err.message);
+      throw err;
     });
 };

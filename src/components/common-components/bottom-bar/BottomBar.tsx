@@ -34,7 +34,7 @@ const navVariants = {
 };
 const BottomBar = () => {
   const [selectedItem, setSelectedItem] = useRecoilState(bottomBarItemState);
-  const [previousItem, setPreviousItem] = useState(selectedItem); // 이전 아이템을 저장할 상태
+  const [previousItem, setPreviousItem] = useState(navItem[0]); // 이전 아이템을 저장할 상태
 
   const backdropRef = useRef<HTMLDivElement>(null);
 

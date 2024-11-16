@@ -63,6 +63,7 @@ export const postFollowingUser = async (followingId: number) => {
     })
     .catch((err) => {
       console.log(err);
+      throw err;
     });
 };
 
@@ -81,6 +82,7 @@ export const deleteFollowingUser = async (followingMemberId: number) => {
     })
     .catch((err) => {
       console.log(err);
+      throw err;
     });
 };
 
@@ -99,6 +101,7 @@ export const deleteFollowerUser = async (followerMemberId: number) => {
     })
     .catch((err) => {
       console.log(err);
+      throw err;
     });
 };
 
@@ -117,6 +120,7 @@ export const deleteGroup = async (teamId: number) => {
     })
     .catch((err) => {
       console.log(err);
+      throw err;
     });
 };
 
@@ -160,6 +164,7 @@ export const postMyShowcaseList = async (showcases: number[]) => {
     })
     .catch((err) => {
       console.log(err);
+      throw err;
     });
 };
 
@@ -177,5 +182,6 @@ export const deleteShowcaseItem = async (showcaseId: number) => {
     })
     .catch((err) => {
       console.log(err);
+      throw err;
     });
 };
