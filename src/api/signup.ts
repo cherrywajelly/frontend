@@ -32,6 +32,6 @@ export const putNicknameSignUp = async (nickname: string) => {
     })
     .catch((err) => {
       console.log(err);
-      throw err;
+      return Promise.reject(err);
     });
 };
