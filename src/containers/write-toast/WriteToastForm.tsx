@@ -6,6 +6,7 @@ import { MdCancel } from 'react-icons/md';
 
 import Button from '@/components/common-components/button';
 import Input from '@/components/common-components/input';
+import Spinner from '@/components/common-components/spinner';
 
 import { pieceData, ToastData } from '@/types/atoms/toastAtom';
 
@@ -15,7 +16,7 @@ import { RecoilState, useRecoilState } from 'recoil';
 
 const QuillWrapper = dynamic(() => import('react-quill'), {
   ssr: false,
-  loading: () => <p>Loading ...</p>,
+  loading: () => <Spinner />,
 });
 
 const modules = {

@@ -27,6 +27,7 @@ export default function GoogleCallback() {
 
     if (error) {
       console.error('Error fetching google token:', error);
+      router.push('/');
       return;
     }
 
@@ -43,7 +44,8 @@ export default function GoogleCallback() {
         router.push('/home');
       }
     } else {
-      console.log(data);
+      // console.log(data);
+      // router.push('/');
     }
   }, [data, isLoading, error, router]);
 

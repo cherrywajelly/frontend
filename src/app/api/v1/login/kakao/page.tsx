@@ -27,6 +27,7 @@ const KakaoCallback = () => {
 
     if (error) {
       console.error('Error fetching Kakao token:', error);
+      router.push('/');
       return;
     }
 
@@ -43,7 +44,8 @@ const KakaoCallback = () => {
         router.push('/home');
       }
     } else {
-      console.log(data);
+      // console.log(data);
+      router.push('/');
     }
   }, [data, isLoading, error, router]);
 
