@@ -3,7 +3,10 @@
 import { useState } from 'react';
 
 import { navItem } from '@/components/common-components/bottom-bar/BottomBar';
+import Button from '@/components/common-components/button';
 import TopBar from '@/components/common-components/top-bar';
+
+import ConfirmDialog from '@/components/alert/ConfirmDialog';
 
 import {
   usePostGiftToastFriend,
@@ -45,16 +48,20 @@ export default function GiftToastPage() {
   const { mutate: mutateGiftToastFriend } = usePostGiftToastFriend();
   const { mutate: mutateGiftToastMine } = usePostGiftToastMine();
 
-  // console.log('giftData', giftData);
+  const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
+
+  const [responseGiftToastId, setResponseGiftToastId] = useState<number>();
 
   const formatMemoryDate = useFormatDate(giftData.memoryDate as Date);
   const formatOpenDate = useFormatDate(giftData.openDate as Date);
 
   const handleSubmit = () => {
-    const handleSuccess = () => {
-      alert('토스트가 구워졌어요!');
+    const handleSuccess = (data: any) => {
+      setResponseGiftToastId(data.giftToastId);
+      setIsDialogOpen(true);
+      setStep(0);
       setSelectedItem(navItem[0]);
-      router.replace('/home');
+      resetGiftToastData();
     };
 
     if (giftData.type === 'group') {
@@ -68,6 +75,11 @@ export default function GiftToastPage() {
         },
         {
           onSuccess: handleSuccess,
+          onError: (error) => {
+            setStep(0);
+            alert('예기치 못한 에러가 발생했습니다.');
+            resetGiftToastData();
+          },
         },
       );
     } else if (giftData.type === 'friend') {
@@ -81,6 +93,11 @@ export default function GiftToastPage() {
         },
         {
           onSuccess: handleSuccess,
+          onError: (error) => {
+            setStep(0);
+            alert('예기치 못한 에러가 발생했습니다.');
+            resetGiftToastData();
+          },
         },
       );
     } else if (giftData.type === 'mine') {
@@ -96,6 +113,7 @@ export default function GiftToastPage() {
           onError: (error) => {
             setStep(0);
             alert('예기치 못한 에러가 발생했습니다.');
+            resetGiftToastData();
           },
         },
       );
@@ -119,6 +137,29 @@ export default function GiftToastPage() {
           />
         )}
       </div>
+      {isDialogOpen && (
+        <ConfirmDialog
+          description="선물 토스트가 생성되었어요!"
+          isOpen={isDialogOpen}
+          onClose={() => setIsDialogOpen((prev) => !prev)}
+        >
+          <Button
+            color="active"
+            className="w-full"
+            onClick={() => {
+              router.push(`/gift-toast/${responseGiftToastId}`);
+            }}
+          >
+            토스트 조각 쌓기
+          </Button>
+          <Button
+            className="w-full text-white bg-gray-60"
+            onClick={() => router.push('/home')}
+          >
+            홈으로 가기
+          </Button>
+        </ConfirmDialog>
+      )}
     </div>
   );
 }
