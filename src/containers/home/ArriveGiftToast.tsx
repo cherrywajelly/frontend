@@ -129,7 +129,7 @@ export default function ArriveGiftToast() {
               className="w-full h-[48px]"
               onClick={() => router.push('/bake/gift-toast')}
             >
-              선물 토스트 굽기
+              캡슐 토스트 굽기
             </Button>
           </div>
         )}

@@ -30,7 +30,7 @@ export default function GiftToastNameForm() {
     <div className="w-full h-full px-6 py-6 flex flex-col justify-between">
       <div>
         <InputForm
-          title={`${nickname}님의 선물 토스트 이름을 지어주세요.`}
+          title={`${nickname}님의 캡슐 토스트 이름을 지어주세요.`}
           subTitle="토스트명"
         >
           <Input

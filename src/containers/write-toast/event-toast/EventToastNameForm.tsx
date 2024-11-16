@@ -23,8 +23,8 @@ export default function EventToastNameForm() {
     setEventData((prev) => ({ ...prev, toastName: e.target.value }));
   };
 
-  // TODO: to get global-state nickname by using recoil
-  const nickname = '채민';
+  const nickname =
+    typeof window !== 'undefined' && sessionStorage.getItem('nickname');
 
   return (
     <div className="w-full h-full px-6 py-6 flex flex-col justify-between">
