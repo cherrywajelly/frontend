@@ -2,15 +2,18 @@
 
 import BottomBar from '@/components/common-components/bottom-bar';
 import Button from '@/components/common-components/button';
+import Spinner from '@/components/common-components/spinner';
 import TopBar from '@/components/common-components/top-bar';
 
 import JamItem from '@/components/toast/JamItem';
 import ToastBox from '@/components/toast/ToastBox';
 
 import { useGetEventToastItem } from '@/hooks/api/useEventToast';
+import { notifyToast } from '@/utils/toast';
 
 import lockedToast from '../../../../public/images/toast/lockedToast.png';
 
+import clsx from 'clsx';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
@@ -45,20 +48,22 @@ export default function EventToastPage({ params }: { params: PageParams }) {
               nickname={data.nickname}
               openDate={data.openedDate}
             >
-              {data.isOpened ? (
-                <Button
-                  size="sm"
-                  color={data.isOpened ? 'disabled' : 'primary'}
-                  disabled={data.isOpened}
-                  onClick={() => {
-                    if (!data.isOpened)
-                      router.push(`/event-toast/${data.eventToastId}/write`);
-                  }}
-                >
-                  토스트가 오픈되었어요
-                </Button>
-              ) : isMine ? (
-                <></>
+              {isMine ? (
+                data.isOpened ? (
+                  <Button
+                    size="sm"
+                    color={data.isOpened ? 'disabled' : 'primary'}
+                    disabled={data.isOpened}
+                    onClick={() => {
+                      if (!data.isOpened)
+                        router.push(`/event-toast/${data.eventToastId}/write`);
+                    }}
+                  >
+                    토스트가 오픈되었어요
+                  </Button>
+                ) : (
+                  <></>
+                )
               ) : data.isWritten ? (
                 <Button size="sm" color="disabled" disabled>
                   잼을 발랐어요
@@ -82,7 +87,7 @@ export default function EventToastPage({ params }: { params: PageParams }) {
               현재 {data.jamCount}명의 친구들이 잼을 발라줬어요.
             </span>
 
-            {data.dDay !== 0 ? (
+            {!data.isOpened ? (
               <div className="w-full h-full mt-4 flex flex-col justify-center items-center">
                 <Image
                   src={lockedToast}
@@ -92,24 +97,36 @@ export default function EventToastPage({ params }: { params: PageParams }) {
                 <div>D-{data.dDay}</div>
               </div>
             ) : (
-              <div className="w-full mt-4 grid grid-cols-3 gap-3">
-                {data.jams &&
-                  data.jams.map((item, index) => (
-                    <JamItem
-                      key={index}
-                      nickname={item.nickname}
-                      iconImageUrl={item.iconImageUrl}
-                      onClick={() =>
-                        router.push(
-                          `/event-toast/${params.eventToastId}/jam/${item.jamId}`,
-                        )
-                      }
-                    />
-                  ))}
+              <div className="w-full h-full flex flex-col justify-between">
+                <div className="w-full mt-4 grid grid-cols-3 gap-3">
+                  {data.jams &&
+                    data.jams.map((item, index) => (
+                      <JamItem
+                        key={index}
+                        nickname={item.nickname}
+                        iconImageUrl={item.iconImageUrl}
+                        className={clsx(!isMine && 'opacity-60')}
+                        onClick={() => {
+                          if (isMine) {
+                            router.push(
+                              `/event-toast/${params.eventToastId}/jam/${item.jamId}`,
+                            );
+                          } else {
+                            notifyToast({
+                              text: '친구의 잼은 열어볼 수 없어요.',
+                              icon: '🥺',
+                            });
+                          }
+                        }}
+                      />
+                    ))}
+                </div>
               </div>
             )}
           </>
         )}
+
+        {isLoading && <Spinner />}
       </div>
 
       <BottomBar />
