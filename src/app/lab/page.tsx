@@ -135,7 +135,7 @@ export default function LabPage() {
       </Dialog> */}
 
       <ConfirmDialog
-        description="선물 토스트가 생성되었어요!"
+        description="캡슐 토스트가 생성되었어요!"
         isOpen={isOpen}
         onClose={() => setIsOpen((prev) => !prev)}
       >

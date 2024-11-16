@@ -54,7 +54,7 @@ export default function GiftToastWithChoiceForm() {
 
   return (
     <div className="w-full h-full px-6 py-6 flex flex-col justify-between">
-      <InputForm title="선물 토스트에 함께 할 사람을 선택해주세요.">
+      <InputForm title="캡슐 토스트에 함께 할 사람을 선택해주세요.">
         <div className="w-full flex items-center flex-none">
           <Input
             placeholder="검색어를 입력하세요."

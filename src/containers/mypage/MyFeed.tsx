@@ -57,7 +57,7 @@ export default function MyFeed() {
           )}
           onClick={() => handleTabClick(1)}
         >
-          선물 토스트
+          캡슐 토스트
         </div>
       </div>
 

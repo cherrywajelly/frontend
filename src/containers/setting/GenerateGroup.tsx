@@ -13,19 +13,6 @@ import temp from '../../../public/images/default-toast.png';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
-// export const tempUserList: UserDefaultProps[] = [
-//   { profileImg: temp, nickname: '채민이', memberId: 1 },
-//   { profileImg: temp, nickname: 'chchch', memberId: 2 },
-//   { profileImg: temp, nickname: '정채연', memberId: 3 },
-//   { profileImg: temp, nickname: '에스파', memberId: 4 },
-//   { profileImg: temp, nickname: 'asdf', memberId: 5 },
-//   { profileImg: temp, nickname: 'cccx', memberId: 6 },
-//   { profileImg: temp, nickname: 'cswd', memberId: 7 },
-//   { profileImg: temp, nickname: 'xvew', memberId: 8 },
-//   { profileImg: temp, nickname: 'asdfaefg', memberId: 9 },
-//   { profileImg: temp, nickname: 'vdsefs', memberId: 10 },
-// ];
-
 export default function GenerateGroup({
   selectedUsers,
 }: {
