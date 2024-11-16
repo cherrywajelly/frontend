@@ -2,6 +2,8 @@ import './globals.css';
 
 import pretendard from '@/styles/font';
 
+import { Toaster } from 'react-hot-toast';
+
 import RecoilRootWrapper from './RecoilRootWrapper';
 import Providers from './providers';
 
@@ -39,7 +41,10 @@ export default function RootLayout({
           className={`${pretendard.variable} font-pretendard antialiased m-auto`}
         >
           <Script src="/service-worker.js" />
-          <Providers>{children}</Providers>
+          <Providers>
+            {children}
+            <Toaster />
+          </Providers>
         </body>
       </RecoilRootWrapper>
     </html>
