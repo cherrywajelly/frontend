@@ -122,7 +122,7 @@ export default function GiftToastPage() {
 
   return (
     <div className="w-full h-lvh">
-      <TopBar onBack={handleBack} title="선물 토스트 굽기" />
+      <TopBar onBack={handleBack} title="캡슐 토스트 굽기" />
 
       <div className="h-[calc(100vh-48px)] flex flex-col gap-1 bg-gray-05">
         {step === 0 && <GiftToastWithChoiceForm />}
@@ -139,7 +139,7 @@ export default function GiftToastPage() {
       </div>
       {isDialogOpen && (
         <ConfirmDialog
-          description="선물 토스트가 생성되었어요!"
+          description="캡슐 토스트가 생성되었어요!"
           isOpen={isDialogOpen}
           onClose={() => setIsDialogOpen((prev) => !prev)}
         >
