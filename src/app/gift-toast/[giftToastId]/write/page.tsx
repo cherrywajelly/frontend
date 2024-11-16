@@ -64,7 +64,10 @@ export default function GiftWritePage() {
       mutate(
         {
           toastPieceContents: toastPieceContentsFile,
-          toastPieceImages: toastPieceData.imgList ?? [],
+          ...(toastPieceData.imgList &&
+            toastPieceData.imgList.length > 0 && {
+              toastPieceImages: toastPieceData.imgList,
+            }),
           toastPieceRequest: toastPieceRequest,
         },
         {

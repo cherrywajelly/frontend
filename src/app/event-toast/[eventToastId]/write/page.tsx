@@ -63,7 +63,11 @@ export default function JamWritePage() {
           eventToastId: eventToastId,
           item: {
             jamContents: jamContentsFile,
-            jamImages: (jamData.imgList ?? [])[0] as File,
+            // jamImages: (jamData.imgList ?? [])[0] as File,
+            ...(jamData.imgList &&
+              jamData.imgList.length > 0 && {
+                jamImages: jamData.imgList[0] as File,
+              }),
             jamRequest: jamRequest,
           },
         },
