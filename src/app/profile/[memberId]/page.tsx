@@ -111,7 +111,7 @@ export default function UserProfilePage({ params }: { params: PageProps }) {
     <div className="w-full h-lvh">
       <TopBar title={data?.nickname} />
 
-      <div className="flex flex-col bg-gray-05 h-[calc(100vh-144px)]">
+      <div className="h-[calc(100vh-144px)] flex flex-grow flex-col bg-gray-05 overflow-y-auto">
         <div className="px-6 py-4">
           <UserInfo
             nickname={data?.nickname ?? ''}
