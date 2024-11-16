@@ -65,7 +65,7 @@ export default function ArriveGiftToast() {
             <Skeleton width={140} height={174} className="mr-2" />
             <Skeleton width={140} height={174} />
           </>
-        ) : incompletedToastData ? (
+        ) : incompletedToastData && incompletedToastData.length > 0 ? (
           incompletedToastData.map((item, idx) => {
             return (
               <div
