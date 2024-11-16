@@ -9,10 +9,19 @@ export type ToastBoxProps = {
   nickname: string;
   openDate: string;
   children?: React.ReactNode;
+  isLoading?: boolean;
 };
 
 export default function ToastBox(props: ToastBoxProps) {
-  const { toastImg, title, profileImg, nickname, openDate, children } = props;
+  const {
+    toastImg,
+    title,
+    profileImg,
+    nickname,
+    openDate,
+    children,
+    isLoading,
+  } = props;
 
   return (
     <div className="w-full py-6 px-4 flex flex-col gap-4 bg-white border border-gray-10 rounded-[10px]">

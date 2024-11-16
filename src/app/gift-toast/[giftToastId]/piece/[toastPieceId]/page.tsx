@@ -39,6 +39,7 @@ export default function GiftToastPiecePage({ params }: { params: PageParams }) {
               width={40}
               height={40}
               className="object-cover w-[40px] h-[40px]"
+              priority
             />
             <span className="text-body1 text-gray-80 line-clamp-1">
               {data?.giftToastInfo.title}
@@ -51,6 +52,7 @@ export default function GiftToastPiecePage({ params }: { params: PageParams }) {
               width={24}
               height={24}
               className="object-cover w-[24px] h-[24px] rounded-full"
+              priority
             />
             <span className="text-gray-80 text-body4">
               {data?.giftToastInfo.giftToastOwner}

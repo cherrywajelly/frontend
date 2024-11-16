@@ -41,6 +41,7 @@ export default function GiftToastItemPage({ params }: { params: PageParams }) {
                 profileImg={data.giftToastInfo.profileImageUrl}
                 nickname={data.giftToastInfo.giftToastOwner}
                 openDate={data.giftToastInfo.openedDate}
+                isLoading={isLoading}
               >
                 <Button
                   size="sm"
@@ -62,7 +63,7 @@ export default function GiftToastItemPage({ params }: { params: PageParams }) {
 
             <div
               className={clsx(
-                'mt-4 flex flex-col gap-4 justify-center items-center',
+                'mt-4 flex flex-col gap-4 items-center',
                 data?.dDay !== 0 ? 'h-full' : '',
               )}
             >
