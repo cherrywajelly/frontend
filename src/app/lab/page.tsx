@@ -4,16 +4,21 @@ import { useState } from 'react';
 import { LuCalendarDays } from 'react-icons/lu';
 
 import Button from '@/components/common-components/button';
+import { Dialog } from '@/components/common-components/dialog';
 import Dropdown from '@/components/common-components/dropdown';
 import Input from '@/components/common-components/input';
 import Spinner from '@/components/common-components/spinner';
 
+import ConfirmDialog from '@/components/alert/ConfirmDialog';
 import InputForm from '@/components/input-form/InputForm';
 import UserInfo from '@/components/mypage/UserInfo';
 import ToastBox from '@/components/toast/ToastBox';
 
+import { notifyLater } from '@/utils/toast';
+
 import tempImg from '../../../public/images/timetoast.png';
 
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 export default function LabPage() {
@@ -43,6 +48,11 @@ export default function LabPage() {
     console.log('delete function');
   };
 
+  const onToggleModal = () => {
+    setIsOpen((prev) => !prev);
+  };
+
+  const [isOpen, setIsOpen] = useState<boolean>(true);
   return (
     <div className="w-full px-6 flex flex-col gap-1">
       {/* <Button size="md" color="disabled">
@@ -107,6 +117,40 @@ export default function LabPage() {
       {/* <div>input component test</div> */}
       {/* <Input placeholder="인풋입니다인풋" /> */}
       {/* <Input placeholder="normal input" startIcon={<LuCalendarDays />} /> */}
+      {/* 
+      <Dialog open={isOpen} onClose={onToggleModal}>
+       
+        <Dialog.Description className="flex flex-col items-center">
+          <Image src={tempImg} alt="" width={120} height={120} />
+          선물토스트가 생성되었어요!
+        </Dialog.Description>
+        <Dialog.Footer className="">
+          <Button color="active" className="w-full">
+            확인
+          </Button>
+          <Button className="w-full text-white bg-gray-60">
+            설정으로 이동
+          </Button>
+        </Dialog.Footer>
+      </Dialog> */}
+
+      <ConfirmDialog
+        description="선물 토스트가 생성되었어요!"
+        isOpen={isOpen}
+        onClose={() => setIsOpen((prev) => !prev)}
+      >
+        <Button
+          color="active"
+          className="w-full"
+          onClick={() => {
+            notifyLater();
+          }}
+          size="md"
+        >
+          공유하기
+        </Button>
+        <Button className="w-full text-white bg-gray-60">홈으로 가기</Button>
+      </ConfirmDialog>
 
       <InputForm
         title="TimeToast에서 사용할 닉네임을 입력해주세요."
