@@ -43,7 +43,7 @@ export default function ToastDecoForm(props: ToastFormProps) {
   const [toastData, setToastData] = useRecoilState(dataState);
 
   const nickname =
-    typeof window !== 'undefined' && localStorage.getItem('nickname');
+    typeof window !== 'undefined' && sessionStorage.getItem('nickname');
 
   const toastBoxRef = useRef<HTMLDivElement>(null);
 

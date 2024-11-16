@@ -20,7 +20,7 @@ export default function GiftToastNameForm() {
   };
 
   const nickname =
-    typeof window !== 'undefined' && localStorage.getItem('nickname');
+    typeof window !== 'undefined' && sessionStorage.getItem('nickname');
 
   const handleSubmit = () => {
     setStep((prev) => prev + 1);

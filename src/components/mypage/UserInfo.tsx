@@ -26,8 +26,8 @@ export default function UserInfo(props: UserInfoProps) {
   } = props;
   const router = useRouter();
 
-  const localStorageNickname =
-    typeof window !== 'undefined' && localStorage.getItem('nickname');
+  const sessionStorageNickname =
+    typeof window !== 'undefined' && sessionStorage.getItem('nickname');
 
   return (
     <>
@@ -57,7 +57,7 @@ export default function UserInfo(props: UserInfoProps) {
             <span
               className={variants.container}
               onClick={() => {
-                if (localStorageNickname === nickname)
+                if (sessionStorageNickname === nickname)
                   router.push('/mypage/follow?tab=follower');
               }}
             >
@@ -70,7 +70,7 @@ export default function UserInfo(props: UserInfoProps) {
             <span
               className={variants.container}
               onClick={() => {
-                if (localStorageNickname === nickname)
+                if (sessionStorageNickname === nickname)
                   router.push('/mypage/follow?tab=following');
               }}
             >
@@ -83,7 +83,7 @@ export default function UserInfo(props: UserInfoProps) {
             <span
               className={variants.container}
               onClick={() => {
-                if (localStorageNickname === nickname)
+                if (sessionStorageNickname === nickname)
                   router.push('/mypage/follow?tab=group');
               }}
             >

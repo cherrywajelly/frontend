@@ -32,7 +32,7 @@ export default function ArriveGiftToast() {
     if (myInfoData) {
       setMemberId(myInfoData.memberId);
       if (typeof window !== 'undefined')
-        localStorage.setItem('nickname', myInfoData?.nickname ?? '');
+        sessionStorage.setItem('nickname', myInfoData?.nickname ?? '');
     }
   }, [myInfoData]);
 
