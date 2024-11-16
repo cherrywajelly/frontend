@@ -38,7 +38,7 @@ export default function MyFeed() {
     useDeleteEventToast();
 
   return (
-    <div>
+    <div className="flex flex-col flex-1">
       <div className="w-full flex border-b border-gray-10 px-6">
         <div
           className={clsx(
@@ -63,7 +63,7 @@ export default function MyFeed() {
 
       <div
         className={clsx(
-          'flex flex-col gap-4 p-6 box-border',
+          'flex flex-col flex-1 gap-4 p-6 box-border !bg-white',
           (activeTab === 0 &&
             (!eventToastListData || eventToastListData.length === 0)) ||
             (activeTab === 1 &&
