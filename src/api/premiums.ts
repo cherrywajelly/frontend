@@ -26,5 +26,6 @@ export const postPremiumsInfo = async (premiumId: number) => {
     })
     .catch((err) => {
       console.log(err);
+      throw err;
     });
 };
