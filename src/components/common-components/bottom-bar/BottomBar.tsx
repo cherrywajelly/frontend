@@ -119,11 +119,11 @@ const BottomBar = () => {
                 router.push('/bake/event-toast');
               }}
             >
-              <span className="text-black-main text-body1">
+              <span className="text-black-main text-body1 break-keep">
                 이벤트토스트 굽기
               </span>
               <Image src={tempImg} alt="" />
-              <p className="text-gray-80 text-body4">
+              <p className="text-gray-80 text-body4 break-keep">
                 특별한 날을 기념하는 토스트를 구워보세요
               </p>
             </div>
@@ -138,7 +138,7 @@ const BottomBar = () => {
                 캡슐토스트 굽기
               </span>
               <Image src={tempImg} alt="" />
-              <p className="text-gray-80 text-body4">
+              <p className="text-gray-80 text-body4 break-keep">
                 친구들과 그룹을 만들어 추억을 나눠보세요
               </p>
             </div>

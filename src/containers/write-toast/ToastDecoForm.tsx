@@ -134,7 +134,7 @@ export default function ToastDecoForm(props: ToastFormProps) {
 
           <div
             ref={toastBoxRef}
-            className="w-full h-full grid grid-cols-3 mt-6 gap-x-4 gap-y-6 max-h-[200px] overflow-y-auto"
+            className="w-full h-full grid grid-cols-3 mt-6 gap-x-4 gap-y-6 max-h-[200px] overflow-y-auto hide-scrollbar"
           >
             {filteredIcons &&
               filteredIcons.map((icon) => (
