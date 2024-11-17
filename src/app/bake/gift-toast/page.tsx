@@ -44,9 +44,12 @@ export default function GiftToastPage() {
     }
   };
 
-  const { mutate: mutateGiftToastGroup } = usePostGiftToastGroup();
-  const { mutate: mutateGiftToastFriend } = usePostGiftToastFriend();
-  const { mutate: mutateGiftToastMine } = usePostGiftToastMine();
+  const { mutate: mutateGiftToastGroup, isPending: isPendingGroup } =
+    usePostGiftToastGroup();
+  const { mutate: mutateGiftToastFriend, isPending: isPendingFriend } =
+    usePostGiftToastFriend();
+  const { mutate: mutateGiftToastMine, isPending: isPendingMine } =
+    usePostGiftToastMine();
 
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
 
@@ -147,7 +150,7 @@ export default function GiftToastPage() {
             color="active"
             className="w-full"
             onClick={() => {
-              router.push(`/gift-toast/${responseGiftToastId}`);
+              router.replace(`/gift-toast/${responseGiftToastId}`);
             }}
           >
             토스트 조각 쌓기

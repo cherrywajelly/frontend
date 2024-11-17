@@ -8,7 +8,7 @@ export interface EventToastDefaultResponse {
 }
 
 export interface EventToastItemResponse extends EventToastDefaultResponse {
-  postedJam?: boolean;
+  isWritten?: boolean;
   icon: {
     iconId: number;
     iconImageUrl: string;
@@ -32,6 +32,7 @@ export interface EventToastResponse extends EventToastDefaultResponse {
   jams: JamItemResponse[] | null;
   iconImageUrl: string;
   isOpened: boolean;
+  memberId: number;
 }
 
 export interface JamDataItemResponse {

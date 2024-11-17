@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 
+import Spinner from '@/components/common-components/spinner';
 import TopBar from '@/components/common-components/top-bar';
 
 import { usePostJamItemToEventToast } from '@/hooks/api/useEventToast';
@@ -49,7 +50,7 @@ export default function JamWritePage() {
     jamData.title as string,
   );
 
-  const { mutate } = usePostJamItemToEventToast();
+  const { mutate, isPending } = usePostJamItemToEventToast();
 
   const handleSubmit = () => {
     if (jamData.submitAble) {
@@ -100,24 +101,33 @@ export default function JamWritePage() {
         isRight={step === 1 ? 'submit' : false}
         submitAble={jamData.submitAble}
         handleSubmit={handleSubmit}
+        isPending={isPending}
       />
 
       <div className="h-[calc(100vh-48px)] flex flex-col gap-1 bg-gray-05">
-        {step === 0 && (
-          <ToastDecoForm
-            stepState={jamStepState}
-            dataState={jamDataState}
-            handleSubmit={handleNext}
-            type="jam"
-            isMainToast={false}
-          />
-        )}
-        {step === 1 && (
-          <WriteToastForm<pieceData | ToastData>
-            stepState={jamStepState}
-            dataState={jamDataState}
-            type="jam"
-          />
+        {isPending ? (
+          <div className="flex justify-center items-center h-full">
+            <Spinner />
+          </div>
+        ) : (
+          <>
+            {step === 0 && (
+              <ToastDecoForm
+                stepState={jamStepState}
+                dataState={jamDataState}
+                handleSubmit={handleNext}
+                type="jam"
+                isMainToast={false}
+              />
+            )}
+            {step === 1 && (
+              <WriteToastForm<pieceData | ToastData>
+                stepState={jamStepState}
+                dataState={jamDataState}
+                type="jam"
+              />
+            )}
+          </>
         )}
       </div>
     </div>

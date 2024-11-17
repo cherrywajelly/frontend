@@ -128,8 +128,7 @@ export default function HomePage() {
 
   return (
     <div className="w-full h-screen">
-      <TopBar title="Time Toast" isBackBtn={false} />
-      <span>v0.4.0</span>
+      <TopBar title="Time Toast (v0.5.0)" isBackBtn={false} />
 
       <div className="w-full h-[calc(100vh-144px)] flex flex-grow flex-col overflow-y-auto p-6 bg-gray-05">
         <ArriveGiftToast />

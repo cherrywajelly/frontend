@@ -13,7 +13,7 @@ export type ConfirmDialogProps = {
 
 export default function ConfirmDialog(props: ConfirmDialogProps) {
   return (
-    <Dialog open={props.isOpen} onClose={props.onClose}>
+    <Dialog open={props.isOpen} onClose={props.onClose} className="w-[400px]">
       <Dialog.Title className="">{props.title}</Dialog.Title>
       <Dialog.Description className="flex flex-col items-center">
         <Image src={tempImg} alt="" width={120} height={120} />

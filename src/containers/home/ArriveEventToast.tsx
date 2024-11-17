@@ -43,19 +43,16 @@ export default function ArriveEventToast() {
                 toastImg={item.icon.iconImageUrl}
                 nickname={item.nickname}
                 openDate={item.openedDate}
+                onClick={() => {
+                  router.push(`/event-toast/${item.eventToastId}`);
+                }}
               >
                 {item.isWritten ? (
                   <Button size="sm" color="disabled" disabled>
                     잼을 발랐어요
                   </Button>
                 ) : (
-                  <Button
-                    size="sm"
-                    color="primary"
-                    onClick={() => {
-                      router.push(`/event-toast/${item.eventToastId}`);
-                    }}
-                  >
+                  <Button size="sm" color="primary">
                     잼 바르기
                   </Button>
                 )}

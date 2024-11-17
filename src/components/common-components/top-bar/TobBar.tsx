@@ -12,7 +12,7 @@ import { useRouter } from 'next/navigation';
 const variants = {
   base: 'text-body1',
   disabled: 'text-gray-20',
-  active: 'text-secondary-main',
+  active: 'text-secondary-main cursor-pointer',
 };
 
 const TopBar = ({
@@ -22,6 +22,7 @@ const TopBar = ({
   submitAble = false,
   onBack,
   handleSubmit,
+  isPending,
 }: TopBarProps & { onBack?: () => void }) => {
   const router = useRouter();
 
@@ -43,6 +44,17 @@ const TopBar = ({
     { label: '로그아웃', onClick: () => handleLogout() },
   ];
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmitClick = async () => {
+    if (isSubmitting) return;
+    setIsSubmitting(true);
+
+    if (handleSubmit) await handleSubmit();
+
+    setIsSubmitting(false);
+  };
+
   return (
     <div className="bg-white w-full h-[48px] border-b border-gray-10 px-6 flex justify-between items-center">
       {isBackBtn ? (
@@ -63,15 +75,16 @@ const TopBar = ({
         isRight === 'setting' ? (
           <Dropdown items={SettingCategories} color="text-gray-80" />
         ) : (
-          <span
+          <button
             className={clsx(
               variants.base,
-              submitAble ? variants.active : variants.disabled,
+              isPending || !submitAble ? variants.disabled : variants.active,
             )}
-            onClick={handleSubmit}
+            onClick={handleSubmitClick}
+            disabled={isPending}
           >
             등록
-          </span>
+          </button>
         )
       ) : (
         <div className="w-[20px]" />

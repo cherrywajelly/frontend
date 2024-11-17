@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import { BiDollarCircle } from 'react-icons/bi';
 
 import Button from '@/components/common-components/button';
@@ -10,6 +11,7 @@ import {
   useGetIconGroupsDetail,
   usePostBuyIconGroups,
 } from '@/hooks/api/useIconGroups';
+import { notifySuccess } from '@/utils/toast';
 
 import Image from 'next/image';
 
@@ -21,14 +23,15 @@ export default function IconDetailPage({ params }: { params: PageParams }) {
   const iconGroupId = params.iconGroupId;
 
   const { data, isLoading } = useGetIconGroupsDetail(iconGroupId);
-  // console.log('data', data);
+  const [isPurchased, setIsPurchased] = useState<boolean>(false);
 
   const { mutate, isPending } = usePostBuyIconGroups();
 
   const handleSubmit = () => {
     mutate(iconGroupId, {
       onSuccess: () => {
-        alert('아이콘 구매가 완료되었어요!');
+        notifySuccess('아이콘 구매가 완료되었어요!');
+        setIsPurchased(true);
       },
       onError: () => {
         alert('예기치 못한 에러가 발생했습니다.');
@@ -90,10 +93,11 @@ export default function IconDetailPage({ params }: { params: PageParams }) {
         <Button
           size="md"
           className="flex-none mb-6"
-          color="active"
+          color={isPurchased || isPending ? 'disabled' : 'active'}
           onClick={handleSubmit}
+          disabled={isPurchased || isPending}
         >
-          구매하기
+          {isPurchased ? '구매완료' : '구매하기'}
         </Button>
       </div>
     </div>

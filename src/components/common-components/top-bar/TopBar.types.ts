@@ -4,6 +4,7 @@ export type TopBarProps = {
   isRight?: boolean | RightType;
   submitAble?: boolean;
   handleSubmit?: () => void;
+  isPending?: boolean;
 };
 
 export const rightTypes = {

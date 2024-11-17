@@ -95,7 +95,11 @@ export default function GiftToastItemPage({ params }: { params: PageParams }) {
                     alt=""
                     className="opacity-50 w-[240px] h-[240px]"
                   />
-                  <div>D-{data?.dDay}</div>
+                  <div className="text-gray-60">
+                    {data?.dDay === 0
+                      ? '모두가 토스트 조각을 쌓아야 볼 수 있어요! '
+                      : `D-${data?.dDay}`}
+                  </div>
                 </div>
               ) : null}
             </div>

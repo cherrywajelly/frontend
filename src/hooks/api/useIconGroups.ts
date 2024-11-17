@@ -17,20 +17,26 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 // 사용자 잼 아이콘 그룹 목록 조회
 export const useGetIconGroupsJams = () => {
-  const { data, isLoading, error } = useQuery<IconGroupItemResponse[]>({
-    queryKey: ['iconGroupsJams'],
-    queryFn: () => getIconGroupsJams(),
-  });
-  return { data, isLoading, error };
+  const { data, isLoading, error, refetch } = useQuery<IconGroupItemResponse[]>(
+    {
+      queryKey: ['iconGroupsJams'],
+      queryFn: () => getIconGroupsJams(),
+      enabled: true,
+    },
+  );
+  return { data, isLoading, error, refetch };
 };
 
 // 사용자 토스트 아이콘 그룹 목록 조회
 export const useGetIconGroupsToasts = () => {
-  const { data, isLoading, error } = useQuery<IconGroupItemResponse[]>({
-    queryKey: ['iconGroupsToasts'],
-    queryFn: () => getIconGroupsToasts(),
-  });
-  return { data, isLoading, error };
+  const { data, isLoading, error, refetch } = useQuery<IconGroupItemResponse[]>(
+    {
+      queryKey: ['iconGroupsToasts'],
+      queryFn: () => getIconGroupsToasts(),
+      enabled: true,
+    },
+  );
+  return { data, isLoading, error, refetch };
 };
 
 // 아이콘 그룹 목록 삭제
