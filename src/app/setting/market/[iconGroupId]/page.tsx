@@ -43,7 +43,7 @@ export default function IconDetailPage({ params }: { params: PageParams }) {
     <div className="w-full h-lvh">
       <TopBar title="아이콘 마켓" />
 
-      <div className="h-[calc(100vh-48px)] flex flex-col gap-6 justify-between bg-gray-white p-6">
+      <div className="h-[calc(100vh-48px)] bg-white flex flex-col gap-6 justify-between bg-gray-white p-6">
         {isLoading ? (
           <Spinner />
         ) : (
@@ -57,13 +57,13 @@ export default function IconDetailPage({ params }: { params: PageParams }) {
                 height={120}
                 className="w-[120px] h-[120px] object-cover rounded-[10px]"
               />
-              <span className="mt-6 text-black-main dark:text-white text-body1">
+              <span className="mt-6 text-black-main text-body1">
                 {data?.title}
               </span>
-              <span className="mt-2 text-gray-80 text-body4 dark:text-white">
+              <span className="mt-2 text-gray-80 text-body4 ">
                 {data?.creatorNickname}
               </span>
-              <span className="mt-2 text-gray-80 dark:text-white text-body4 flex items-center gap-1">
+              <span className="mt-2 text-gray-80 text-body4 flex items-center gap-1">
                 <BiDollarCircle />
                 {data?.price}
               </span>
