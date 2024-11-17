@@ -31,7 +31,7 @@ export default function Home() {
       {!accessToken ? (
         <div className="h-full text-center relative p-6 box-border w-full flex flex-col justify-center items-center">
           <Image src={Logo} alt="timetoast" width={200} height={200} />
-          <h1 className="text-[36px] font-bold texet-gray-80">TimeToast</h1>
+          <h1 className="text-[36px] font-bold text-gray-80">TimeToast</h1>
           <h3 className="text-subtitle2 mt-4 text-gray-80">
             지속적인 공유가 가능한 <br />
             추억 아카이빙 서비스
