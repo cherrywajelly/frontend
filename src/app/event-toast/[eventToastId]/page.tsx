@@ -92,7 +92,9 @@ export default function EventToastPage({ params }: { params: PageParams }) {
                   alt=""
                   className="opacity-50 w-[240px] h-[240px]"
                 />
-                <div>D-{data.dDay}</div>
+                <div className="text-gray-60">
+                  {data.dDay === 0 ? '' : `D-${data.dDay}`}
+                </div>
               </div>
             ) : (
               <div className="w-full h-full flex flex-col justify-between">
@@ -111,7 +113,7 @@ export default function EventToastPage({ params }: { params: PageParams }) {
                             );
                           } else {
                             notifyToast({
-                              text: '친구의 잼은 열어볼 수 없어요.',
+                              text: '토스트 주인만 열어볼 수 있어요.',
                               icon: '🥺',
                             });
                           }

@@ -48,7 +48,7 @@ export default function PieceBox(props: PieceBoxProps) {
     >
       <div className="flex gap-4">
         <Image
-          src={data.iconImageUrl || temp}
+          src={data.iconImageUrl}
           alt=""
           width={56}
           height={56}
@@ -60,7 +60,7 @@ export default function PieceBox(props: PieceBoxProps) {
 
           <span className="flex gap-1 items-center">
             <Image
-              src={data.profileUrl || temp}
+              src={data.profileUrl}
               alt=""
               width={24}
               height={24}
@@ -88,42 +88,44 @@ export default function PieceBox(props: PieceBoxProps) {
       />
 
       {/* images */}
-      {data.toastPieceImages && (
-        <div className="flex flex-col gap-2">
+      {data.toastPieceImages && data.toastPieceImages.length > 0 && (
+        <div className="w-full flex flex-col gap-2">
           <div className="w-full flex gap-1">
             <Image
-              src={data.toastPieceImages[0] || temp}
+              src={data.toastPieceImages[0]}
               alt=""
               width={100}
               height={154}
-              className="w-1/2 h-[154px] object-cover rounded-[8px] border border-gray-10"
+              className="w-full object-cover rounded-[8px] border border-gray-10"
             />
-            <div
-              className={clsx(
-                'w-1/2 h-[154px] relative rounded-[8px] border border-gray-10 overflow-hidden',
-                isList ? 'bg-black bg-opacity-60' : '',
-              )}
-            >
-              <Image
-                src={data.toastPieceImages[1] || temp}
-                alt=""
-                width={100}
-                height={100}
+            {data.toastPieceImages.length > 1 && (
+              <div
                 className={clsx(
-                  'object-cover w-full h-full',
-                  isList ? 'opacity-40' : '',
+                  'w-full relative rounded-[8px] border border-gray-10 overflow-hidden',
+                  isList ? 'bg-black bg-opacity-60' : '',
                 )}
-              />
-              {isList && (
-                <span className="absolute inset-0 flex items-center justify-center text-white text-body1">
-                  더보기
-                </span>
-              )}
-            </div>
+              >
+                <Image
+                  src={data.toastPieceImages[1]}
+                  alt=""
+                  width={100}
+                  height={100}
+                  className={clsx(
+                    'object-cover w-full h-full',
+                    isList ? 'opacity-40' : '',
+                  )}
+                />
+                {isList && (
+                  <span className="absolute inset-0 flex items-center justify-center text-white text-body1">
+                    더보기
+                  </span>
+                )}
+              </div>
+            )}
           </div>
-          {!isList && (
+          {!isList && data.toastPieceImages.length > 2 && (
             <Image
-              src={data.toastPieceImages[2] || temp}
+              src={data.toastPieceImages[2]}
               alt=""
               width={100}
               height={100}

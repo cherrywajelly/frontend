@@ -8,7 +8,7 @@ export interface EventToastDefaultResponse {
 }
 
 export interface EventToastItemResponse extends EventToastDefaultResponse {
-  postedJam?: boolean;
+  isWritten?: boolean;
   icon: {
     iconId: number;
     iconImageUrl: string;

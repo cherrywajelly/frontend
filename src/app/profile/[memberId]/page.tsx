@@ -83,7 +83,7 @@ export default function UserProfilePage({ params }: { params: PageProps }) {
             openedDate: item.openedDate,
             memberProfileUrl: item.memberProfileUrl,
             nickname: item.nickname,
-            postedJam: item.postedJam,
+            isWritten: item.isWritten,
             icon: item.icon,
           }) as EventToastItemResponse,
       ) ?? [],
@@ -178,7 +178,7 @@ export default function UserProfilePage({ params }: { params: PageProps }) {
           isFollow &&
           userEventToastDataList.length > 0 ? (
             <div className="pt-4 flex flex-col gap-4">
-              {userEventToastDataList.map((item) => (
+              {userEventToastDataList.map((item, idx) => (
                 <ToastBox
                   key={item.eventToastId}
                   title={item.title}
@@ -187,7 +187,7 @@ export default function UserProfilePage({ params }: { params: PageProps }) {
                   openDate={item.openedDate}
                   toastImg={item.icon.iconImageUrl}
                 >
-                  <Button
+                  {/* <Button
                     size="sm"
                     color="primary"
                     onClick={() =>
@@ -195,7 +195,22 @@ export default function UserProfilePage({ params }: { params: PageProps }) {
                     }
                   >
                     잼 바르기
-                  </Button>
+                  </Button> */}
+                  {item.isWritten ? (
+                    <Button size="sm" color="disabled" disabled>
+                      잼을 발랐어요
+                    </Button>
+                  ) : (
+                    <Button
+                      size="sm"
+                      color="primary"
+                      onClick={() => {
+                        router.push(`/event-toast/${item.eventToastId}`);
+                      }}
+                    >
+                      잼 바르기
+                    </Button>
+                  )}
                 </ToastBox>
               ))}
             </div>

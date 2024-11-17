@@ -48,7 +48,7 @@ export default function JamBox(props: JamBoxProps) {
     >
       <div className="flex gap-4">
         <Image
-          src={data.jamIconImageUrl || temp}
+          src={data.jamIconImageUrl}
           alt=""
           width={56}
           height={56}
@@ -91,7 +91,7 @@ export default function JamBox(props: JamBoxProps) {
       {data.jamImageUrl && (
         <div className="flex flex-col gap-2">
           <Image
-            src={data.jamImageUrl || temp}
+            src={data.jamImageUrl}
             alt=""
             width={100}
             height={100}

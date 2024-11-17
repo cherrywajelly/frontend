@@ -43,10 +43,10 @@ export default function Showcase(props: ShowcaseProps) {
         ) : (
           data &&
           data.length > 0 &&
-          data.map((item) => (
+          data.map((item, idx) => (
             <div
               className="w-1/3 bg-white border border-gray-10 p-4 rounded-[10px]"
-              key={item.eventToastId}
+              key={idx}
               onClick={() => router.push(`/event-toast/${item.eventToastId}`)}
             >
               <Image
@@ -61,7 +61,7 @@ export default function Showcase(props: ShowcaseProps) {
         )}
 
         {!isLoading && data && !data.length && (
-          <div className="w-full text-center text-body4 bg-white border border-gray-10 p-4 rounded-[10px]">
+          <div className="w-full text-center text-body4 bg-white border border-gray-10 p-4 rounded-[10px] text-gray-60">
             진열장이 비어있어요.
           </div>
         )}

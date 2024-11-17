@@ -8,7 +8,10 @@ export default function UserListItem(props: UserListItemProps) {
   const { profileImg, nickname, children, onClick } = props;
 
   return (
-    <div onClick={onClick} className="w-full flex gap-4 items-center">
+    <div
+      onClick={onClick}
+      className="w-full flex gap-4 items-center cursor-pointer"
+    >
       <Image
         src={profileImg ?? temp}
         alt=""
