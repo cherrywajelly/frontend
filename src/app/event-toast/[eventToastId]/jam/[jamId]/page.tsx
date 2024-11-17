@@ -7,6 +7,7 @@ import TopBar from '@/components/common-components/top-bar';
 import JamBox from '@/components/toast/JamBox';
 
 import { useDeleteJamItem, useGetJamDetail } from '@/hooks/api/useEventToast';
+import { notifySuccess } from '@/utils/toast';
 
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
@@ -72,7 +73,7 @@ export default function JamItemPage({ params }: { params: PageParams }) {
                 handleDelete={() => {
                   mutate(params.jamId, {
                     onSuccess: () => {
-                      alert('잼이 삭제되었어요!');
+                      notifySuccess('잼이 삭제되었어요!');
                       router.back();
                     },
                     onError: (error) => {

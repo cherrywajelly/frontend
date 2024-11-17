@@ -7,6 +7,7 @@ import {
 } from 'react-icons/ri';
 
 import Button from '@/components/common-components/button';
+import Spinner from '@/components/common-components/spinner';
 import TopBar from '@/components/common-components/top-bar';
 
 import MyEventToastItem from '@/components/mypage/MyEventToastItem';
@@ -123,6 +124,8 @@ export default function ShowcaseEdit() {
     }
   };
 
+  const isLoading = isPosting || isDeleting || isLoadingShowcaseListData;
+
   return (
     <div className="w-full h-lvh">
       <TopBar title="진열장 편집" />
@@ -136,46 +139,52 @@ export default function ShowcaseEdit() {
         </div>
 
         <div className="w-full h-[calc(100vh-154px)] flex flex-col justify-between flex-grow bg-white px-6 py-4 border-t-2 border-gray-10 rounded-t-[20px]">
-          <div className="flex-grow mb-6 overflow-y-auto hide-scrollbar">
-            <div className="flex flex-col gap-4">
-              {showcaseList &&
-                showcaseList?.map((item) => {
-                  return (
-                    <MyEventToastItem
-                      key={item.eventToastId}
-                      image={item.iconUrl}
-                      title={item.title}
-                      date={item.openedDate}
-                      isSetting={false}
-                      onClick={() => toggleToastSelection(item)}
-                    >
-                      {selectedToast.includes(item.eventToastId) ? (
-                        <RiCheckboxCircleFill
-                          className="text-primary-main my-auto"
-                          size={24}
-                        />
-                      ) : (
-                        <RiCheckboxBlankCircleLine
-                          className="text-gray-40 my-auto"
-                          size={24}
-                        />
-                      )}
-                    </MyEventToastItem>
-                  );
-                })}
-            </div>
-          </div>
+          {isLoading ? (
+            <Spinner />
+          ) : (
+            <>
+              <div className="flex-grow mb-6 overflow-y-auto hide-scrollbar">
+                <div className="flex flex-col gap-4">
+                  {showcaseList &&
+                    showcaseList?.map((item) => {
+                      return (
+                        <MyEventToastItem
+                          key={item.eventToastId}
+                          image={item.iconUrl}
+                          title={item.title}
+                          date={item.openedDate}
+                          isSetting={false}
+                          onClick={() => toggleToastSelection(item)}
+                        >
+                          {selectedToast.includes(item.eventToastId) ? (
+                            <RiCheckboxCircleFill
+                              className="text-primary-main my-auto"
+                              size={24}
+                            />
+                          ) : (
+                            <RiCheckboxBlankCircleLine
+                              className="text-gray-40 my-auto"
+                              size={24}
+                            />
+                          )}
+                        </MyEventToastItem>
+                      );
+                    })}
+                </div>
+              </div>
 
-          <Button
-            size="md"
-            // color={selectedToast.length ? 'active' : 'disabled'}
-            color="active"
-            onClick={handleSubmit}
-            // disabled={!selectedToast.length}
-            className="flex-none mb-6 w-full"
-          >
-            전시하기
-          </Button>
+              <Button
+                size="md"
+                // color={selectedToast.length ? 'active' : 'disabled'}
+                color="active"
+                onClick={handleSubmit}
+                // disabled={!selectedToast.length}
+                className="flex-none mb-6 w-full"
+              >
+                전시하기
+              </Button>
+            </>
+          )}
         </div>
       </div>
     </div>

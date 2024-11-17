@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react';
 
+import Spinner from '@/components/common-components/spinner';
 import TopBar from '@/components/common-components/top-bar';
 
 import { usePostToastPieces } from '@/hooks/api/useGiftToast';
@@ -51,7 +52,7 @@ export default function GiftWritePage() {
     toastPieceData.title as string,
   );
 
-  const { mutate } = usePostToastPieces();
+  const { mutate, isPending } = usePostToastPieces();
 
   const handleSubmit = () => {
     if (toastPieceData.submitAble) {
@@ -99,24 +100,33 @@ export default function GiftWritePage() {
         isRight={step === 1 ? 'submit' : false}
         submitAble={toastPieceData.submitAble}
         handleSubmit={handleSubmit}
+        isPending={isPending}
       />
 
       <div className="h-[calc(100vh-48px)] flex flex-col gap-1 bg-gray-05">
-        {step === 0 && (
-          <ToastDecoForm
-            stepState={toastPieceStepState}
-            dataState={toastPieceDataState}
-            handleSubmit={handleNext}
-            isMainToast={false}
-            type="toast"
-          />
-        )}
-        {step === 1 && (
-          <WriteToastForm<pieceData | ToastData>
-            stepState={toastPieceStepState}
-            dataState={toastPieceDataState}
-            type="toast"
-          />
+        {isPending ? (
+          <div className="flex justify-center items-center h-full">
+            <Spinner />
+          </div>
+        ) : (
+          <>
+            {step === 0 && (
+              <ToastDecoForm
+                stepState={toastPieceStepState}
+                dataState={toastPieceDataState}
+                handleSubmit={handleNext}
+                isMainToast={false}
+                type="toast"
+              />
+            )}
+            {step === 1 && (
+              <WriteToastForm<pieceData | ToastData>
+                stepState={toastPieceStepState}
+                dataState={toastPieceDataState}
+                type="toast"
+              />
+            )}
+          </>
         )}
       </div>
     </div>
