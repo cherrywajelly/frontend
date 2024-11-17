@@ -51,6 +51,7 @@ export default function JamBox(props: JamBoxProps) {
           alt=""
           width={56}
           height={56}
+          unoptimized
           className="object-cover w-[56px] h-[56px] rounded-[10px]"
         />
 
@@ -62,6 +63,7 @@ export default function JamBox(props: JamBoxProps) {
               src={data.jamMemberProfileUrl || temp}
               alt=""
               width={24}
+              unoptimized
               height={24}
               className="object-cover rounded-full w-[24px] h-[24px]"
             />

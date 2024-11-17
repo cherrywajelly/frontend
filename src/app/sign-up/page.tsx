@@ -118,6 +118,7 @@ export default function SignUpPage() {
           disabled={!isValid}
           color={isValid ? 'active' : 'disabled'}
           onClick={handleSubmit}
+          className="mb-6"
         >
           회원가입하기
         </Button>

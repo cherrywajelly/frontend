@@ -27,15 +27,18 @@ export default function Home() {
   }, [accessToken, router]);
 
   return (
-    <div className="w-full h-screen">
+    <div className="w-full h-screen p-6 bg-white">
       {!accessToken ? (
-        <div className="p-6 box-border w-full h-screen flex flex-col justify-center items-center">
-          <Image src={Logo} alt="timetoast" />
-          <h1 className="text-subtitle1">타임토스트</h1>
-          <h3>지속가능한 추억 아카이빙 서비스</h3>
+        <div className="h-full text-center relative p-6 box-border w-full flex flex-col justify-center items-center">
+          <Image src={Logo} alt="timetoast" width={200} height={200} />
+          <h1 className="text-[36px] font-bold">TimeToast</h1>
+          <h3 className="text-subtitle2 mt-4">
+            지속적인 공유가 가능한 <br />
+            추억 아카이빙 서비스
+          </h3>
           <Button
             color="active"
-            className="w-full mt-8"
+            className="w-full mt-8 absolute bottom-6"
             onClick={() => {
               router.push('/login');
             }}

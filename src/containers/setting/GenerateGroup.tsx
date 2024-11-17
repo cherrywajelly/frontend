@@ -137,6 +137,7 @@ export default function GenerateGroup({
                     alt=""
                     width={48}
                     height={48}
+                    unoptimized
                     className="object-cover rounded-full w-[48px] h-[48px]"
                   />
                   <span className="text-body2 text-black-main">

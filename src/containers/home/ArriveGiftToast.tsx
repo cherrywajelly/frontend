@@ -81,6 +81,7 @@ export default function ArriveGiftToast() {
                   alt="icon"
                   width={100}
                   height={100}
+                  unoptimized
                   className="w-[100px] h-[100px] object-cover"
                 />
                 <span className="mt-2 w-[108px] text-gray-80 text-body1 truncate text-center">

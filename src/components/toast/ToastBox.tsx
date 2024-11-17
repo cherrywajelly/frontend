@@ -41,6 +41,7 @@ export default function ToastBox(props: ToastBoxProps) {
           alt=""
           width={80}
           height={80}
+          unoptimized
           className="object-cover w-[80px] h-[80px]"
         />
 
@@ -55,6 +56,7 @@ export default function ToastBox(props: ToastBoxProps) {
               alt="profile"
               width={24}
               height={24}
+              unoptimized
               className="object-cover rounded-full w-[24px] h-[24px]"
             />
             <span className="text-gray-80 text-body4">
