@@ -24,6 +24,7 @@ export default function JamItem(props: JamItemProps) {
         width={80}
         height={80}
         alt=""
+        unoptimized
         className="w-[80px] h-[80px] object-cover"
       />
       <span className="text-gray-80 text-body4 line-clamp-1">@{nickname}</span>

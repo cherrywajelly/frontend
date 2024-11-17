@@ -64,6 +64,7 @@ export default function PieceBox(props: PieceBoxProps) {
               alt=""
               width={24}
               height={24}
+              unoptimized
               className="object-cover rounded-full w-[24px] h-[24px]"
             />
             <span className="text-gray-80 text-body4">{data.nickname}</span>

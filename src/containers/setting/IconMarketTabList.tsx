@@ -60,6 +60,7 @@ export default function IconMarketTabList() {
                   width={56}
                   height={56}
                   className="object-cover"
+                  unoptimized
                 />
 
                 <div className="flex-1 flex-col space-y-2">
