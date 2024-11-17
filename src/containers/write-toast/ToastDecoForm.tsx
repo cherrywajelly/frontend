@@ -145,6 +145,7 @@ export default function ToastDecoForm(props: ToastFormProps) {
                   <Image
                     src={icon.iconImageUrl}
                     alt={icon.iconId.toString()}
+                    unoptimized
                     width={80}
                     height={80}
                     className="cursor-pointer w-[80px] h-[80px] object-cover"
