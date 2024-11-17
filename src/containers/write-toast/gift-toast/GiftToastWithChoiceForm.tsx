@@ -143,7 +143,7 @@ export default function GiftToastWithChoiceForm() {
 
       <Button
         size="md"
-        className="flex-none"
+        className="flex-none mb-6"
         color={giftData.type ? 'active' : 'disabled'}
         onClick={handleSubmit}
         disabled={!giftData.type}

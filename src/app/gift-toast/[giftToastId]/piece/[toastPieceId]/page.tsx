@@ -28,7 +28,7 @@ export default function GiftToastPiecePage({ params }: { params: PageParams }) {
   const { mutate, isPending } = useDeleteToastPiece();
 
   return (
-    <div className="w-full h-lvh">
+    <div className="w-full h-lvh bg-gray-05">
       <TopBar title={data?.giftToastInfo.title} />
 
       <div className="h-[calc(100vh-144px)] flex flex-col gap-4 bg-gray-05 p-6 flex-grow overflow-y-auto">
