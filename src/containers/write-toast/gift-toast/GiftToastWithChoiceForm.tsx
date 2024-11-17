@@ -35,7 +35,6 @@ export default function GiftToastWithChoiceForm() {
 
   // 자기 자신 조회
   const { data: mineData, isLoading: isLoadingMineData } = useMyInfo();
-  console.log(mineData);
   // 팔로잉 목록 및 그룹 목록 조회
   const { data: followingData, isLoading: isLoadingFollowings } =
     useGetFollowings();

@@ -51,8 +51,6 @@ export default function ShowcaseEdit() {
     [showcaseList],
   );
 
-  console.log('initialShowcaseIds', initialShowcaseIds);
-
   const [selectedToast, setSelectedToast] =
     useState<number[]>(initialShowcaseIds);
 
@@ -76,9 +74,6 @@ export default function ShowcaseEdit() {
   const { mutate: deleteMutate, isPending: isDeleting } =
     useDeleteMyShowcaseItem();
 
-  console.log('showcaseList', showcaseList);
-  console.log('selectedToast', selectedToast);
-
   const handleSubmit = () => {
     const toAdd = selectedToast.filter(
       (id) => !initialShowcaseIds.includes(id),
@@ -91,9 +86,6 @@ export default function ShowcaseEdit() {
     const toDeleteShowcaseIds = showcaseList
       .filter((item) => toDeleteItem.includes(item.eventToastId))
       .map((item) => item.showCaseId);
-
-    console.log('삭제할 아이템:', toDeleteShowcaseIds);
-    console.log('추가할 아이템:', toAdd);
 
     if (toDeleteShowcaseIds.length > 0) {
       Promise.all(

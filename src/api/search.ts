@@ -25,7 +25,7 @@ export const postSearchResult = async ({
 
     return Promise.reject('Unexpected response status');
   } catch (err) {
-    console.log(err);
+    // console.log(err);
     return Promise.reject(err);
   }
 };

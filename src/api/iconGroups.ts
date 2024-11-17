@@ -37,7 +37,7 @@ export const deleteIconGroups = async (iconGroupId: number) => {
       }
     })
     .catch((err) => {
-      console.log(err);
+      // console.log(err);
       throw err;
     });
 };
@@ -91,7 +91,7 @@ export const postBuyIconGroups = async (iconGroupId: number) => {
       }
     })
     .catch((err) => {
-      console.log(err);
+      // console.log(err);
       throw err;
     });
 };

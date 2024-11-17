@@ -13,6 +13,7 @@ import { useMyInfo } from '@/hooks/api/useLogin';
 import { useGetMyProfile } from '@/hooks/api/useMyPage';
 import { usePostProfileImage } from '@/hooks/api/useSetting';
 import { useNicknameSignUp, useNicknameValid } from '@/hooks/api/useSignUp';
+import { notifyError, notifySuccess } from '@/utils/toast';
 
 import { useQueryClient } from '@tanstack/react-query';
 
@@ -50,7 +51,6 @@ const SettingProfilePage = () => {
 
   useEffect(() => {
     if (data) {
-      console.log(data);
       setNickname(data.nickname);
       // setProfileImgPreview(data.profileUrl);
       refetchMyInfo();
@@ -112,7 +112,6 @@ const SettingProfilePage = () => {
 
     try {
       const data = await refetch();
-      console.log(data);
       if (data.status === 'success') {
         setIsValid(true);
         setValidMessage('사용 가능한 닉네임입니다.');
@@ -129,14 +128,12 @@ const SettingProfilePage = () => {
     if (nickname !== prevNickname) {
       mutateNicknameSignUp(undefined, {
         onSuccess: () => {
-          console.log('닉네임 변경 성공');
-          alert('프로필 정보가 수정되었습니다.');
+          notifySuccess('프로필 정보가 수정되었습니다.');
           setIsValid(false);
-          console.log(isValid);
           sessionStorage.setItem('nickname', nickname ?? '');
         },
         onError: () => {
-          alert('예기치 못한 에러가 발생했습니다.');
+          notifyError('예기치 못한 에러가 발생했습니다.');
         },
       });
     }
@@ -145,7 +142,7 @@ const SettingProfilePage = () => {
       mutateProfileImage(profileImg, {
         onSuccess: () => {
           // alert('프로필 정보가 수정되었습니다.');
-          console.log('프로필 이미지 변경 성공');
+          notifySuccess('프로필 정보가 수정되었어요!');
           queryClient.invalidateQueries({ queryKey: ['myProfile'] });
           queryClient.invalidateQueries({ queryKey: ['myInfo'] });
           // refetchMyInfo();
@@ -153,7 +150,7 @@ const SettingProfilePage = () => {
           router.replace('/mypage');
         },
         onError: () => {
-          alert('예기치 못한 에러가 발생했습니다.');
+          notifyError('예기치 못한 에러가 발생했습니다.');
         },
       });
     }

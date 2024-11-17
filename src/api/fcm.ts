@@ -15,7 +15,7 @@ export const putFCMToken = async (token: string) => {
       }
     })
     .catch((err) => {
-      console.log(err);
+      // console.log(err);
       throw err;
     });
 };
@@ -67,7 +67,7 @@ export const postFCMTest = async ({
       }
     })
     .catch((err) => {
-      console.log(err);
+      // console.log(err);
       throw err;
     });
 };

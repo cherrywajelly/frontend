@@ -8,7 +8,6 @@ const variants = {
 
 export default function PremiumsInfo() {
   const { data, isLoading } = useGetPremiumsInfo();
-  console.log(data);
 
   return (
     <div className="mt-[60px] h-full border border-blue-500">

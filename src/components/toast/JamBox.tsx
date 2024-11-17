@@ -38,7 +38,6 @@ export default function JamBox(props: JamBoxProps) {
 
   useEffect(() => {
     readFileContent(data.jamContentsUrl);
-    console.log(fileContent);
   }, [fileContent, data]);
 
   return (

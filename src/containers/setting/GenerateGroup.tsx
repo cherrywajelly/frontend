@@ -62,7 +62,6 @@ export default function GenerateGroup({
   const handleSubmit = async () => {
     try {
       const responseData = await mutateAsync();
-      console.log('responseData', responseData);
 
       if (responseData?.teamId && profileImg) {
         await mutateGroupImg(
