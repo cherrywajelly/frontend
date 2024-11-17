@@ -10,7 +10,9 @@
     "project": "./tsconfig.json"
   },
   "env": {
-    "browser": true
+    "browser": true,
+    "es6": true,
+    "serviceworker": true
   },
   "rules": {
     "react/react-in-jsx-scope": "off",

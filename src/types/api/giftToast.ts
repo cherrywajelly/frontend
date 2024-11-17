@@ -67,7 +67,7 @@ export interface GiftToastFriendRequestBody extends GiftToastRequestBody {
 // 토스트 조각 관련 타입
 export interface GiftToastPiecePostRequestBody {
   toastPieceContents: File;
-  toastPieceImages: File[];
+  toastPieceImages?: File[];
   toastPieceRequest: {
     giftToastId: number;
     iconId: number;

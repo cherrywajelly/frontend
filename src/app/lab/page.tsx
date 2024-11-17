@@ -4,15 +4,21 @@ import { useState } from 'react';
 import { LuCalendarDays } from 'react-icons/lu';
 
 import Button from '@/components/common-components/button';
+import { Dialog } from '@/components/common-components/dialog';
 import Dropdown from '@/components/common-components/dropdown';
 import Input from '@/components/common-components/input';
+import Spinner from '@/components/common-components/spinner';
 
+import ConfirmDialog from '@/components/alert/ConfirmDialog';
 import InputForm from '@/components/input-form/InputForm';
 import UserInfo from '@/components/mypage/UserInfo';
 import ToastBox from '@/components/toast/ToastBox';
 
+import { notifyLater } from '@/utils/toast';
+
 import tempImg from '../../../public/images/timetoast.png';
 
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 export default function LabPage() {
@@ -26,7 +32,6 @@ export default function LabPage() {
         break;
       case '그룹 관리':
         router.push('/setting/group');
-        console.log('hhhh');
         break;
     }
   };
@@ -34,14 +39,19 @@ export default function LabPage() {
   const SettingCategories = [
     { label: '프로필 편집', onClick: () => handleClick('프로필 편집') },
     { label: '그룹 관리', onClick: () => handleClick('그룹 관리') },
-    { label: '아이콘 마켓', onClick: () => console.log('아이콘 마켓 클릭됨') },
-    { label: '구독 플랜', onClick: () => console.log('구독 플랜 클릭됨') },
+    { label: '아이콘 마켓', onClick: () => handleClick('아이콘 마켓 클릭됨') },
+    { label: '구독 플랜', onClick: () => handleClick('구독 플랜 클릭됨') },
   ];
 
   const handleDelete = () => {
-    console.log('delete function');
+    // console.log('delete function');
   };
 
+  const onToggleModal = () => {
+    setIsOpen((prev) => !prev);
+  };
+
+  const [isOpen, setIsOpen] = useState<boolean>(true);
   return (
     <div className="w-full px-6 flex flex-col gap-1">
       {/* <Button size="md" color="disabled">
@@ -106,6 +116,40 @@ export default function LabPage() {
       {/* <div>input component test</div> */}
       {/* <Input placeholder="인풋입니다인풋" /> */}
       {/* <Input placeholder="normal input" startIcon={<LuCalendarDays />} /> */}
+      {/* 
+      <Dialog open={isOpen} onClose={onToggleModal}>
+       
+        <Dialog.Description className="flex flex-col items-center">
+          <Image src={tempImg} alt="" width={120} height={120} />
+          선물토스트가 생성되었어요!
+        </Dialog.Description>
+        <Dialog.Footer className="">
+          <Button color="active" className="w-full">
+            확인
+          </Button>
+          <Button className="w-full text-white bg-gray-60">
+            설정으로 이동
+          </Button>
+        </Dialog.Footer>
+      </Dialog> */}
+
+      <ConfirmDialog
+        description="캡슐 토스트가 생성되었어요!"
+        isOpen={isOpen}
+        onClose={() => setIsOpen((prev) => !prev)}
+      >
+        <Button
+          color="active"
+          className="w-full"
+          onClick={() => {
+            notifyLater();
+          }}
+          size="md"
+        >
+          공유하기
+        </Button>
+        <Button className="w-full text-white bg-gray-60">홈으로 가기</Button>
+      </ConfirmDialog>
 
       <InputForm
         title="TimeToast에서 사용할 닉네임을 입력해주세요."
@@ -115,6 +159,12 @@ export default function LabPage() {
       </InputForm>
 
       <div className="pt-[140px]" />
+
+      <Spinner
+        className="p-2 py-4 border border-red-500"
+        isLoading={true}
+        messageStyle="text-body2"
+      />
 
       <InputForm
         title="토스트를 오픈할 특별한 날을 선택해주세요.."

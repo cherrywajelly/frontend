@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import Button from '@/components/common-components/button';
 import Input from '@/components/common-components/input';
@@ -79,6 +79,24 @@ export default function FollowTab() {
     isPending: isPendingDeleteFollowerUser,
   } = useDeleteFollowerUser();
 
+  const filteredFollowers = useMemo(() => {
+    return followersData?.followResponses?.filter((item: any) =>
+      item.nickname.toLowerCase().includes(searchValue.toLowerCase()),
+    );
+  }, [followersData, searchValue]);
+
+  const filteredFollowings = useMemo(() => {
+    return followingData?.followResponses?.filter((item: any) =>
+      item.nickname.toLowerCase().includes(searchValue.toLowerCase()),
+    );
+  }, [followingData, searchValue]);
+
+  const filteredGroups = useMemo(() => {
+    return groupData?.teamResponses?.filter((item: any) =>
+      item.teamName.toLowerCase().includes(searchValue.toLowerCase()),
+    );
+  }, [groupData, searchValue]);
+
   return (
     <div className="flex flex-col h-full w-full">
       <div className="mt-6 w-full flex border-b border-gray-10 flex-none">
@@ -126,82 +144,82 @@ export default function FollowTab() {
         </div>
 
         <div className="px-6 w-full h-full my-6">
-          {/* <div className="px-6 w-full h-full flex-grow my-6 overflow-y-auto hide-scrollbar"> */}
-          <div className="flex flex-col gap-4">
-            {activeTab === 0 &&
-              followersData?.followResponses?.map((item: any) => {
-                const isFollowing = followingSet.has(item.nickname);
+          <div className="w-full h-full flex-grow overflow-y-auto hide-scrollbar">
+            <div className="flex flex-col gap-4">
+              {activeTab === 0 &&
+                filteredFollowers?.map((item: any) => {
+                  const isFollowing = followingSet.has(item.nickname);
+                  return (
+                    <UserListItem
+                      key={item.nickname}
+                      profileImg={item.memberProfileUrl || temp}
+                      nickname={item.nickname}
+                      onClick={() => router.push(`/profile/${item.memberId}`)}
+                    >
+                      {isFollowing ? (
+                        <Button
+                          size="sm"
+                          color="active"
+                          className="w-[80px]"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            deleteFollowerMutate(item.memberId);
+                          }}
+                        >
+                          삭제
+                        </Button>
+                      ) : (
+                        <Button
+                          size="sm"
+                          color="primary"
+                          className="w-[80px]"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            postFollowMutate(item.memberId);
+                          }}
+                        >
+                          팔로우
+                        </Button>
+                      )}
+                    </UserListItem>
+                  );
+                })}
 
-                return (
-                  <UserListItem
-                    key={item.nickname}
-                    profileImg={item.memberProfileUrl || temp}
-                    nickname={item.nickname}
-                    onClick={() => router.push(`/profile/${item.nickname}`)}
-                  >
-                    {isFollowing ? (
+              {activeTab === 1 &&
+                filteredFollowings?.map((item: any) => {
+                  return (
+                    <UserListItem
+                      key={item.nickname}
+                      profileImg={item.memberProfileUrl || temp}
+                      nickname={item.nickname}
+                      onClick={() => router.push(`/profile/${item.memberId}`)}
+                    >
                       <Button
                         size="sm"
                         color="active"
                         className="w-[80px]"
                         onClick={(e) => {
                           e.stopPropagation();
-                          deleteFollowerMutate(item.memberId);
+                          deleteFollowingMutate(item.memberId);
                         }}
                       >
                         삭제
                       </Button>
-                    ) : (
-                      <Button
-                        size="sm"
-                        color="primary"
-                        className="w-[80px]"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          postFollowMutate(item.memberId);
-                        }}
-                      >
-                        팔로우
-                      </Button>
-                    )}
-                  </UserListItem>
-                );
-              })}
+                    </UserListItem>
+                  );
+                })}
 
-            {activeTab === 1 &&
-              followingData?.followResponses?.map((item: any) => {
-                return (
-                  <UserListItem
-                    key={item.nickname}
-                    profileImg={item.memberProfileUrl || temp}
-                    nickname={item.nickname}
-                    onClick={() => router.push(`/profile/${item.nickname}`)}
-                  >
-                    <Button
-                      size="sm"
-                      color="active"
-                      className="w-[80px]"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        deleteFollowingMutate(item.memberId);
-                      }}
-                    >
-                      삭제
-                    </Button>
-                  </UserListItem>
-                );
-              })}
-
-            {activeTab === 2 &&
-              groupData?.teamResponses?.map((item: any) => {
-                return (
-                  <UserListItem
-                    key={item.teamName}
-                    profileImg={item.teamProfileUrl || temp}
-                    nickname={item.teamName}
-                  />
-                );
-              })}
+              {activeTab === 2 &&
+                filteredGroups?.map((item: any) => {
+                  return (
+                    <UserListItem
+                      key={item.teamName}
+                      profileImg={item.teamProfileUrl || temp}
+                      nickname={item.teamName}
+                    />
+                  );
+                })}
+            </div>
           </div>
         </div>
       </div>

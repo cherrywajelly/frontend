@@ -18,6 +18,7 @@ export default function MyGiftToastItem(props: MyGiftToastItemProps) {
         width={56}
         height={56}
         className="object-cover"
+        priority
       />
 
       <div className="flex-1 flex-col space-y-2">
@@ -25,7 +26,9 @@ export default function MyGiftToastItem(props: MyGiftToastItemProps) {
 
         <span className="flex gap-1 items-center">
           <HiMiniUserGroup className="text-gray-80" />
-          <span className="text-gray-80 text-body4">{groupUser}</span>
+          <span className="text-gray-80 text-body4">
+            {groupUser ?? '알수없음'}
+          </span>
         </span>
       </div>
 

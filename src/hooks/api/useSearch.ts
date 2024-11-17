@@ -17,20 +17,18 @@ export const usePostSearchResult = () => {
   const { mutate, isPending, error, mutateAsync } = useMutation({
     mutationFn: (item: SearchRequestBody) => postSearchResult(item),
     onSuccess: (data) => {},
-    onError: (error) => {
-      console.log(error);
-    },
+    onError: (error) => {},
   });
   return { mutate, isPending, error, mutateAsync };
 };
 
 // 타 사용자 프로필 조회
 export const useGetUserProfile = (memberId: number) => {
-  const { data, isLoading, error } = useQuery<UserProfileResponse>({
+  const { data, isLoading, error, refetch } = useQuery<UserProfileResponse>({
     queryKey: ['userProfile'],
     queryFn: () => getUserProfile(memberId),
   });
-  return { data, isLoading, error };
+  return { data, isLoading, error, refetch };
 };
 
 // 타 사용자 진열장 조회

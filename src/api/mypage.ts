@@ -57,12 +57,13 @@ export const postFollowingUser = async (followingId: number) => {
       }
 
       if (res.status === 200) {
-        console.log('팔로우됨');
+        // console.log('팔로우됨');
         return res;
       }
     })
     .catch((err) => {
-      console.log(err);
+      // console.log(err);
+      throw err;
     });
 };
 
@@ -75,12 +76,13 @@ export const deleteFollowingUser = async (followingMemberId: number) => {
       }
 
       if (res.status === 200) {
-        console.log('팔로잉 취소됨');
+        // console.log('팔로잉 취소됨');
         return res;
       }
     })
     .catch((err) => {
-      console.log(err);
+      // console.log(err);
+      throw err;
     });
 };
 
@@ -93,12 +95,13 @@ export const deleteFollowerUser = async (followerMemberId: number) => {
       }
 
       if (res.status === 200) {
-        console.log('팔로워 취소됨');
+        // console.log('팔로워 취소됨');
         return res;
       }
     })
     .catch((err) => {
-      console.log(err);
+      // console.log(err);
+      throw err;
     });
 };
 
@@ -111,12 +114,13 @@ export const deleteGroup = async (teamId: number) => {
       }
 
       if (res.status === 200) {
-        console.log('그룹 삭제됨');
+        // console.log('그룹 삭제됨');
         return res;
       }
     })
     .catch((err) => {
-      console.log(err);
+      // console.log(err);
+      throw err;
     });
 };
 
@@ -159,7 +163,8 @@ export const postMyShowcaseList = async (showcases: number[]) => {
       }
     })
     .catch((err) => {
-      console.log(err);
+      // console.log(err);
+      throw err;
     });
 };
 
@@ -176,6 +181,7 @@ export const deleteShowcaseItem = async (showcaseId: number) => {
       }
     })
     .catch((err) => {
-      console.log(err);
+      // console.log(err);
+      throw err;
     });
 };

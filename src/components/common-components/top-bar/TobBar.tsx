@@ -12,7 +12,7 @@ import { useRouter } from 'next/navigation';
 const variants = {
   base: 'text-body1',
   disabled: 'text-gray-20',
-  active: 'text-secondary-main',
+  active: 'text-secondary-main cursor-pointer',
 };
 
 const TopBar = ({
@@ -22,9 +22,8 @@ const TopBar = ({
   submitAble = false,
   onBack,
   handleSubmit,
+  isPending,
 }: TopBarProps & { onBack?: () => void }) => {
-  const [isActive, setIsActive] = useState<boolean>(submitAble ?? false);
-  // console.log(isActive);
   const router = useRouter();
 
   const handleBackBtn = () => {
@@ -40,10 +39,21 @@ const TopBar = ({
   const SettingCategories = [
     { label: '프로필 편집', onClick: () => router.push('/setting/profile') },
     { label: '그룹 관리', onClick: () => router.push('/setting/group') },
-    { label: '아이콘 마켓', onClick: () => router.push('/') },
-    { label: '구독 플랜', onClick: () => router.push('/') },
+    { label: '아이콘 마켓', onClick: () => router.push('/setting/market') },
+    { label: '구독 플랜', onClick: () => router.push('/setting/premiums') },
     { label: '로그아웃', onClick: () => handleLogout() },
   ];
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmitClick = async () => {
+    if (isSubmitting) return;
+    setIsSubmitting(true);
+
+    if (handleSubmit) await handleSubmit();
+
+    setIsSubmitting(false);
+  };
 
   return (
     <div className="bg-white w-full h-[48px] border-b border-gray-10 px-6 flex justify-between items-center">
@@ -65,15 +75,16 @@ const TopBar = ({
         isRight === 'setting' ? (
           <Dropdown items={SettingCategories} color="text-gray-80" />
         ) : (
-          <span
+          <button
             className={clsx(
               variants.base,
-              isActive ? variants.active : variants.disabled,
+              isPending || !submitAble ? variants.disabled : variants.active,
             )}
-            onClick={handleSubmit}
+            onClick={handleSubmitClick}
+            disabled={isPending}
           >
             등록
-          </span>
+          </button>
         )
       ) : (
         <div className="w-[20px]" />

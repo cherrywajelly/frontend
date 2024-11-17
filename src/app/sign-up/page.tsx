@@ -52,7 +52,6 @@ export default function SignUpPage() {
 
     try {
       const data = await refetch();
-      console.log(data);
       if (data.status === 'success') {
         setIsValid(true);
         setValidMessage('사용 가능한 닉네임입니다.');
@@ -61,7 +60,7 @@ export default function SignUpPage() {
         setValidMessage(data.error?.message ?? '');
       }
     } catch (error) {
-      console.error('중복 확인 실패:', error);
+      // console.error('중복 확인 실패:', error);
     }
   };
 
@@ -69,11 +68,10 @@ export default function SignUpPage() {
     mutateNicknameSignUp(undefined, {
       onSuccess: () => {
         // alert('회원가입 완료');
-        router.push('/');
+        router.push('/home');
       },
       onError: () => {
-        alert('예기치 못한 에러가 발생했습니다.');
-        router.push('/login');
+        // alert('예기치 못한 에러가 발생했습니다.');
       },
     });
   };
@@ -120,6 +118,7 @@ export default function SignUpPage() {
           disabled={!isValid}
           color={isValid ? 'active' : 'disabled'}
           onClick={handleSubmit}
+          className="mb-6"
         >
           회원가입하기
         </Button>

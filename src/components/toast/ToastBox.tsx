@@ -1,6 +1,7 @@
 import { FaRegCalendar } from 'react-icons/fa6';
 
 import Image, { StaticImageData } from 'next/image';
+import { useRouter } from 'next/navigation';
 
 export type ToastBoxProps = {
   title: string;
@@ -9,30 +10,53 @@ export type ToastBoxProps = {
   nickname: string;
   openDate: string;
   children?: React.ReactNode;
+  isLoading?: boolean;
+  onClick?: () => void;
+  memberId?: number;
 };
 
 export default function ToastBox(props: ToastBoxProps) {
-  const { toastImg, title, profileImg, nickname, openDate, children } = props;
+  const {
+    toastImg,
+    title,
+    profileImg,
+    nickname,
+    openDate,
+    children,
+    isLoading,
+    onClick,
+    memberId,
+  } = props;
+
+  const router = useRouter();
 
   return (
-    <div className="w-full py-6 px-4 flex flex-col gap-4 bg-white border border-gray-10 rounded-[10px]">
+    <div
+      onClick={onClick}
+      className="w-full py-6 px-4 flex flex-col gap-4 bg-white border border-gray-10 rounded-[10px]"
+    >
       <div className="flex gap-6">
         <Image
           src={toastImg}
           alt=""
           width={80}
           height={80}
+          unoptimized
           className="object-cover w-[80px] h-[80px]"
         />
 
         <div className="flex flex-col gap-1 flex-1">
           <span className="text-gray-80 text-body1">{title}</span>
-          <span className="flex gap-1 items-center">
+          <span
+            className="flex gap-1 items-center"
+            onClick={() => router.push(`/profile/${memberId}`)}
+          >
             <Image
               src={profileImg}
               alt="profile"
               width={24}
               height={24}
+              unoptimized
               className="object-cover rounded-full w-[24px] h-[24px]"
             />
             <span className="text-gray-80 text-body4">

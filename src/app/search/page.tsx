@@ -47,7 +47,8 @@ export default function SearchPage() {
             setSearchResults(data.searchResponses);
           },
           onError: (err) => {
-            console.log(err); // 오류 처리
+            // console.log(err); // 오류 처리
+            setSearchResults([]);
           },
         },
       );
@@ -55,10 +56,8 @@ export default function SearchPage() {
   };
 
   useEffect(() => {
-    if (searchValue) {
-      // console.log(searchResults);
-      searchKeyword(searchValue);
-    }
+    searchKeyword(searchValue);
+    if (!searchValue.length) setSearchResults([]);
   }, [pageIndex, pageSize, searchValue]);
 
   return (

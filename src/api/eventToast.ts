@@ -1,4 +1,7 @@
-import { EventToastPostReqBody } from '@/types/api/eventToast';
+import {
+  EventToastPostReqBody,
+  jamPostRequestBody,
+} from '@/types/api/eventToast';
 
 import { apiRequest } from '.';
 
@@ -71,7 +74,8 @@ export const postEventToast = async ({
       }
     })
     .catch((err) => {
-      console.log(err);
+      // console.log(err);
+      throw err;
     });
 };
 
@@ -88,6 +92,81 @@ export const deleteEventToast = async (eventToastId: number) => {
       }
     })
     .catch((err) => {
-      console.log(err);
+      // console.log(err);
+      throw err;
+    });
+};
+
+// 잼 목록 조회
+export const getJamList = async (eventToastId: number) => {
+  const res = await apiRequest(`/api/v1/jams/eventToast/${eventToastId}`);
+
+  if (!res.ok) {
+    throw new Error(`HTTP error in Google! Status: ${res.status}`);
+  }
+
+  const data = await res.json();
+  return data;
+};
+
+// 잼 상세 조회
+export const getJamDetail = async (jamId: number) => {
+  const res = await apiRequest(`/api/v1/jams/${jamId}`);
+
+  if (!res.ok) {
+    throw new Error(`HTTP error in Google! Status: ${res.status}`);
+  }
+
+  const data = await res.json();
+  return data;
+};
+
+// 잼 삭제
+export const deleteJamItem = async (jamId: number) => {
+  await apiRequest(`/api/v1/jams/${jamId}`, 'DELETE')
+    .then((res) => {
+      if (res.status === 500) {
+        throw new Error('Internal Server Error');
+      }
+
+      if (res.status === 200) {
+        return res;
+      }
+    })
+    .catch((err) => {
+      // console.log(err);
+      throw err;
+    });
+};
+
+// 잼 저장
+export const postJamItemToEventToast = async (
+  eventToastId: number,
+  { jamContents, jamImages, jamRequest }: jamPostRequestBody,
+) => {
+  const formData = new FormData();
+
+  formData.append('jamContents', jamContents);
+  if (jamImages) formData.append('jamImages', jamImages);
+
+  const requestBlob = new Blob([JSON.stringify(jamRequest)], {
+    type: 'application/json',
+  });
+
+  formData.append('jamRequest', requestBlob);
+
+  await apiRequest(`/api/v1/jams/${eventToastId}`, 'POST', formData)
+    .then((res) => {
+      if (res.status === 500) {
+        throw new Error('Internal Server Error');
+      }
+
+      if (res.status === 200) {
+        return res;
+      }
+    })
+    .catch((err) => {
+      // console.log(err);
+      throw err;
     });
 };

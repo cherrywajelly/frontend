@@ -11,7 +11,7 @@ const style: {
   base: string;
   sizes: Record<InputSize, string>;
 } = {
-  base: 'border border-gray-10 placeholder:text-gray-60 rounded-[10px] text-body2',
+  base: 'border border-gray-10 placeholder:text-gray-60 rounded-[10px] text-body2 text-gray-80',
   sizes: {
     sm: 'w-full h-[40px] px-3 py-2 focus:outline-none bg-gray-10', // to use in search view
     md: 'w-full h-[56px] p-4 focus:outline-primary-main', // to use in normal input field

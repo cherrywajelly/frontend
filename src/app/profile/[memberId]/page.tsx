@@ -2,7 +2,9 @@
 
 import { useEffect, useMemo, useState } from 'react';
 
+import BottomBar from '@/components/common-components/bottom-bar';
 import Button from '@/components/common-components/button';
+import CustomSkeleton from '@/components/common-components/skeleton';
 import TopBar from '@/components/common-components/top-bar';
 
 import Showcase from '@/components/mypage/Showcase';
@@ -20,14 +22,21 @@ import { MyShowcaseResponse } from '@/types/api/mypage';
 
 import tempImg from '../../../../public/images/timetoast.png';
 
+import { useRouter } from 'next/navigation';
+
 export type PageProps = {
   memberId: number;
 };
 
 export default function UserProfilePage({ params }: { params: PageProps }) {
   const memberId = params.memberId;
+  const router = useRouter();
 
-  const { data, isLoading } = useGetUserProfile(memberId);
+  const {
+    data,
+    isLoading: isLoadingUserProfile,
+    refetch: refetchProfile,
+  } = useGetUserProfile(memberId);
 
   const { data: showcaseData, isLoading: isLoadingShowcaseData } =
     useGetUserShowcase(memberId);
@@ -74,7 +83,7 @@ export default function UserProfilePage({ params }: { params: PageProps }) {
             openedDate: item.openedDate,
             memberProfileUrl: item.memberProfileUrl,
             nickname: item.nickname,
-            postedJam: item.postedJam,
+            isWritten: item.isWritten,
             icon: item.icon,
           }) as EventToastItemResponse,
       ) ?? [],
@@ -87,6 +96,7 @@ export default function UserProfilePage({ params }: { params: PageProps }) {
         onSuccess: () => {
           setIsFollow(false);
           refetch();
+          refetchProfile();
         },
         onError: (error) => {
           console.error('언팔로우 실패:', error);
@@ -97,6 +107,7 @@ export default function UserProfilePage({ params }: { params: PageProps }) {
         onSuccess: () => {
           setIsFollow(true);
           refetch();
+          refetchProfile();
         },
         onError: (error) => {
           console.error('팔로우 실패:', error);
@@ -109,7 +120,7 @@ export default function UserProfilePage({ params }: { params: PageProps }) {
     <div className="w-full h-lvh">
       <TopBar title={data?.nickname} />
 
-      <div className="flex flex-col bg-gray-05 h-[calc(100vh-48px)]">
+      <div className="h-[calc(100vh-144px)] flex flex-grow flex-col bg-gray-05 overflow-y-auto">
         <div className="px-6 py-4">
           <UserInfo
             nickname={data?.nickname ?? ''}
@@ -117,9 +128,12 @@ export default function UserProfilePage({ params }: { params: PageProps }) {
             follower={data?.followerCount ?? 0}
             following={data?.followingCount ?? 0}
             group={data?.teamCount ?? 0}
+            isLoading={isLoadingUserProfile}
           >
             <div className="w-full flex justify-between gap-[10px]">
-              {isFollow ? (
+              {isLoadingUserProfile ? (
+                <CustomSkeleton height={36} containerClassName="w-full" />
+              ) : isFollow ? (
                 <Button
                   size="sm"
                   className="w-full h-[36px]"
@@ -148,45 +162,75 @@ export default function UserProfilePage({ params }: { params: PageProps }) {
           isMine={false}
           data={showcaseDataList}
           nickname={data?.nickname ?? ''}
+          isLoading={isLoadingShowcaseData}
         />
 
-        {data && (
-          <div className="px-6 pt-2 pb-6 flex flex-col">
+        <div className="px-6 pt-2 pb-6 flex flex-col">
+          {isLoadingUserProfile ? (
+            <CustomSkeleton height={24} containerClassName="" />
+          ) : (
             <span className="text-body1 text-gray-80">
-              {data.nickname}님이 구운 토스트
+              {data && data.nickname}님이 구운 토스트
             </span>
+          )}
 
-            {!isLoading && isFollow && userEventToastDataList.length > 0 ? (
-              <div className="pt-4 flex flex-col gap-4">
-                {userEventToastDataList.map((item) => (
-                  <ToastBox
-                    key={item.eventToastId}
-                    title={item.title}
-                    profileImg={item.memberProfileUrl}
-                    nickname={item.nickname}
-                    openDate={item.openedDate}
-                    toastImg={item.icon.iconImageUrl}
+          {!isLoadingUserProfile &&
+          isFollow &&
+          userEventToastDataList.length > 0 ? (
+            <div className="pt-4 flex flex-col gap-4">
+              {userEventToastDataList.map((item, idx) => (
+                <ToastBox
+                  key={item.eventToastId}
+                  title={item.title}
+                  profileImg={item.memberProfileUrl}
+                  nickname={item.nickname}
+                  openDate={item.openedDate}
+                  toastImg={item.icon.iconImageUrl}
+                >
+                  {/* <Button
+                    size="sm"
+                    color="primary"
+                    onClick={() =>
+                      router.push(`/event-toast/${item.eventToastId}`)
+                    }
                   >
-                    <Button size="sm" color="primary">
+                    잼 바르기
+                  </Button> */}
+                  {item.isWritten ? (
+                    <Button size="sm" color="disabled" disabled>
+                      잼을 발랐어요
+                    </Button>
+                  ) : (
+                    <Button
+                      size="sm"
+                      color="primary"
+                      onClick={() => {
+                        router.push(`/event-toast/${item.eventToastId}`);
+                      }}
+                    >
                       잼 바르기
                     </Button>
-                  </ToastBox>
-                ))}
-              </div>
-            ) : (
-              <div className="mt-4 w-full text-center text-body4 bg-white border border-gray-10 p-4 rounded-[10px]">
-                {isFollow ? (
-                  <>{data.nickname}님이 아직 토스트를 굽지 않았어요!</>
-                ) : (
-                  <>
-                    <b>{data.nickname}</b>님을 팔로우하면 토스트를 볼 수 있어요!
-                  </>
-                )}
-              </div>
-            )}
-          </div>
-        )}
+                  )}
+                </ToastBox>
+              ))}
+            </div>
+          ) : isLoadingUserProfile ? (
+            <CustomSkeleton height={50} containerClassName="mt-4" />
+          ) : (
+            <div className="mt-4 w-full text-center text-body4 bg-white border border-gray-10 p-4 rounded-[10px]">
+              {isFollow ? (
+                <>{data?.nickname}님이 아직 토스트를 굽지 않았어요!</>
+              ) : (
+                <>
+                  <b>{data?.nickname}</b>님을 팔로우하면 토스트를 볼 수 있어요!
+                </>
+              )}
+            </div>
+          )}
+        </div>
       </div>
+
+      <BottomBar />
     </div>
   );
 }

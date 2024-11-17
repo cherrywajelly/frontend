@@ -2,11 +2,18 @@
 
 import { useState } from 'react';
 
+import { navItem } from '@/components/common-components/bottom-bar/BottomBar';
+import Button from '@/components/common-components/button';
+import Spinner from '@/components/common-components/spinner';
 import TopBar from '@/components/common-components/top-bar';
+
+import ConfirmDialog from '@/components/alert/ConfirmDialog';
 
 import { usePostEventToast } from '@/hooks/api/useEventToast';
 import useFormatDate from '@/hooks/useFormat';
+import { notifyLater } from '@/utils/toast';
 
+import { bottomBarItemState } from '@/atoms/componentAtom';
 import { eventToastDataState, eventToastStepState } from '@/atoms/toastAtom';
 import ToastDecoForm from '@/containers/write-toast/ToastDecoForm';
 import EventToastNameForm from '@/containers/write-toast/event-toast/EventToastNameForm';
@@ -22,7 +29,7 @@ export default function EventToastPage() {
     useRecoilState(eventToastDataState);
   const router = useRouter();
 
-  const [isSubmitAble, setIsSubmitAble] = useState<boolean>(false);
+  const [selectedItem, setSelectedItem] = useRecoilState(bottomBarItemState);
 
   const handleBack = () => {
     if (step > 0) {
@@ -34,17 +41,18 @@ export default function EventToastPage() {
   };
 
   const { mutate, isPending } = usePostEventToast();
+  const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
 
   const formatOpenDate = useFormatDate(eventToastData.openDate as Date);
 
   const handleSubmit = () => {
-    //
     const handleSuccess = () => {
-      // TODO: 임의로 홈으로 리다이렉트, 모달 추가 후 로직 변경
-      router.push('/');
+      setIsDialogOpen(true);
+      setStep(0);
+      setSelectedItem(navItem[0]);
+      resetEventToastData();
     };
 
-    console.log('eventToastData', eventToastData);
     mutate(
       {
         iconId: eventToastData.iconId as number,
@@ -53,6 +61,10 @@ export default function EventToastPage() {
       },
       {
         onSuccess: handleSuccess,
+        onError: (error) => {
+          setStep(0);
+          alert('예기치 못한 에러가 발생했습니다.');
+        },
       },
     );
   };
@@ -62,16 +74,49 @@ export default function EventToastPage() {
       <TopBar onBack={handleBack} title="이벤트 토스트 굽기" />
 
       <div className="h-[calc(100vh-48px)] flex flex-col gap-1 bg-gray-05">
-        {step === 0 && <EventToastOpenDateForm />}
-        {step === 1 && <EventToastNameForm />}
-        {step === 2 && (
-          <ToastDecoForm
-            stepState={eventToastStepState}
-            dataState={eventToastDataState}
-            handleSubmit={handleSubmit}
-          />
+        {isPending ? (
+          <div className="flex justify-center items-center h-full">
+            <Spinner />
+          </div>
+        ) : (
+          <>
+            {step === 0 && <EventToastOpenDateForm />}
+            {step === 1 && <EventToastNameForm />}
+            {step === 2 && (
+              <ToastDecoForm
+                stepState={eventToastStepState}
+                dataState={eventToastDataState}
+                handleSubmit={handleSubmit}
+                type="toast"
+              />
+            )}
+          </>
         )}
       </div>
+
+      {isDialogOpen && (
+        <ConfirmDialog
+          description="이벤트 토스트가 생성되었어요!"
+          isOpen={isDialogOpen}
+          onClose={() => setIsDialogOpen((prev) => !prev)}
+        >
+          <Button
+            color="active"
+            className="w-full"
+            onClick={() => {
+              notifyLater();
+            }}
+          >
+            공유하기
+          </Button>
+          <Button
+            className="w-full text-white bg-gray-60"
+            onClick={() => router.push('/home')}
+          >
+            홈으로 가기
+          </Button>
+        </ConfirmDialog>
+      )}
     </div>
   );
 }

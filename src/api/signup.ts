@@ -31,6 +31,7 @@ export const putNicknameSignUp = async (nickname: string) => {
       }
     })
     .catch((err) => {
-      console.log(err);
+      // console.log(err);
+      throw err;
     });
 };

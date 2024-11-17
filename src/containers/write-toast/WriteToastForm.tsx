@@ -6,6 +6,7 @@ import { MdCancel } from 'react-icons/md';
 
 import Button from '@/components/common-components/button';
 import Input from '@/components/common-components/input';
+import Spinner from '@/components/common-components/spinner';
 
 import { pieceData, ToastData } from '@/types/atoms/toastAtom';
 
@@ -15,7 +16,7 @@ import { RecoilState, useRecoilState } from 'recoil';
 
 const QuillWrapper = dynamic(() => import('react-quill'), {
   ssr: false,
-  loading: () => <p>Loading ...</p>,
+  loading: () => <Spinner />,
 });
 
 const modules = {
@@ -46,13 +47,14 @@ export type WriteToastFormProps<T> = {
   stepState: RecoilState<number>;
   dataState: RecoilState<T>;
   handleSubmit?: () => void;
-  isMainToast?: boolean;
+  type?: 'jam' | 'toast';
 };
 
 export default function WriteToastForm<T extends pieceData | ToastData>(
   props: WriteToastFormProps<T>,
 ) {
-  const { dataState } = props;
+  const { dataState, type } = props;
+  const maxFileCount = type === 'jam' ? 1 : 3;
 
   const [toastData, setToastData] = useRecoilState(dataState);
 
@@ -76,9 +78,8 @@ export default function WriteToastForm<T extends pieceData | ToastData>(
     const files = event.target.files;
     if (!files) return;
 
-    // 3개 이상의 파일은 추가하지 않도록 제한
-    if (filePreviews.length + files.length > 3) {
-      alert('이미지는 최대 3개까지 첨부할 수 있습니다.');
+    if (filePreviews.length + files.length > maxFileCount) {
+      alert(`이미지는 최대 ${maxFileCount}개까지 첨부할 수 있습니다.`);
       return;
     }
 

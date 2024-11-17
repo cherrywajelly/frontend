@@ -2,7 +2,11 @@
 
 import { useState } from 'react';
 
+import { navItem } from '@/components/common-components/bottom-bar/BottomBar';
+import Button from '@/components/common-components/button';
 import TopBar from '@/components/common-components/top-bar';
+
+import ConfirmDialog from '@/components/alert/ConfirmDialog';
 
 import {
   usePostGiftToastFriend,
@@ -11,6 +15,7 @@ import {
 } from '@/hooks/api/useGiftToast';
 import useFormatDate from '@/hooks/useFormat';
 
+import { bottomBarItemState } from '@/atoms/componentAtom';
 import { giftToastDataState, giftToastStepState } from '@/atoms/toastAtom';
 import ToastDecoForm from '@/containers/write-toast/ToastDecoForm';
 import GiftToastNameForm from '@/containers/write-toast/gift-toast/GiftToastNameForm';
@@ -26,6 +31,7 @@ export default function GiftToastPage() {
   const [giftData, setGiftData] = useRecoilState(giftToastDataState);
 
   const router = useRouter();
+  const [selectedItem, setSelectedItem] = useRecoilState(bottomBarItemState);
 
   const [isSubmitAble, setIsSubmitAble] = useState<boolean>(false);
 
@@ -38,19 +44,27 @@ export default function GiftToastPage() {
     }
   };
 
-  const { mutate: mutateGiftToastGroup } = usePostGiftToastGroup();
-  const { mutate: mutateGiftToastFriend } = usePostGiftToastFriend();
-  const { mutate: mutateGiftToastMine } = usePostGiftToastMine();
+  const { mutate: mutateGiftToastGroup, isPending: isPendingGroup } =
+    usePostGiftToastGroup();
+  const { mutate: mutateGiftToastFriend, isPending: isPendingFriend } =
+    usePostGiftToastFriend();
+  const { mutate: mutateGiftToastMine, isPending: isPendingMine } =
+    usePostGiftToastMine();
 
-  console.log('giftData', giftData);
+  const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
+
+  const [responseGiftToastId, setResponseGiftToastId] = useState<number>();
 
   const formatMemoryDate = useFormatDate(giftData.memoryDate as Date);
   const formatOpenDate = useFormatDate(giftData.openDate as Date);
 
   const handleSubmit = () => {
-    const handleSuccess = () => {
-      // TODO: 임의로 홈으로 리다이렉트, 모달 추가 후 로직 변경
-      router.push('/');
+    const handleSuccess = (data: any) => {
+      setResponseGiftToastId(data.giftToastId);
+      setIsDialogOpen(true);
+      setStep(0);
+      setSelectedItem(navItem[0]);
+      resetGiftToastData();
     };
 
     if (giftData.type === 'group') {
@@ -64,6 +78,11 @@ export default function GiftToastPage() {
         },
         {
           onSuccess: handleSuccess,
+          onError: (error) => {
+            setStep(0);
+            alert('예기치 못한 에러가 발생했습니다.');
+            resetGiftToastData();
+          },
         },
       );
     } else if (giftData.type === 'friend') {
@@ -77,6 +96,11 @@ export default function GiftToastPage() {
         },
         {
           onSuccess: handleSuccess,
+          onError: (error) => {
+            setStep(0);
+            alert('예기치 못한 에러가 발생했습니다.');
+            resetGiftToastData();
+          },
         },
       );
     } else if (giftData.type === 'mine') {
@@ -89,6 +113,11 @@ export default function GiftToastPage() {
         },
         {
           onSuccess: handleSuccess,
+          onError: (error) => {
+            setStep(0);
+            alert('예기치 못한 에러가 발생했습니다.');
+            resetGiftToastData();
+          },
         },
       );
     }
@@ -96,7 +125,7 @@ export default function GiftToastPage() {
 
   return (
     <div className="w-full h-lvh">
-      <TopBar onBack={handleBack} title="선물 토스트 굽기" />
+      <TopBar onBack={handleBack} title="캡슐 토스트 굽기" />
 
       <div className="h-[calc(100vh-48px)] flex flex-col gap-1 bg-gray-05">
         {step === 0 && <GiftToastWithChoiceForm />}
@@ -107,9 +136,33 @@ export default function GiftToastPage() {
             stepState={giftToastStepState}
             dataState={giftToastDataState}
             handleSubmit={handleSubmit}
+            type="toast"
           />
         )}
       </div>
+      {isDialogOpen && (
+        <ConfirmDialog
+          description="캡슐 토스트가 생성되었어요!"
+          isOpen={isDialogOpen}
+          onClose={() => setIsDialogOpen((prev) => !prev)}
+        >
+          <Button
+            color="active"
+            className="w-full"
+            onClick={() => {
+              router.replace(`/gift-toast/${responseGiftToastId}`);
+            }}
+          >
+            토스트 조각 쌓기
+          </Button>
+          <Button
+            className="w-full text-white bg-gray-60"
+            onClick={() => router.push('/home')}
+          >
+            홈으로 가기
+          </Button>
+        </ConfirmDialog>
+      )}
     </div>
   );
 }

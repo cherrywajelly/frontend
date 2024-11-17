@@ -56,7 +56,7 @@ export const usePostGiftToastGroup = () => {
     mutationFn: (item: GiftToastGroupRequestBody) => postGiftToastGroup(item),
     onSuccess: () => {},
     onError: (error) => {
-      console.log(error);
+      // console.log(error);
     },
   });
   return { mutate, isPending, error };
@@ -68,7 +68,7 @@ export const usePostGiftToastFriend = () => {
     mutationFn: (item: GiftToastFriendRequestBody) => postGiftToastFriend(item),
     onSuccess: () => {},
     onError: (error) => {
-      console.log(error);
+      // console.log(error);
     },
   });
   return { mutate, isPending, error };
@@ -80,7 +80,7 @@ export const usePostGiftToastMine = () => {
     mutationFn: (item: GiftToastRequestBody) => postGiftToastMine(item),
     onSuccess: () => {},
     onError: (error) => {
-      console.log(error);
+      // console.log(error);
     },
   });
   return { mutate, isPending, error };
@@ -96,7 +96,7 @@ export const useDeleteGiftToast = () => {
       queryClient.invalidateQueries({ queryKey: ['giftToastList'] });
     },
     onError: (error) => {
-      console.log(error);
+      // console.log(error);
     },
   });
   return { mutate, isPending, error };
@@ -108,7 +108,7 @@ export const usePostToastPieces = () => {
     mutationFn: (item: GiftToastPiecePostRequestBody) => postToastPieces(item),
     onSuccess: () => {},
     onError: (error) => {
-      console.error(error);
+      // console.error(error);
     },
   });
 
@@ -134,7 +134,7 @@ export const useDeleteToastPiece = () => {
       queryClient.invalidateQueries({ queryKey: ['giftToastList'] });
     },
     onError: (error) => {
-      console.log(error);
+      // console.log(error);
     },
   });
   return { mutate, isPending, error };

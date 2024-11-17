@@ -75,9 +75,7 @@ export const usePostFollowingUser = () => {
       queryClient.invalidateQueries({ queryKey: ['followings'] });
       queryClient.invalidateQueries({ queryKey: ['userEventToastList'] });
     },
-    onError: (error) => {
-      console.log(error);
-    },
+    onError: (error) => {},
   });
   return { mutate, isPending, error };
 };
@@ -93,9 +91,7 @@ export const useDeleteFollowingUser = () => {
       queryClient.invalidateQueries({ queryKey: ['followers'] });
       queryClient.invalidateQueries({ queryKey: ['followings'] });
     },
-    onError: (error) => {
-      console.log(error);
-    },
+    onError: (error) => {},
   });
   return { mutate, isPending, error };
 };
@@ -111,9 +107,7 @@ export const useDeleteFollowerUser = () => {
       queryClient.invalidateQueries({ queryKey: ['followers'] });
       queryClient.invalidateQueries({ queryKey: ['followings'] });
     },
-    onError: (error) => {
-      console.log(error);
-    },
+    onError: (error) => {},
   });
   return { mutate, isPending, error };
 };
@@ -126,9 +120,7 @@ export const useDeleteGroup = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['group'] });
     },
-    onError: (error) => {
-      console.log(error);
-    },
+    onError: (error) => {},
   });
   return { mutate, isPending, error };
 };
@@ -161,9 +153,7 @@ export const usePostMyShowcaseList = () => {
     onSuccess: () => {
       // queryClient.invalidateQueries({ queryKey: ['followers'] });
     },
-    onError: (error) => {
-      console.log(error);
-    },
+    onError: (error) => {},
   });
   return { mutate, isPending, error };
 };
@@ -178,9 +168,7 @@ export const useDeleteMyShowcaseItem = () => {
       queryClient.invalidateQueries({ queryKey: ['myShowcaseList'] });
       queryClient.invalidateQueries({ queryKey: ['myShowcase'] });
     },
-    onError: (error) => {
-      console.log(error);
-    },
+    onError: (error) => {},
   });
   return { mutate, isPending, error };
 };

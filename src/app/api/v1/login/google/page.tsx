@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from 'react';
 
+import Spinner from '@/components/common-components/spinner';
+
 import { useGoogleLogin } from '@/hooks/api/useLogin';
 
 import { useRouter } from 'next/navigation';
@@ -25,6 +27,7 @@ export default function GoogleCallback() {
 
     if (error) {
       console.error('Error fetching google token:', error);
+      router.push('/');
       return;
     }
 
@@ -33,23 +36,23 @@ export default function GoogleCallback() {
       const refreshToken: string | undefined = data.refreshToken;
       if (accessToken && refreshToken) {
         window.sessionStorage.setItem('accessToken', accessToken);
-        window.sessionStorage.setItem('refreshToken', refreshToken);
+        window.localStorage.setItem('refreshToken', refreshToken);
       }
       if (data.isNew) {
         router.push('/sign-up');
       } else {
-        router.push('/');
+        router.push('/home');
       }
     } else {
-      console.log(data);
+      // console.log(data);
+      // router.push('/');
     }
   }, [data, isLoading, error, router]);
 
   return isLoading ? (
     <div className="h-screen">
       <div className="w-full h-full flex justify-center items-center">
-        {/* <Spinner /> */}
-        기다리는중..
+        <Spinner />
       </div>
     </div>
   ) : (

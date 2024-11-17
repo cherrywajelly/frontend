@@ -50,25 +50,24 @@ export const postGiftToastGroup = async ({
   title,
   teamId,
 }: GiftToastGroupRequestBody) => {
-  await apiRequest(`/api/v1/giftToasts/group`, 'POST', {
+  const response = await apiRequest(`/api/v1/giftToasts/group`, 'POST', {
     iconId,
     memorizedDate,
     openedDate,
     title,
     teamId,
-  })
-    .then((res) => {
-      if (res.status === 500) {
-        throw new Error('Internal Server Error');
-      }
+  });
 
-      if (res.status === 200) {
-        return res;
-      }
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  if (response.status === 500) {
+    throw new Error('Internal Server Error');
+  }
+
+  if (response.status === 200) {
+    const data = await response.json();
+    return data;
+  }
+
+  throw new Error('Unexpected response status');
 };
 
 // 선물 토스트 등록 (팔로잉)
@@ -79,25 +78,24 @@ export const postGiftToastFriend = async ({
   title,
   friendId,
 }: GiftToastFriendRequestBody) => {
-  await apiRequest(`/api/v1/giftToasts/friend`, 'POST', {
+  const response = await apiRequest(`/api/v1/giftToasts/friend`, 'POST', {
     iconId,
     memorizedDate,
     openedDate,
     title,
     friendId,
-  })
-    .then((res) => {
-      if (res.status === 500) {
-        throw new Error('Internal Server Error');
-      }
+  });
 
-      if (res.status === 200) {
-        return res;
-      }
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  if (response.status === 500) {
+    throw new Error('Internal Server Error');
+  }
+
+  if (response.status === 200) {
+    const data = await response.json();
+    return data;
+  }
+
+  throw new Error('Unexpected response status');
 };
 
 // 선물 토스트 등록 (자신)
@@ -107,24 +105,23 @@ export const postGiftToastMine = async ({
   openedDate,
   title,
 }: GiftToastRequestBody) => {
-  await apiRequest(`/api/v1/giftToasts/mine`, 'POST', {
+  const response = await apiRequest(`/api/v1/giftToasts/mine`, 'POST', {
     iconId,
     memorizedDate,
     openedDate,
     title,
-  })
-    .then((res) => {
-      if (res.status === 500) {
-        throw new Error('Internal Server Error');
-      }
+  });
 
-      if (res.status === 200) {
-        return res;
-      }
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  if (response.status === 500) {
+    throw new Error('Internal Server Error');
+  }
+
+  if (response.status === 200) {
+    const data = await response.json();
+    return data;
+  }
+
+  throw new Error('Unexpected response status');
 };
 
 // 선물 토스트 삭제
@@ -140,7 +137,8 @@ export const deleteGiftToast = async (giftToastId: number) => {
       }
     })
     .catch((err) => {
-      console.log(err);
+      // console.log(err);
+      throw err;
     });
 };
 
@@ -154,7 +152,7 @@ export const postToastPieces = async ({
 
   formData.append('toastPieceContents', toastPieceContents);
 
-  toastPieceImages.forEach((item) => {
+  toastPieceImages?.forEach((item) => {
     formData.append('toastPieceImages', item);
   });
 
@@ -175,7 +173,8 @@ export const postToastPieces = async ({
       }
     })
     .catch((err) => {
-      console.log(err);
+      // console.log(err);
+      throw err;
     });
 };
 
@@ -204,6 +203,7 @@ export const deleteToastPiece = async (toastPieceId: number) => {
       }
     })
     .catch((err) => {
-      console.log(err);
+      // console.log(err);
+      throw err;
     });
 };
