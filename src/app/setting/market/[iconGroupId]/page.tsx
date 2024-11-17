@@ -57,13 +57,13 @@ export default function IconDetailPage({ params }: { params: PageParams }) {
                 height={120}
                 className="w-[120px] h-[120px] object-cover rounded-[10px]"
               />
-              <span className="mt-6 text-black-main text-body1">
+              <span className="mt-6 text-black-main dark:text-white text-body1">
                 {data?.title}
               </span>
-              <span className="mt-2 text-gray-80 text-body4">
+              <span className="mt-2 text-gray-80 text-body4 dark:text-white">
                 {data?.creatorNickname}
               </span>
-              <span className="mt-2 text-gray-80 text-body4 flex items-center gap-1">
+              <span className="mt-2 text-gray-80 dark:text-white text-body4 flex items-center gap-1">
                 <BiDollarCircle />
                 {data?.price}
               </span>
