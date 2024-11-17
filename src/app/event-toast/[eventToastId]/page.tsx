@@ -47,6 +47,7 @@ export default function EventToastPage({ params }: { params: PageParams }) {
               profileImg={data?.memberProfileUrl}
               nickname={data.nickname}
               openDate={data.openedDate}
+              memberId={data.memberId}
             >
               {isMine ? (
                 data.isOpened ? (

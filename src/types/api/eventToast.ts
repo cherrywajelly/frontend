@@ -32,6 +32,7 @@ export interface EventToastResponse extends EventToastDefaultResponse {
   jams: JamItemResponse[] | null;
   iconImageUrl: string;
   isOpened: boolean;
+  memberId: number;
 }
 
 export interface JamDataItemResponse {

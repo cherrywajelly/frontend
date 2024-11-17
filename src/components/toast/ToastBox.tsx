@@ -12,6 +12,7 @@ export type ToastBoxProps = {
   children?: React.ReactNode;
   isLoading?: boolean;
   onClick?: () => void;
+  memberId?: number;
 };
 
 export default function ToastBox(props: ToastBoxProps) {
@@ -24,6 +25,7 @@ export default function ToastBox(props: ToastBoxProps) {
     children,
     isLoading,
     onClick,
+    memberId,
   } = props;
 
   const router = useRouter();
@@ -46,7 +48,7 @@ export default function ToastBox(props: ToastBoxProps) {
           <span className="text-gray-80 text-body1">{title}</span>
           <span
             className="flex gap-1 items-center"
-            onClick={() => router.push(`/profile/${nickname}`)}
+            onClick={() => router.push(`/profile/${memberId}`)}
           >
             <Image
               src={profileImg}
