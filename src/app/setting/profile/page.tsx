@@ -175,6 +175,7 @@ const SettingProfilePage = () => {
                   alt=""
                   width={120}
                   height={120}
+                  unoptimized
                   className="object-cover rounded-full w-[120px] h-[120px]"
                 />
                 <div className="absolute bottom-[-12px] right-0 border-4 border-gray-05 bg-gray-10 w-[40px] h-[40px] rounded-full flex justify-center items-center">
