@@ -24,7 +24,7 @@ export const navItem: NavItem[] = [
 
 const navVariants = {
   container:
-    'fixed bottom-0 bg-white w-full h-[96px] px-6 pt-4 flex justify-between rounded-t-[12px] shadow-[0_0_4px_0px_rgba(78,69,64,0.25)]',
+    'fixed bottom-0 bg-white w-full max-w-[600px] h-[96px] px-6 pt-4 flex justify-between rounded-t-[12px] shadow-[0_0_4px_0px_rgba(78,69,64,0.25)]',
   itemContainer:
     'w-full max-w-[64px] flex flex-col gap-[2px] justify-start items-center',
   textDefault: 'text-body5 text-gray-20',
@@ -76,7 +76,7 @@ const BottomBar = () => {
   useEffect(() => {}, [selectedItem]);
 
   return (
-    <div className="relative">
+    <div className="relative flex justify-center bg-gray-05">
       <div className={navVariants.container}>
         {navItem.map((item) => {
           const isActive = selectedItem.title === item.title;

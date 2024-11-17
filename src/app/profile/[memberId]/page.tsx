@@ -117,7 +117,7 @@ export default function UserProfilePage({ params }: { params: PageProps }) {
   };
 
   return (
-    <div className="w-full h-lvh">
+    <div className="w-full h-lvh bg-gray-05">
       <TopBar title={data?.nickname} />
 
       <div className="h-[calc(100vh-144px)] flex flex-grow flex-col bg-gray-05 overflow-y-auto">
