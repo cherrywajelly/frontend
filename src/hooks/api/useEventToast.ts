@@ -66,7 +66,7 @@ export const usePostEventToast = () => {
     mutationFn: (item: EventToastPostReqBody) => postEventToast(item),
     onSuccess: () => {},
     onError: (error) => {
-      console.log(error);
+      // console.log(error);
     },
   });
   return { mutate, isPending, error };
@@ -81,7 +81,7 @@ export const useDeleteEventToast = () => {
       queryClient.invalidateQueries({ queryKey: ['eventToastList'] });
     },
     onError: (error) => {
-      console.log(error);
+      // console.log(error);
     },
   });
   return { mutate, isPending, error };
@@ -116,7 +116,7 @@ export const useDeleteJamItem = () => {
       queryClient.invalidateQueries({ queryKey: ['jamList'] });
     },
     onError: (error) => {
-      console.log(error);
+      // console.log(error);
     },
   });
   return { mutate, isPending, error };
@@ -137,7 +137,7 @@ export const usePostJamItemToEventToast = () => {
       queryClient.invalidateQueries({ queryKey: ['jamList'] });
     },
     onError: (error) => {
-      console.error(error);
+      // console.error(error);
     },
   });
 

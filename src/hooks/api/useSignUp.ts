@@ -19,9 +19,7 @@ export const useNicknameSignUp = (nickname: string) => {
       queryClient.invalidateQueries({ queryKey: ['myProfile'] });
       queryClient.invalidateQueries({ queryKey: ['myInfo'] });
     },
-    onError: (error) => {
-      console.log(error);
-    },
+    onError: (error) => {},
   });
   return { mutate, isPending, error };
 };

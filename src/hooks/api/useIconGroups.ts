@@ -48,9 +48,7 @@ export const useDeleteGiftToast = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['iconGroups'] });
     },
-    onError: (error) => {
-      console.log(error);
-    },
+    onError: (error) => {},
   });
   return { mutate, isPending, error };
 };
@@ -92,9 +90,7 @@ export const usePostBuyIconGroups = () => {
       queryClient.invalidateQueries({ queryKey: ['iconGroupsJams'] });
       queryClient.invalidateQueries({ queryKey: ['iconGroupsToasts'] });
     },
-    onError: (error) => {
-      console.log(error);
-    },
+    onError: (error) => {},
   });
   return { mutate, isPending, error };
 };

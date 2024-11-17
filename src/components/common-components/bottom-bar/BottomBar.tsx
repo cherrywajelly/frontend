@@ -38,9 +38,6 @@ const BottomBar = () => {
 
   const backdropRef = useRef<HTMLDivElement>(null);
 
-  console.log('selectedItem', selectedItem);
-  console.log('previousItem', previousItem);
-
   // useEffect(() => {
   //   const handleClickOutside = (event: MouseEvent) => {
   //     if (

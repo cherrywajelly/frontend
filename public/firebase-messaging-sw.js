@@ -26,7 +26,7 @@ const messaging = firebase.messaging();
 
 // 활성화
 self.addEventListener('activate', function (e) {
-  console.log('fcm service worker가 실행되었습니다.');
+  // console.log('fcm service worker가 실행되었습니다.');
   e.waitUntil(clients.claim());
 });
 
@@ -40,10 +40,10 @@ const aFilesToCache = [
 
 // 서비스 워커 설치 및 캐싱
 self.addEventListener('install', (event) => {
-  console.log('Service Worker 설치');
+  // console.log('Service Worker 설치');
   event.waitUntil(
     caches.open(sCacheName).then((cache) => {
-      console.log('파일을 캐시에 저장합니다.');
+      // console.log('파일을 캐시에 저장합니다.');
       // return cache.addAll(aFilesToCache);
     }),
   );
@@ -52,7 +52,7 @@ self.addEventListener('install', (event) => {
 // 푸시 알림 수신 처리
 // foreground
 self.addEventListener('push', (event) => {
-  console.log('푸시 이벤트 발생:', event);
+  // console.log('푸시 이벤트 발생:', event);
 
   if (!event.data) {
     console.error('푸시 데이터가 없습니다.');

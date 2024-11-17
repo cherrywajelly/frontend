@@ -18,7 +18,7 @@ export const usePutFCM = () => {
     mutationFn: (token: string) => putFCMToken(token),
     onSuccess: () => {},
     onError: (error) => {
-      console.log(error);
+      // console.log(error);
     },
   });
   return { mutate, isPending, error };
@@ -52,7 +52,7 @@ export const usePostFCMTest = () => {
     mutationFn: (item: FCMTestRequestBody) => postFCMTest(item),
     onSuccess: () => {},
     onError: (error) => {
-      console.log(error);
+      // console.log(error);
     },
   });
   return { mutate, isPending, error };

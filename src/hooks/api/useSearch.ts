@@ -17,9 +17,7 @@ export const usePostSearchResult = () => {
   const { mutate, isPending, error, mutateAsync } = useMutation({
     mutationFn: (item: SearchRequestBody) => postSearchResult(item),
     onSuccess: (data) => {},
-    onError: (error) => {
-      console.log(error);
-    },
+    onError: (error) => {},
   });
   return { mutate, isPending, error, mutateAsync };
 };

@@ -21,9 +21,7 @@ export const usePostBuyIconGroups = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['premiumsInfo'] });
     },
-    onError: (error) => {
-      console.log(error);
-    },
+    onError: (error) => {},
   });
   return { mutate, isPending, error };
 };

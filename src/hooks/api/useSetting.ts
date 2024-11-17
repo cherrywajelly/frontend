@@ -17,12 +17,8 @@ export const useGroupTeam = ({ teamName, teamMembers }: RequestGroupTeam) => {
         teamName,
         teamMembers,
       }),
-    onSuccess: (data) => {
-      console.log(data);
-    },
-    onError: (error) => {
-      console.log(error);
-    },
+    onSuccess: (data) => {},
+    onError: (error) => {},
   });
   return { mutate, isPending, error, data, mutateAsync };
 };
@@ -37,9 +33,7 @@ export const usePostProfileImage = () => {
       queryClient.invalidateQueries({ queryKey: ['myProfile'] });
       queryClient.invalidateQueries({ queryKey: ['myInfo'] });
     },
-    onError: (error) => {
-      console.log(error);
-    },
+    onError: (error) => {},
   });
   return { mutate, isPending, error };
 };
@@ -56,9 +50,7 @@ export const usePostGroupImage = () => {
       router.push('/setting/group');
       // queryClient.invalidateQueries({ queryKey: [''] });
     },
-    onError: (error) => {
-      console.log(error);
-    },
+    onError: (error) => {},
   });
   return { mutate, isPending, error };
 };

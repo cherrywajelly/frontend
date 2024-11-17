@@ -137,7 +137,7 @@ export const deleteGiftToast = async (giftToastId: number) => {
       }
     })
     .catch((err) => {
-      console.log(err);
+      // console.log(err);
       throw err;
     });
 };
@@ -173,7 +173,7 @@ export const postToastPieces = async ({
       }
     })
     .catch((err) => {
-      console.log(err);
+      // console.log(err);
       throw err;
     });
 };
@@ -203,7 +203,7 @@ export const deleteToastPiece = async (toastPieceId: number) => {
       }
     })
     .catch((err) => {
-      console.log(err);
+      // console.log(err);
       throw err;
     });
 };

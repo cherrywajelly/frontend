@@ -32,7 +32,6 @@ export default function LabPage() {
         break;
       case '그룹 관리':
         router.push('/setting/group');
-        console.log('hhhh');
         break;
     }
   };
@@ -40,12 +39,12 @@ export default function LabPage() {
   const SettingCategories = [
     { label: '프로필 편집', onClick: () => handleClick('프로필 편집') },
     { label: '그룹 관리', onClick: () => handleClick('그룹 관리') },
-    { label: '아이콘 마켓', onClick: () => console.log('아이콘 마켓 클릭됨') },
-    { label: '구독 플랜', onClick: () => console.log('구독 플랜 클릭됨') },
+    { label: '아이콘 마켓', onClick: () => handleClick('아이콘 마켓 클릭됨') },
+    { label: '구독 플랜', onClick: () => handleClick('구독 플랜 클릭됨') },
   ];
 
   const handleDelete = () => {
-    console.log('delete function');
+    // console.log('delete function');
   };
 
   const onToggleModal = () => {

@@ -38,7 +38,6 @@ export default function PieceBox(props: PieceBoxProps) {
 
   useEffect(() => {
     readFileContent(data.contentsUrl);
-    console.log(fileContent);
   }, [fileContent, data]);
 
   return (

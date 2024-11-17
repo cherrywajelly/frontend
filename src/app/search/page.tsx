@@ -47,7 +47,7 @@ export default function SearchPage() {
             setSearchResults(data.searchResponses);
           },
           onError: (err) => {
-            console.log(err); // 오류 처리
+            // console.log(err); // 오류 처리
             setSearchResults([]);
           },
         },
