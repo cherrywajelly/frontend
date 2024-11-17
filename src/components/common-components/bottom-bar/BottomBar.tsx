@@ -139,7 +139,7 @@ const BottomBar = () => {
               </span>
               <Image src={tempImg} alt="" />
               <p className="text-gray-80 text-body4">
-                추억을 담은 토스트를 물고 당장 뛰쳐나가세요
+                친구들과 그룹을 만들어 추억을 나눠보세요
               </p>
             </div>
           </div>
