@@ -78,7 +78,9 @@ export default function ArriveEventToast() {
                 아직 토스트를 구운 친구가 없어요.
               </span>
               <span className="text-body4 text-gray-60">
-                검색을 통해 더 많은 친구를 팔로우해보세요!
+                검색을 통해 더 많은
+                <br />
+                친구를 팔로우해보세요!
               </span>
             </span>
 

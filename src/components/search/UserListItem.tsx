@@ -17,6 +17,7 @@ export default function UserListItem(props: UserListItemProps) {
         alt=""
         width={48}
         height={48}
+        unoptimized
         className="object-cover rounded-full w-[48px] h-[48px]"
       />
       <span className="flex-1 text-body1 text-black-main">{nickname}</span>

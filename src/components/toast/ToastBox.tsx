@@ -41,6 +41,7 @@ export default function ToastBox(props: ToastBoxProps) {
           alt=""
           width={80}
           height={80}
+          unoptimized
           className="object-cover w-[80px] h-[80px]"
         />
 

@@ -51,6 +51,7 @@ export default function PieceBox(props: PieceBoxProps) {
           alt=""
           width={56}
           height={56}
+          unoptimized
           className="object-cover w-[56px] h-[56px] rounded-[10px]"
         />
 
