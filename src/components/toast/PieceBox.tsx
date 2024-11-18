@@ -47,7 +47,7 @@ export default function PieceBox(props: PieceBoxProps) {
     >
       <div className="flex gap-4">
         <Image
-          src={data.iconImageUrl}
+          src={data?.iconImageUrl}
           alt=""
           width={56}
           height={56}
@@ -56,18 +56,18 @@ export default function PieceBox(props: PieceBoxProps) {
         />
 
         <div className="flex-1 flex-col space-y-2">
-          <span className="text-body1 text-gray-80">{data.title}</span>
+          <span className="text-body1 text-gray-80">{data?.title}</span>
 
           <span className="flex gap-1 items-center">
             <Image
-              src={data.profileUrl}
+              src={data?.profileUrl}
               alt=""
               width={24}
               height={24}
               unoptimized
               className="object-cover rounded-full w-[24px] h-[24px]"
             />
-            <span className="text-gray-80 text-body4">{data.nickname}</span>
+            <span className="text-gray-80 text-body4">{data?.nickname}</span>
           </span>
         </div>
 
@@ -89,7 +89,7 @@ export default function PieceBox(props: PieceBoxProps) {
       />
 
       {/* images */}
-      {data.toastPieceImages && data.toastPieceImages.length > 0 && (
+      {data && data.toastPieceImages && data.toastPieceImages.length > 0 && (
         <div className="w-full flex flex-col gap-2">
           <div className="w-full flex gap-1">
             <Image
@@ -97,7 +97,10 @@ export default function PieceBox(props: PieceBoxProps) {
               alt=""
               width={100}
               height={154}
-              className="w-1/2 object-cover rounded-[8px] border border-gray-10"
+              className={clsx(
+                'object-cover rounded-[8px] border border-gray-10',
+                data.toastPieceImages.length === 1 ? 'w-full' : 'w-1/2',
+              )}
             />
             {data.toastPieceImages.length > 1 && (
               <div
