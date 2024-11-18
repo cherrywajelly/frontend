@@ -29,7 +29,7 @@ export const getGoogleLogin = async (code: string) => {
   const res = await apiRequest(`/api/v1/login/google?code=${code}`);
 
   if (!res.ok) {
-    throw new Error(`HTTP error in Google! Status: ${res.status}`);
+    throw new Error(`HTTP error! Status: ${res.status}`);
   }
 
   const data = await res.json();
@@ -41,7 +41,7 @@ export const getMyInfo = async () => {
   const res = await apiRequest(`/api/v1/members/info`);
 
   if (!res.ok) {
-    throw new Error(`HTTP error in Google! Status: ${res.status}`);
+    throw new Error(`HTTP error! Status: ${res.status}`);
   }
 
   const data = await res.json();

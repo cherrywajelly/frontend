@@ -10,7 +10,7 @@ export const getNicknameValid = async (nickname: string) => {
   }
 
   if (!res.ok) {
-    throw new Error(`HTTP error in Google! Status: ${res.status}`);
+    throw new Error(`HTTP error! Status: ${res.status}`);
   }
 
   return res;

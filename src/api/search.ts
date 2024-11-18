@@ -35,7 +35,7 @@ export const getUserProfile = async (memberId: number) => {
   const res = await apiRequest(`/api/v1/members/${memberId}`);
 
   if (!res.ok) {
-    throw new Error(`HTTP error in Google! Status: ${res.status}`);
+    throw new Error(`HTTP error! Status: ${res.status}`);
   }
 
   const data = await res.json();
@@ -47,7 +47,7 @@ export const getUserShowcase = async (memberId: number) => {
   const res = await apiRequest(`/api/v1/showcases/members/${memberId}`);
 
   if (!res.ok) {
-    throw new Error(`HTTP error in Google! Status: ${res.status}`);
+    throw new Error(`HTTP error! Status: ${res.status}`);
   }
 
   const data = await res.json();

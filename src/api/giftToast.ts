@@ -12,7 +12,7 @@ export const getGiftToastIncompleted = async () => {
   const res = await apiRequest(`/api/v1/giftToasts/members/incomplete`);
 
   if (!res.ok) {
-    throw new Error(`HTTP error in Google! Status: ${res.status}`);
+    throw new Error(`HTTP error! Status: ${res.status}`);
   }
   const data = await res.json();
   return data.giftToastResponses;
@@ -23,7 +23,7 @@ export const getGiftToastList = async () => {
   const res = await apiRequest(`/api/v1/giftToasts/members`);
 
   if (!res.ok) {
-    throw new Error(`HTTP error in Google! Status: ${res.status}`);
+    throw new Error(`HTTP error! Status: ${res.status}`);
   }
 
   const data = await res.json();
@@ -35,7 +35,7 @@ export const getGiftToastItem = async (giftToastId: number) => {
   const res = await apiRequest(`/api/v1/giftToasts/${giftToastId}`);
 
   if (!res.ok) {
-    throw new Error(`HTTP error in Google! Status: ${res.status}`);
+    throw new Error(`HTTP error! Status: ${res.status}`);
   }
 
   const data = await res.json();
@@ -183,7 +183,7 @@ export const getToastPieceItem = async (toastPieceId: number) => {
   const res = await apiRequest(`/api/v1/toastPieces/${toastPieceId}`);
 
   if (!res.ok) {
-    throw new Error(`HTTP error in Google! Status: ${res.status}`);
+    throw new Error(`HTTP error! Status: ${res.status}`);
   }
 
   const data = await res.json();
