@@ -10,7 +10,7 @@ export const getEventToastList = async () => {
   const res = await apiRequest(`/api/v1/eventToasts/member`);
 
   if (!res.ok) {
-    throw new Error(`HTTP error in Google! Status: ${res.status}`);
+    throw new Error(`HTTP error! Status: ${res.status}`);
   }
 
   const data = await res.json();
@@ -22,7 +22,7 @@ export const getUserEventToastList = async (memberId: number) => {
   const res = await apiRequest(`/api/v1/eventToasts/member/${memberId}`);
 
   if (!res.ok) {
-    throw new Error(`HTTP error in Google! Status: ${res.status}`);
+    throw new Error(`HTTP error! Status: ${res.status}`);
   }
 
   const data = await res.json();
@@ -34,7 +34,7 @@ export const getEventToastItem = async (eventToastId: number) => {
   const res = await apiRequest(`/api/v1/eventToasts/${eventToastId}`);
 
   if (!res.ok) {
-    throw new Error(`HTTP error in Google! Status: ${res.status}`);
+    throw new Error(`HTTP error! Status: ${res.status}`);
   }
 
   const data = await res.json();
@@ -46,7 +46,7 @@ export const getFollowingUserEventToast = async () => {
   const res = await apiRequest(`/api/v1/eventToasts/follow/following`);
 
   if (!res.ok) {
-    throw new Error(`HTTP error in Google! Status: ${res.status}`);
+    throw new Error(`HTTP error! Status: ${res.status}`);
   }
 
   const data = await res.json();
@@ -102,7 +102,7 @@ export const getJamList = async (eventToastId: number) => {
   const res = await apiRequest(`/api/v1/jams/eventToast/${eventToastId}`);
 
   if (!res.ok) {
-    throw new Error(`HTTP error in Google! Status: ${res.status}`);
+    throw new Error(`HTTP error! Status: ${res.status}`);
   }
 
   const data = await res.json();
@@ -114,7 +114,7 @@ export const getJamDetail = async (jamId: number) => {
   const res = await apiRequest(`/api/v1/jams/${jamId}`);
 
   if (!res.ok) {
-    throw new Error(`HTTP error in Google! Status: ${res.status}`);
+    throw new Error(`HTTP error! Status: ${res.status}`);
   }
 
   const data = await res.json();

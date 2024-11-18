@@ -5,7 +5,7 @@ export const getPremiumsInfo = async () => {
   const res = await apiRequest(`/api/v1/premiums`);
 
   if (!res.ok) {
-    throw new Error(`HTTP error in Google! Status: ${res.status}`);
+    throw new Error(`HTTP error! Status: ${res.status}`);
   }
 
   const data = await res.json();
