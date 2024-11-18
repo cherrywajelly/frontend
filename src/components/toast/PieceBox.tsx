@@ -97,7 +97,10 @@ export default function PieceBox(props: PieceBoxProps) {
               alt=""
               width={100}
               height={154}
-              className="w-1/2 object-cover rounded-[8px] border border-gray-10"
+              className={clsx(
+                'object-cover rounded-[8px] border border-gray-10',
+                data.toastPieceImages.length === 1 ? 'w-full' : 'w-1/2',
+              )}
             />
             {data.toastPieceImages.length > 1 && (
               <div
