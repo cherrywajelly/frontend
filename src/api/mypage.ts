@@ -5,7 +5,7 @@ export const getMyProfile = async () => {
   const res = await apiRequest(`/api/v1/members`);
 
   if (!res.ok) {
-    throw new Error(`HTTP error in Google! Status: ${res.status}`);
+    throw new Error(`HTTP error! Status: ${res.status}`);
   }
 
   const data = await res.json();
@@ -17,7 +17,7 @@ export const getFollowers = async () => {
   const res = await apiRequest(`/api/v1/follows/followers`);
 
   if (!res.ok) {
-    throw new Error(`HTTP error in Google! Status: ${res.status}`);
+    throw new Error(`HTTP error! Status: ${res.status}`);
   }
 
   const data = await res.json();
@@ -29,7 +29,7 @@ export const getFollowings = async () => {
   const res = await apiRequest(`/api/v1/follows/followings`);
 
   if (!res.ok) {
-    throw new Error(`HTTP error in Google! Status: ${res.status}`);
+    throw new Error(`HTTP error! Status: ${res.status}`);
   }
 
   const data = await res.json();
@@ -41,7 +41,7 @@ export const getGroup = async () => {
   const res = await apiRequest(`/api/v1/teams`);
 
   if (!res.ok) {
-    throw new Error(`HTTP error in Google! Status: ${res.status}`);
+    throw new Error(`HTTP error! Status: ${res.status}`);
   }
 
   const data = await res.json();
@@ -129,7 +129,7 @@ export const getMyShowcase = async () => {
   const res = await apiRequest(`/api/v1/showcases/members`);
 
   if (!res.ok) {
-    throw new Error(`HTTP error in Google! Status: ${res.status}`);
+    throw new Error(`HTTP error! Status: ${res.status}`);
   }
 
   const data = await res.json();
@@ -141,7 +141,7 @@ export const getMyShowcaseList = async () => {
   const res = await apiRequest(`/api/v1/showcases`);
 
   if (!res.ok) {
-    throw new Error(`HTTP error in Google! Status: ${res.status}`);
+    throw new Error(`HTTP error! Status: ${res.status}`);
   }
 
   const data = await res.json();
