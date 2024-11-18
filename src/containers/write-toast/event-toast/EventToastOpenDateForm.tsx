@@ -63,6 +63,7 @@ export default function EventToastOpenDateForm() {
         color={eventData.openDate ? 'active' : 'disabled'}
         onClick={handleSubmit}
         disabled={!eventData.openDate}
+        className="mb-6"
       >
         다음
       </Button>

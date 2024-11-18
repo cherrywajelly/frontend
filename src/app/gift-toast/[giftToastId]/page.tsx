@@ -26,7 +26,7 @@ export default function GiftToastItemPage({ params }: { params: PageParams }) {
   const router = useRouter();
 
   return (
-    <div className="w-full h-lvh">
+    <div className="w-full h-lvh bg-gray-05">
       <TopBar title={data?.giftToastInfo.title} />
 
       <div className="h-[calc(100vh-144px)] flex flex-grow flex-col gap-1 bg-gray-05 p-6 overflow-y-auto">

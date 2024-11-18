@@ -35,7 +35,7 @@ export default function EventToastPage({ params }: { params: PageParams }) {
   const isMine = sessionStorageNickname === data?.nickname;
 
   return (
-    <div className="w-full h-lvh">
+    <div className="w-full h-lvh bg-gray-05">
       <TopBar onBack={handleBack} title={data?.title} />
 
       <div className="h-[calc(100vh-144px)] flex flex-grow flex-col bg-gray-05 p-6 overflow-y-auto">

@@ -24,7 +24,7 @@ export const navItem: NavItem[] = [
 
 const navVariants = {
   container:
-    'fixed bottom-0 bg-white w-full h-[96px] px-6 pt-4 flex justify-between rounded-t-[12px] shadow-[0_0_4px_0px_rgba(78,69,64,0.25)]',
+    'fixed bottom-0 bg-white w-full max-w-[600px] h-[96px] px-6 pt-4 flex justify-between rounded-t-[12px] shadow-[0_0_4px_0px_rgba(78,69,64,0.25)]',
   itemContainer:
     'w-full max-w-[64px] flex flex-col gap-[2px] justify-start items-center',
   textDefault: 'text-body5 text-gray-20',
@@ -76,7 +76,7 @@ const BottomBar = () => {
   useEffect(() => {}, [selectedItem]);
 
   return (
-    <div className="relative">
+    <div className="relative flex justify-center bg-gray-05">
       <div className={navVariants.container}>
         {navItem.map((item) => {
           const isActive = selectedItem.title === item.title;
@@ -119,11 +119,11 @@ const BottomBar = () => {
                 router.push('/bake/event-toast');
               }}
             >
-              <span className="text-black-main text-body1">
+              <span className="text-black-main text-body1 break-keep">
                 이벤트토스트 굽기
               </span>
               <Image src={tempImg} alt="" />
-              <p className="text-gray-80 text-body4">
+              <p className="text-gray-80 text-body4 break-keep">
                 특별한 날을 기념하는 토스트를 구워보세요
               </p>
             </div>
@@ -138,7 +138,7 @@ const BottomBar = () => {
                 캡슐토스트 굽기
               </span>
               <Image src={tempImg} alt="" />
-              <p className="text-gray-80 text-body4">
+              <p className="text-gray-80 text-body4 break-keep">
                 친구들과 그룹을 만들어 추억을 나눠보세요
               </p>
             </div>
