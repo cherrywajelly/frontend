@@ -12,7 +12,7 @@ import {
 import { pieceData, ToastData } from '@/types/atoms/toastAtom';
 
 import defaultImg from '../../../public/images/default-toast.png';
-import tempImg from '../../../public/images/timetoast.png';
+import defaultJam from '../../../public/images/defaultJam.png';
 
 import { StaticImageData } from 'next/dist/shared/lib/get-img-props';
 import Image from 'next/image';
@@ -163,9 +163,15 @@ export default function ToastDecoForm(props: ToastFormProps) {
         </div>
 
         <Button
-          color={toastData.deco !== defaultImg ? 'active' : 'disabled'}
+          color={
+            toastData.deco !== defaultImg && toastData.deco !== defaultJam
+              ? 'active'
+              : 'disabled'
+          }
           onClick={handleSubmit}
-          disabled={toastData.deco == defaultImg}
+          disabled={
+            toastData.deco == defaultImg || toastData.deco === defaultJam
+          }
         >
           {isMainToast ? '토스트 생성' : '다음'}
         </Button>
