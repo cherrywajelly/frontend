@@ -97,12 +97,12 @@ export default function PieceBox(props: PieceBoxProps) {
               alt=""
               width={100}
               height={154}
-              className="w-full object-cover rounded-[8px] border border-gray-10"
+              className="w-1/2 object-cover rounded-[8px] border border-gray-10"
             />
             {data.toastPieceImages.length > 1 && (
               <div
                 className={clsx(
-                  'w-full relative rounded-[8px] border border-gray-10 overflow-hidden',
+                  'w-1/2 relative rounded-[8px] border border-gray-10 overflow-hidden',
                   isList ? 'bg-black bg-opacity-60' : '',
                 )}
               >
