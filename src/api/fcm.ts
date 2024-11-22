@@ -41,7 +41,7 @@ export const getMoveNotificationsPage = async (fcmId: number) => {
   }
 
   const data = await res.json();
-  return data;
+  return data.fcmResponses;
 };
 
 // 알림 테스트

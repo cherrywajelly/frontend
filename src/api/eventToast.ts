@@ -14,7 +14,7 @@ export const getEventToastList = async () => {
   }
 
   const data = await res.json();
-  return data;
+  return data.eventToastOwnResponses;
 };
 
 // 특정 사용자의 이벤트 토스트 목록 조회
@@ -26,7 +26,7 @@ export const getUserEventToastList = async (memberId: number) => {
   }
 
   const data = await res.json();
-  return data;
+  return data.eventToastMemberResponses;
 };
 
 // 사용자 이벤트 토스트 상세 조회
@@ -50,7 +50,7 @@ export const getFollowingUserEventToast = async () => {
   }
 
   const data = await res.json();
-  return data;
+  return data.eventToastFriendResponses;
 };
 
 // 이벤트 토스트 등록
@@ -106,7 +106,7 @@ export const getJamList = async (eventToastId: number) => {
   }
 
   const data = await res.json();
-  return data;
+  return data.jamResponses;
 };
 
 // 잼 상세 조회

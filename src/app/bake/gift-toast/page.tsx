@@ -124,21 +124,23 @@ export default function GiftToastPage() {
   };
 
   return (
-    <div className="w-full h-lvh">
-      <TopBar onBack={handleBack} title="캡슐 토스트 굽기" />
+    <>
+      <div className="w-full h-lvh">
+        <TopBar onBack={handleBack} title="캡슐 토스트 굽기" />
 
-      <div className="h-[calc(100vh-48px)] flex flex-col gap-1 bg-gray-05">
-        {step === 0 && <GiftToastWithChoiceForm />}
-        {step === 1 && <GiftToastOpenDateForm />}
-        {step === 2 && <GiftToastNameForm />}
-        {step === 3 && (
-          <ToastDecoForm
-            stepState={giftToastStepState}
-            dataState={giftToastDataState}
-            handleSubmit={handleSubmit}
-            type="toast"
-          />
-        )}
+        <div className="h-[calc(100vh-48px)] flex flex-col gap-1 bg-gray-05">
+          {step === 0 && <GiftToastWithChoiceForm />}
+          {step === 1 && <GiftToastOpenDateForm />}
+          {step === 2 && <GiftToastNameForm />}
+          {step === 3 && (
+            <ToastDecoForm
+              stepState={giftToastStepState}
+              dataState={giftToastDataState}
+              handleSubmit={handleSubmit}
+              type="toast"
+            />
+          )}
+        </div>
       </div>
       {isDialogOpen && (
         <ConfirmDialog
@@ -163,6 +165,6 @@ export default function GiftToastPage() {
           </Button>
         </ConfirmDialog>
       )}
-    </div>
+    </>
   );
 }
