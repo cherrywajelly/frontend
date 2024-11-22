@@ -9,7 +9,7 @@ export const getIconGroupsJams = async () => {
   }
 
   const data = await res.json();
-  return data;
+  return data.iconGroupResponses;
 };
 
 // 사용자 토스트 아이콘 그룹 목록 조회
@@ -21,7 +21,7 @@ export const getIconGroupsToasts = async () => {
   }
 
   const data = await res.json();
-  return data;
+  return data.iconGroupResponses;
 };
 
 // 아이콘 그룹 목록 삭제
@@ -51,7 +51,7 @@ export const getMarketJamIcons = async () => {
   }
 
   const data = await res.json();
-  return data.iconGroupMarketResponses;
+  return data.iconGroupResponses;
 };
 
 // 마켓 - 토스트 아이콘 그룹 목록 조회
