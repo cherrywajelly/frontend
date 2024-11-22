@@ -44,6 +44,8 @@ const Button = forwardRef<HTMLButtonElement, PropsWithChildren<ButtonProps>>(
       endIcon,
       className,
       children,
+      disabled,
+      onClick,
       ...rest
     } = props;
 
@@ -58,6 +60,8 @@ const Button = forwardRef<HTMLButtonElement, PropsWithChildren<ButtonProps>>(
           style.color[color],
           className,
         )}
+        disabled={color === 'disabled' || disabled}
+        onClick={onClick}
         {...rest}
       >
         {startIcon}
