@@ -51,7 +51,7 @@ export const getMarketJamIcons = async () => {
   }
 
   const data = await res.json();
-  return data.iconGroupResponses;
+  return data.iconGroupMarketResponses;
 };
 
 // 마켓 - 토스트 아이콘 그룹 목록 조회

@@ -60,7 +60,7 @@ const Button = forwardRef<HTMLButtonElement, PropsWithChildren<ButtonProps>>(
           style.color[color],
           className,
         )}
-        disabled={color === 'disabled' || disabled}
+        // disabled={color === 'disabled' || disabled}
         onClick={onClick}
         {...rest}
       >
