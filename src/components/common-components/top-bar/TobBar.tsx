@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { IoIosArrowBack } from 'react-icons/io';
 
+import { useDeleteWithdrawal } from '@/hooks/api/useSetting';
 import { notifyLater } from '@/utils/toast';
 
 import Dropdown from '../dropdown';
@@ -38,12 +39,18 @@ const TopBar = ({
     window.location.href = '/';
   };
 
+  // TODO: 설정 리뉴얼 후 따로 빼기
+  const { mutate: mutateWithdrawal, isPending: isPendingWithdrawal } =
+    useDeleteWithdrawal();
+
   const SettingCategories = [
     { label: '프로필 편집', onClick: () => router.push('/setting/profile') },
     { label: '그룹 관리', onClick: () => router.push('/setting/group') },
     { label: '아이콘 마켓', onClick: () => router.push('/setting/market') },
     { label: '구독 플랜', onClick: () => notifyLater() },
     { label: '로그아웃', onClick: () => handleLogout() },
+    // TODO: 임시 코드
+    // { label: '회원 탈퇴', onClick: () => mutateWithdrawal() },
   ];
 
   const [isSubmitting, setIsSubmitting] = useState(false);
