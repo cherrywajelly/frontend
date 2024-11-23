@@ -29,7 +29,7 @@ export const getNotificationsList = async () => {
   }
 
   const data = await res.json();
-  return data;
+  return data.fcmResponses;
 };
 
 // 알림 관련 페이지로 이동
