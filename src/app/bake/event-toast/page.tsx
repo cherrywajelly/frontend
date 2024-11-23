@@ -97,6 +97,7 @@ export default function EventToastPage() {
         <ConfirmDialog
           description="이벤트 토스트가 생성되었어요!"
           isOpen={isDialogOpen}
+          className="!max-w-[400px]"
           onClose={() => setIsDialogOpen((prev) => !prev)}
         >
           <Button

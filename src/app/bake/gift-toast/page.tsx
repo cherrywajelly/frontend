@@ -143,6 +143,7 @@ export default function GiftToastPage() {
       {isDialogOpen && (
         <ConfirmDialog
           description="캡슐 토스트가 생성되었어요!"
+          className="!max-w-[400px]"
           isOpen={isDialogOpen}
           onClose={() => setIsDialogOpen((prev) => !prev)}
         >
