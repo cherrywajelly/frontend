@@ -70,30 +70,28 @@ export default function EventToastPage() {
   };
 
   return (
-    <>
-      <div className="w-full h-lvh">
-        <TopBar onBack={handleBack} title="이벤트 토스트 굽기" />
+    <div className="w-full h-lvh">
+      <TopBar onBack={handleBack} title="이벤트 토스트 굽기" />
 
-        <div className="h-[calc(100vh-48px)] flex flex-col gap-1 bg-gray-05">
-          {isPending ? (
-            <div className="flex justify-center items-center h-full">
-              <Spinner />
-            </div>
-          ) : (
-            <>
-              {step === 0 && <EventToastOpenDateForm />}
-              {step === 1 && <EventToastNameForm />}
-              {step === 2 && (
-                <ToastDecoForm
-                  stepState={eventToastStepState}
-                  dataState={eventToastDataState}
-                  handleSubmit={handleSubmit}
-                  type="toast"
-                />
-              )}
-            </>
-          )}
-        </div>
+      <div className="h-[calc(100vh-48px)] flex flex-col gap-1 bg-gray-05">
+        {isPending ? (
+          <div className="flex justify-center items-center h-full">
+            <Spinner />
+          </div>
+        ) : (
+          <>
+            {step === 0 && <EventToastOpenDateForm />}
+            {step === 1 && <EventToastNameForm />}
+            {step === 2 && (
+              <ToastDecoForm
+                stepState={eventToastStepState}
+                dataState={eventToastDataState}
+                handleSubmit={handleSubmit}
+                type="toast"
+              />
+            )}
+          </>
+        )}
       </div>
       {isDialogOpen && (
         <ConfirmDialog
@@ -118,6 +116,6 @@ export default function EventToastPage() {
           </Button>
         </ConfirmDialog>
       )}
-    </>
+    </div>
   );
 }
