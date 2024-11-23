@@ -57,7 +57,7 @@ export const usePostGroupImage = () => {
 };
 
 // 회원 탈퇴
-export const useDeleteToastPiece = () => {
+export const useDeleteWithdrawal = () => {
   const { mutate, isPending, error } = useMutation({
     mutationFn: () => deleteWithdrawal(),
     onSuccess: () => {},
