@@ -33,24 +33,12 @@ const TopBar = ({
     router.back();
   };
 
-  const handleLogout = () => {
-    sessionStorage.clear();
-    localStorage.clear();
-    window.location.href = '/';
-  };
-
-  // TODO: 설정 리뉴얼 후 따로 빼기
-  const { mutate: mutateWithdrawal, isPending: isPendingWithdrawal } =
-    useDeleteWithdrawal();
-
   const SettingCategories = [
-    { label: '프로필 편집', onClick: () => router.push('/setting/profile') },
+    { label: '계정 정보', onClick: () => router.push('/setting/account') },
     { label: '그룹 관리', onClick: () => router.push('/setting/group') },
     { label: '아이콘 마켓', onClick: () => router.push('/setting/market') },
     { label: '구독 플랜', onClick: () => notifyLater() },
-    { label: '로그아웃', onClick: () => handleLogout() },
-    // TODO: 임시 코드
-    // { label: '회원 탈퇴', onClick: () => mutateWithdrawal() },
+    { label: '1:1 문의', onClick: () => router.push('/setting/inquiry') },
   ];
 
   const [isSubmitting, setIsSubmitting] = useState(false);
