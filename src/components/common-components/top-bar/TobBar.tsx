@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { IoIosArrowBack } from 'react-icons/io';
 
+import { useDeleteWithdrawal } from '@/hooks/api/useSetting';
 import { notifyLater } from '@/utils/toast';
 
 import Dropdown from '../dropdown';
@@ -32,18 +33,13 @@ const TopBar = ({
     router.back();
   };
 
-  const handleLogout = () => {
-    sessionStorage.clear();
-    localStorage.clear();
-    window.location.href = '/';
-  };
-
   const SettingCategories = [
-    { label: '프로필 편집', onClick: () => router.push('/setting/profile') },
+    { label: '계정 정보', onClick: () => router.push('/setting/account') },
     { label: '그룹 관리', onClick: () => router.push('/setting/group') },
     { label: '아이콘 마켓', onClick: () => router.push('/setting/market') },
-    { label: '구독 플랜', onClick: () => notifyLater() },
-    { label: '로그아웃', onClick: () => handleLogout() },
+    // { label: '구독 플랜', onClick: () => notifyLater() },
+    { label: '구독 플랜', onClick: () => router.push('/setting/premiums') },
+    { label: '1:1 문의', onClick: () => router.push('/setting/inquiry') },
   ];
 
   const [isSubmitting, setIsSubmitting] = useState(false);

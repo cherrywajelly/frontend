@@ -17,7 +17,7 @@ export default function PremiumsPage() {
       <div className="h-[calc(100vh-48px)] flex flex-col gap-6 justify-between bg-gray-05 p-6">
         {/* info */}
         <div className="h-full flex flex-col">
-          <div className="border border-red-500 flex flex-col gap-2">
+          <div className="flex flex-col gap-2">
             <span className="text-black-main text-subtitle3">
               구독할 이용권을 선택하세요.
             </span>

@@ -14,12 +14,12 @@ import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import { RecoilState, useRecoilState } from 'recoil';
 
-const QuillWrapper = dynamic(() => import('react-quill'), {
+export const QuillWrapper = dynamic(() => import('react-quill'), {
   ssr: false,
   loading: () => <Spinner />,
 });
 
-const modules = {
+export const modules = {
   toolbar: [
     ['bold', 'italic', 'underline', 'strike'],
     // ['link', 'video'],
@@ -33,7 +33,7 @@ const modules = {
  * Quill editor formats
  * See https://quilljs.com/docs/formats/
  */
-const formats = [
+export const formats = [
   'bold',
   'italic',
   'underline',

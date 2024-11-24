@@ -70,3 +70,21 @@ export const postProfileImage = async (profileImage: File) => {
       throw err;
     });
 };
+
+// 회원 탈퇴
+export const deleteWithdrawal = async () => {
+  await apiRequest(`/api/v1/withdrawal`, 'DELETE')
+    .then((res) => {
+      if (res.status === 500) {
+        throw new Error('Internal Server Error');
+      }
+
+      if (res.status === 200) {
+        return res;
+      }
+    })
+    .catch((err) => {
+      // console.log(err);
+      throw err;
+    });
+};
