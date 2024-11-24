@@ -107,7 +107,8 @@ const BottomBar = () => {
 
       {selectedItem.title === '토스트' && (
         <div
-          // ref={backdropRef}
+          ref={backdropRef}
+          role="backdropToast"
           className="px-6 fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-10"
           onClick={handleCloseBackdrop}
         >

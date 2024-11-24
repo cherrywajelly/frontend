@@ -64,6 +64,7 @@ const TopBar = ({
           onClick={onBack || handleBackBtn}
           size={20}
           className="text-black-main"
+          data-testid="back-button"
         />
       ) : (
         <></>
