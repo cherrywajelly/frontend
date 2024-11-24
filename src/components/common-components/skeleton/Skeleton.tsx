@@ -19,7 +19,7 @@ export const CustomSkeleton = ({
   borderRadius = 10,
 }: SkeletonProps) => {
   return (
-    <div className={containerClassName}>
+    <div className={containerClassName} data-testid="custom-skeleton">
       <SkeletonTheme baseColor="#ebebeb" highlightColor="#f5f5f5">
         <Skeleton
           count={count}
