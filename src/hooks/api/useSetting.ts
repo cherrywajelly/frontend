@@ -60,7 +60,11 @@ export const usePostGroupImage = () => {
 export const useDeleteWithdrawal = () => {
   const { mutate, isPending, error } = useMutation({
     mutationFn: () => deleteWithdrawal(),
-    onSuccess: () => {},
+    onSuccess: () => {
+      window.location.href = '/';
+      sessionStorage.clear();
+      localStorage.clear();
+    },
     onError: (error) => {},
   });
   return { mutate, isPending, error };
