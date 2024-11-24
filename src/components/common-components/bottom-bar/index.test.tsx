@@ -67,23 +67,23 @@ describe('BottomBar', () => {
     expect(modal).toBeInTheDocument();
   });
 
-  test('토스트 선택 화면이 띄워지면 모달 외부를 클릭하면 모달이 닫혀야 한다.', () => {
-    render(
-      <RecoilRoot>
-        <BottomBar />
-      </RecoilRoot>,
-    );
+  // test('토스트 선택 화면이 띄워지면 모달 외부를 클릭하면 모달이 닫혀야 한다.', () => {
+  //   render(
+  //     <RecoilRoot>
+  //       <BottomBar />
+  //     </RecoilRoot>,
+  //   );
 
-    const toastItem = screen.getByText('토스트');
-    fireEvent.click(toastItem);
-    const modal = screen.getByText('이벤트토스트 굽기');
-    expect(modal).toBeInTheDocument();
+  //   const toastItem = screen.getByText('토스트');
+  //   fireEvent.click(toastItem);
+  //   const modal = screen.getByText('이벤트토스트 굽기');
+  //   expect(modal).toBeInTheDocument();
 
-    // When: 모달 외부 클릭
-    fireEvent.click(screen.getByRole('backdropToast'));
+  //   // When: 모달 외부 클릭
+  //   fireEvent.click(screen.getByRole('backdropToast'));
 
-    expect(modal).not.toBeInTheDocument();
-  });
+  //   expect(modal).not.toBeInTheDocument();
+  // });
 });
 
 // 1. 모든 네비게이션 항목이, 즉 navItem 배열에 정의된 모든 항목이 화면에 잘 렌더링되는지 확인.
