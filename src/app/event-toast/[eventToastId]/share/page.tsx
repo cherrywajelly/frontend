@@ -155,7 +155,9 @@ export default function EventToastSharePage() {
 
           <button
             className="w-[48px] h-[50px] shadow-lg flex justify-center items-center bg-[#FEE500] rounded-full"
-            onClick={() => shareKakao(copyUrl as string, 'kakao 공유하깅')}
+            onClick={() =>
+              shareKakao(copyUrl as string, '흩어지는 기억을 담다, TimeToast')
+            }
           >
             <Image src={kakaoLogo} alt="kakao" />
           </button>
