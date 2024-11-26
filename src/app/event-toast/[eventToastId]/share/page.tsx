@@ -7,7 +7,10 @@ import { FiLink } from 'react-icons/fi';
 
 import TopBar from '@/components/common-components/top-bar';
 
-import temp from '../../../../../public/images/toast/emptyToast.png';
+import { notifyError, notifySuccess } from '@/utils/toast';
+
+import kakaoLogo from '../../../../../public/images/button/kakao.svg';
+import temp from '../../../../../public/images/timetoast.png';
 import templateImg from '../../../../../public/images/toast/toast-template.png';
 
 import saveAs from 'file-saver';
@@ -41,17 +44,102 @@ export default function EventToastSharePage() {
     }
   };
 
+  const handleCopyUrl = (url: string) => {
+    navigator.clipboard
+      .writeText(url)
+      .then(() => {
+        notifySuccess('링크가 복사되었어요!');
+      })
+      .catch((error) => {
+        notifyError('다시 시도해주세요!');
+      });
+  };
+
+  const copyUrl =
+    typeof window !== 'undefined' && window.location.href.replace('/share', '');
+
+  const shareKakao = (route: string, title: string) => {
+    if (window.Kakao) {
+      const kakao = window.Kakao;
+      if (!kakao.isInitialized()) {
+        kakao.init(process.env.NEXT_PUBLIC_KAKAO_JS_APP_KEY);
+      }
+
+      kakao.Share.sendDefault({
+        objectType: 'feed',
+        content: {
+          title: title,
+          description: '친구의 이벤트 토스트에 잼을 발라주세요!',
+          imageUrl:
+            'https://timetoast.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Ftimetoast.5b1b48cc.png&w=640&q=75',
+          link: {
+            mobileWebUrl: route,
+            webUrl: route,
+          },
+        },
+        buttons: [
+          {
+            title: '잼 바르기',
+            link: {
+              mobileWebUrl: route,
+              webUrl: route,
+            },
+          },
+        ],
+      });
+    }
+  };
+
+  const handleWebShare = async () => {
+    const url =
+      typeof window !== 'undefined'
+        ? window.location.href.replace('/share', '')
+        : '';
+    const title = '🍞친구가 토스트를 구웠어요🍞';
+    const text = '친구의 토스트에 잼을 발라주세요!';
+
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title,
+          text,
+          url,
+        });
+        notifySuccess('공유가 완료되었습니다!');
+      } catch (error) {
+        console.error('Error sharing:', error);
+        // notifyError('공유에 실패했습니다.');
+      }
+    } else {
+      notifyError('공유 기능이 지원되지 않는 브라우저입니다.');
+    }
+  };
+
   return (
     <div className="w-full h-lvh">
       <TopBar title="공유하기" />
 
-      <div className="p-6 h-[calc(100vh-48px)] flex flex-col gap-6 items-center bg-gray-05 flex-grow overflow-y-auto">
+      <div className="p-6 h-full flex flex-col gap-6 items-center bg-gray-05 flex-grow">
         {/* 기타 */}
         <div className="flex gap-4">
-          <button className="p-4 rounded-full bg-white flex flex-col shadow-lg">
+          <button
+            onClick={() => handleCopyUrl(`${copyUrl}`)}
+            className="p-4 rounded-full bg-white flex flex-col shadow-lg"
+          >
             <FiLink />
           </button>
-          <button className="p-4 rounded-full bg-white flex flex-col shadow-lg">
+
+          <button
+            className="w-[48px] h-[50px] shadow-lg flex justify-center items-center bg-[#FEE500] rounded-full"
+            onClick={() => shareKakao(copyUrl as string, 'kakao 공유하깅')}
+          >
+            <Image src={kakaoLogo} alt="kakao" />
+          </button>
+
+          <button
+            onClick={handleWebShare}
+            className="p-4 rounded-full bg-white flex flex-col shadow-lg"
+          >
             <FiShare />
           </button>
           <button
