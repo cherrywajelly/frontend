@@ -133,6 +133,9 @@ const config: Config = {
         semibold: '600',
         bold: '700',
       },
+      backgroundImage: {
+        'template-pattern': "url('/images/toast/toast-template.png')",
+      },
     },
   },
   plugins: [],
