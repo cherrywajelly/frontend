@@ -5,6 +5,8 @@ import { useEffect, useState } from 'react';
 import Button from '@/components/common-components/button';
 import Spinner from '@/components/common-components/spinner';
 
+import Carousel from '@/containers/landing/Carousel';
+
 import Logo from '../../public/images/timetoast.png';
 
 import Image from 'next/image';
@@ -29,8 +31,9 @@ export default function Home() {
   return (
     <div className="w-full h-screen p-6 bg-white">
       {!accessToken ? (
-        <div className="h-full text-center relative p-6 box-border w-full flex flex-col justify-center items-center">
-          <Image src={Logo} alt="timetoast" width={200} height={200} />
+        <div className="h-full text-center relative box-border w-full flex flex-col justify-center items-center">
+          <Carousel />
+          {/* <Image src={Logo} alt="timetoast" width={200} height={200} />
           <h1 className="text-[36px] font-bold text-gray-80">TimeToast</h1>
           <h3 className="text-subtitle2 mt-4 text-gray-80">
             지속적인 공유가 가능한 <br />
@@ -44,7 +47,7 @@ export default function Home() {
             }}
           >
             타임토스트 시작하기
-          </Button>
+          </Button> */}
         </div>
       ) : (
         <Spinner />
