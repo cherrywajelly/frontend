@@ -10,8 +10,7 @@ import TopBar from '@/components/common-components/top-bar';
 import { notifyError, notifySuccess } from '@/utils/toast';
 
 import kakaoLogo from '../../../../../public/images/button/kakao.svg';
-import temp from '../../../../../public/images/timetoast.png';
-import templateImg from '../../../../../public/images/toast/toast-template.png';
+import shareImg from '../../../../../public/images/toast/share-thumbnail.png';
 
 import saveAs from 'file-saver';
 import html2canvas from 'html2canvas';
@@ -95,7 +94,7 @@ export default function EventToastSharePage() {
           title: title,
           description: '친구의 토스트에 잼을 발라주세요!',
           imageUrl:
-            'https://timetoast.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Ftimetoast.5b1b48cc.png&w=640&q=75',
+            'https://github.com/user-attachments/assets/4dc1e25b-63d7-41ff-819e-f420f3cabeb8',
           link: {
             mobileWebUrl: route,
             webUrl: route,
@@ -156,7 +155,10 @@ export default function EventToastSharePage() {
           <button
             className="w-[48px] h-[50px] shadow-lg flex justify-center items-center bg-[#FEE500] rounded-full"
             onClick={() =>
-              shareKakao(copyUrl as string, '흩어지는 기억을 담다, TimeToast')
+              shareKakao(
+                copyUrl as string,
+                '🍞친구의 이벤트 토스트가 도착했어요!🍞',
+              )
             }
           >
             <Image src={kakaoLogo} alt="kakao" />
