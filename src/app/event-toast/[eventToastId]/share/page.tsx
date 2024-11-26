@@ -24,6 +24,26 @@ export default function EventToastSharePage() {
 
   const divRef = useRef<HTMLDivElement>(null);
 
+  // const handleDownload = async () => {
+  //   if (!divRef.current) return;
+
+  //   try {
+  //     const div = divRef.current;
+  //     const canvas = await html2canvas(div, {
+  //       scale: 2,
+  //       // width: div.offsetWidth,
+  //       // height: div.offsetHeight,
+  //     });
+  //     canvas.toBlob((blob) => {
+  //       if (blob !== null) {
+  //         saveAs(blob, 'result.png');
+  //       }
+  //     });
+  //   } catch (error) {
+  //     console.error('Error converting div to image:', error);
+  //   }
+  // };
+
   const handleDownload = async () => {
     if (!divRef.current) return;
 
@@ -31,12 +51,16 @@ export default function EventToastSharePage() {
       const div = divRef.current;
       const canvas = await html2canvas(div, {
         scale: 2,
-        // width: div.offsetWidth,
-        // height: div.offsetHeight,
       });
+
       canvas.toBlob((blob) => {
         if (blob !== null) {
-          saveAs(blob, 'result.png');
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.href = url;
+          link.download = 'result.png'; // 다운로드 파일 이름 설정
+          link.click();
+          URL.revokeObjectURL(url); // 메모리 해제
         }
       });
     } catch (error) {
@@ -69,7 +93,7 @@ export default function EventToastSharePage() {
         objectType: 'feed',
         content: {
           title: title,
-          description: '친구의 이벤트 토스트에 잼을 발라주세요!',
+          description: '친구의 토스트에 잼을 발라주세요!',
           imageUrl:
             'https://timetoast.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Ftimetoast.5b1b48cc.png&w=640&q=75',
           link: {
