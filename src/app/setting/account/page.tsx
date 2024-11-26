@@ -10,12 +10,15 @@ import ConfirmDialog from '@/components/alert/ConfirmDialog';
 
 import { useDeleteWithdrawal } from '@/hooks/api/useSetting';
 
+import Cookies from 'js-cookie';
+
 export default function SettingAccountPage() {
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
 
   const handleLogout = () => {
     sessionStorage.clear();
     localStorage.clear();
+    Cookies.remove('accessToken');
     window.location.href = '/';
   };
 

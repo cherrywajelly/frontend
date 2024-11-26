@@ -6,6 +6,7 @@ import Spinner from '@/components/common-components/spinner';
 
 import { useKakaoToken } from '@/hooks/api/useLogin';
 
+import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
 
 const KakaoCallback = () => {
@@ -37,6 +38,12 @@ const KakaoCallback = () => {
       if (accessToken && refreshToken) {
         window.sessionStorage.setItem('accessToken', accessToken);
         window.localStorage.setItem('refreshToken', refreshToken);
+
+        Cookies.set('accessToken', accessToken, {
+          expires: 7,
+          sameSite: 'Lax',
+          secure: process.env.NODE_ENV === 'production', // 프로덕션 환경에서만 secure 적용
+        });
       }
       if (data.isNew) {
         router.push('/sign-up');
