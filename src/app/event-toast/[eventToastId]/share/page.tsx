@@ -157,7 +157,7 @@ export default function EventToastSharePage() {
             onClick={() =>
               shareKakao(
                 copyUrl as string,
-                '🍞친구의 이벤트 토스트가 도착했어요!🍞',
+                '친구의 이벤트 토스트가 도착했어요!',
               )
             }
           >
