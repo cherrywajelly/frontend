@@ -57,7 +57,7 @@ export default function SettingAccountPage() {
               <Input placeholder="스탠다드" disabled />
             </div>
             <span className="p-2 text-navigation1 text-right text-gray-60">
-              만료일자:222
+              만료일자: 24.12.25
             </span>
           </div>
         </div>
