@@ -1,16 +1,9 @@
 import React from 'react';
 import { ClipLoader } from 'react-spinners';
 
-import { clsx } from 'clsx';
+import { SpinnerProps } from './Spinner.types';
 
-export type SpinnerProps = {
-  isLoading?: boolean;
-  className?: string;
-  color?: string;
-  size?: number;
-  message?: string;
-  messageStyle?: string;
-};
+import { clsx } from 'clsx';
 
 const Spinner = ({
   isLoading,
@@ -22,6 +15,8 @@ const Spinner = ({
 }: SpinnerProps) => {
   return (
     <div
+      data-testid="spinner"
+      title="loading..."
       className={clsx(
         'w-full h-full flex flex-col gap-8 justify-center items-center m-auto',
         className,

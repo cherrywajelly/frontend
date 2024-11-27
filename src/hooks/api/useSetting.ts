@@ -1,6 +1,7 @@
 import { RequestGroupTeam } from '@/types/api/setting';
 
 import {
+  deleteWithdrawal,
   postGroupTeam,
   postGroupTeamImage,
   postProfileImage,
@@ -49,6 +50,20 @@ export const usePostGroupImage = () => {
     onSuccess: () => {
       router.push('/setting/group');
       // queryClient.invalidateQueries({ queryKey: [''] });
+    },
+    onError: (error) => {},
+  });
+  return { mutate, isPending, error };
+};
+
+// 회원 탈퇴
+export const useDeleteWithdrawal = () => {
+  const { mutate, isPending, error } = useMutation({
+    mutationFn: () => deleteWithdrawal(),
+    onSuccess: () => {
+      window.location.href = '/';
+      sessionStorage.clear();
+      localStorage.clear();
     },
     onError: (error) => {},
   });
