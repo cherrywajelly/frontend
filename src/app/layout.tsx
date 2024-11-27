@@ -97,7 +97,6 @@ export default function RootLayout({
             src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js"
             integrity={process.env.NEXT_PUBLIC_KAKAO_JS_SDK_INTEGRITY}
             crossOrigin="anonymous"
-            strategy="beforeInteractive"
           />
           <Providers>
             {children}
