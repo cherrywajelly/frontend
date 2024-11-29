@@ -32,6 +32,12 @@ const navVariants = {
   textActive: 'text-navigation1 text-secondary-main',
   iconActive: 'text-[24px] text-navigation1 text-secondary-main',
 };
+
+/**
+ * BottomBar 컴포넌트
+ * 하단에 고정된 네비게이션 바로, 사용자에게 홈, 검색, 알림, 마이페이지 등 다양한 네비게이션 아이템을 제공
+ * @returns {JSX.Element} BottomBar 컴포넌트
+ */
 const BottomBar = () => {
   const [selectedItem, setSelectedItem] = useRecoilState(bottomBarItemState);
   const [previousItem, setPreviousItem] = useState(navItem[0]); // 이전 아이템을 저장할 상태

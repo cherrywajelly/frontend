@@ -19,6 +19,16 @@ const variants = {
   },
 };
 
+/**
+ * Dropdown 컴포넌트
+ *
+ * @param {DropdownProps} props - Dropdown의 속성
+ * @param {Array<DropdownItem>} props.items - 드롭다운에서 표시할 항목들의 배열
+ * @param {string} [props.size='md'] - 드롭다운의 크기 ('sm' 또는 'md')
+ * @param {string} [props.position='left'] - 드롭다운의 위치 ('left' 또는 'center')
+ * @param {string} [props.color='text-gray-20'] - 드롭다운 아이콘 색상
+ * @returns {JSX.Element} 드롭다운 메뉴 컴포넌트
+ */
 export default function Dropdown({
   items,
   size = 'md',

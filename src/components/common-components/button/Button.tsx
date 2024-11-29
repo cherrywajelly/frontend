@@ -34,6 +34,16 @@ const style: {
   },
 };
 
+/**
+ * Button 컴포넌트
+ * 다양한 크기, 모양, 색상으로 커스터마이징할 수 있는 버튼 컴포넌트
+ * 버튼의 크기, 색상, 모양을 선택할 수 있으며, 시작 및 종료 아이콘을 추가할 수 있습니다.
+ *
+ * @param {ButtonProps} props - 버튼에 전달되는 props
+ * @param {React.Ref<HTMLButtonElement>} ref - 버튼의 ref
+ *
+ * @returns {JSX.Element} Button 컴포넌트
+ */
 const Button = forwardRef<HTMLButtonElement, PropsWithChildren<ButtonProps>>(
   (props, ref) => {
     const {
