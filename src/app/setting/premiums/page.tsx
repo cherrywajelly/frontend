@@ -1,5 +1,7 @@
 'use client';
 
+import { useState } from 'react';
+
 import Button from '@/components/common-components/button';
 import TopBar from '@/components/common-components/top-bar';
 
@@ -8,7 +10,10 @@ import PremiumsInfo from '@/containers/premiums/PremiumsInfo';
 export default function PremiumsPage() {
   const handleSubmit = () => {
     // TODO: 이용권 저장 api 연동
+    // console.log('hi');
   };
+
+  const [selectedItem, setSelectedItem] = useState<string>('BASIC');
 
   return (
     <div className="w-full h-lvh">
@@ -27,16 +32,33 @@ export default function PremiumsPage() {
               여기다 뭐를 써야할까?
             </span>
           </div>
-          <PremiumsInfo />
+          <PremiumsInfo
+            selectedItem={selectedItem}
+            setSelectedItem={setSelectedItem}
+          />
         </div>
+
+        {selectedItem === 'PREMIUM' && (
+          <div className="bg-white flex flex-col items-center p-6 border border-gray-10 rounded-[10px] shadow-lg w-full">
+            <span className="text-gray-08 text-body2">
+              선택한 구독권: <b>PREMIUM</b>
+            </span>
+
+            <span className="text-gray-08 text-body2">
+              가격:
+              <b> 5,500원</b>
+            </span>
+          </div>
+        )}
 
         {/* button */}
         <Button
-          color="active"
+          color={selectedItem === 'PREMIUM' ? 'active' : 'disabled'}
           onClick={handleSubmit}
           className="mb-6 flex-none"
+          disabled={selectedItem === 'BASIC'}
         >
-          이용권 저장
+          이용권 구매하기
         </Button>
       </div>
     </div>
