@@ -73,6 +73,7 @@ const Button = forwardRef<HTMLButtonElement, PropsWithChildren<ButtonProps>>(
         // disabled={color === 'disabled' || disabled}
         onClick={onClick}
         {...rest}
+        disabled={disabled}
       >
         {startIcon}
         {children}
