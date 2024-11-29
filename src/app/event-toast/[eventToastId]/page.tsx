@@ -1,6 +1,5 @@
 'use client';
 
-import BottomBar from '@/components/common-components/bottom-bar';
 import Button from '@/components/common-components/button';
 import Spinner from '@/components/common-components/spinner';
 import TopBar from '@/components/common-components/top-bar';
