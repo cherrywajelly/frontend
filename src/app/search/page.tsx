@@ -13,7 +13,7 @@ import { SearchItemResponse } from '@/types/api/search';
 
 import { memberIdState } from '@/atoms/userInfoAtom';
 
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useRecoilValue } from 'recoil';
 
 export default function SearchPage() {
@@ -47,7 +47,6 @@ export default function SearchPage() {
             setSearchResults(data.searchResponses);
           },
           onError: (err) => {
-            // console.log(err); // 오류 처리
             setSearchResults([]);
           },
         },

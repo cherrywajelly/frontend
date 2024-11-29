@@ -1,7 +1,5 @@
 'use client';
 
-import { HiMiniUserGroup } from 'react-icons/hi2';
-
 import BottomBar from '@/components/common-components/bottom-bar';
 import Spinner from '@/components/common-components/spinner';
 import TopBar from '@/components/common-components/top-bar';

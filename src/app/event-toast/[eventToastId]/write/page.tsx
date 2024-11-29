@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 import Spinner from '@/components/common-components/spinner';
 import TopBar from '@/components/common-components/top-bar';
@@ -64,7 +64,6 @@ export default function JamWritePage() {
           eventToastId: eventToastId,
           item: {
             jamContents: jamContentsFile,
-            // jamImages: (jamData.imgList ?? [])[0] as File,
             ...(jamData.imgList &&
               jamData.imgList.length > 0 && {
                 jamImages: jamData.imgList[0] as File,
@@ -89,9 +88,7 @@ export default function JamWritePage() {
     }
   };
 
-  useEffect(() => {
-    // console.log(jamData);
-  }, [jamData]);
+  useEffect(() => {}, [jamData]);
 
   return (
     <div className="w-full h-lvh">
