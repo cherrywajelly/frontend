@@ -9,6 +9,7 @@ import Input from '@/components/common-components/input';
 
 import InputForm from '@/components/input-form/InputForm';
 import UserListItem from '@/components/search/UserListItem';
+import TargetDivider from '@/components/toast/TargetDivider';
 
 import { useMyInfo } from '@/hooks/api/useLogin';
 import { useGetFollowings, useGetGroup } from '@/hooks/api/useMyPage';
@@ -68,13 +69,13 @@ export default function GiftToastWithChoiceForm() {
               }
             }}
             className={`transition-all duration-300 ${
-              isFocused ? 'w-[calc(100%-30px)]' : 'w-full'
+              isFocused ? 'w-[calc(100%-20px)]' : 'w-full'
             }`}
           />
           {isFocused && (
             <span
               onClick={handleCancel}
-              className="whitespace-nowrap text-body1 text-gray-40 transition-opacity duration-300 opacity-100"
+              className="pl-4 whitespace-nowrap text-body1 text-gray-40 transition-opacity duration-300 opacity-100"
             >
               취소
             </span>
@@ -84,6 +85,7 @@ export default function GiftToastWithChoiceForm() {
 
       <div className="flex-grow my-6 overflow-y-auto hide-scrollbar">
         <div className="flex flex-col gap-4">
+          <TargetDivider text="나에게" />
           <UserListItem
             profileImg={mineData?.profileUrl ?? ''}
             nickname={mineData?.nickname as string}
@@ -95,6 +97,8 @@ export default function GiftToastWithChoiceForm() {
               <RiCheckboxBlankCircleLine className="text-gray-40" size={24} />
             )}
           </UserListItem>
+
+          <TargetDivider text="친구와 함께" />
           {followingData &&
             followingData.followResponses.map((item) => (
               <UserListItem
@@ -116,6 +120,8 @@ export default function GiftToastWithChoiceForm() {
                 )}
               </UserListItem>
             ))}
+
+          <TargetDivider text="그룹과 함께" isButton />
           {groupData &&
             groupData.teamResponses.map((item, idx) => (
               <UserListItem
