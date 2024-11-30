@@ -91,7 +91,7 @@ export default function SearchPage() {
             {isFocused && (
               <span
                 onClick={handleCancel}
-                className="whitespace-nowrap text-body1 text-gray-40 transition-opacity duration-300 opacity-100"
+                className="pl-4 whitespace-nowrap text-body1 text-gray-40 transition-opacity duration-300 opacity-100"
               >
                 취소
               </span>
