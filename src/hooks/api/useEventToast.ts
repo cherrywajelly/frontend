@@ -1,7 +1,9 @@
 import {
   EventToastItemResponse,
   EventToastPostReqBody,
+  EventToastPostResponse,
   EventToastResponse,
+  EventToastShareTemplateResponse,
   JamItemDetailResponse,
   JamItemResponse,
   jamPostRequestBody,
@@ -12,11 +14,13 @@ import {
   deleteJamItem,
   getEventToastItem,
   getEventToastList,
+  getEventToastShareTemplate,
   getFollowingUserEventToast,
   getJamDetail,
   getJamList,
   getUserEventToastList,
   postEventToast,
+  postEventToastShareTemplateContent,
   postJamItemToEventToast,
 } from '@/api/eventToast';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
@@ -62,9 +66,13 @@ export const useGetFollowingUserEventToast = () => {
 
 // 이벤트 토스트 등록
 export const usePostEventToast = () => {
-  const { mutate, isPending, error } = useMutation({
+  const { mutate, isPending, error } = useMutation<
+    EventToastPostResponse,
+    Error,
+    EventToastPostReqBody
+  >({
     mutationFn: (item: EventToastPostReqBody) => postEventToast(item),
-    onSuccess: () => {},
+    onSuccess: (data) => {},
     onError: (error) => {
       // console.log(error);
     },
@@ -135,6 +143,38 @@ export const usePostJamItemToEventToast = () => {
     }) => postJamItemToEventToast(eventToastId, item),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['jamList'] });
+    },
+    onError: (error) => {
+      // console.error(error);
+    },
+  });
+
+  return { mutate, isPending, error };
+};
+
+// 이벤트 토스트 공유 템플릿 조회
+export const useGetEventToastShareTemplate = (eventToastId: number) => {
+  const { data, isLoading, error, refetch } =
+    useQuery<EventToastShareTemplateResponse>({
+      queryKey: ['shareTemplate'],
+      queryFn: () => getEventToastShareTemplate(eventToastId),
+    });
+  return { data, isLoading, error, refetch };
+};
+
+// 이벤트 토스트 공유 템플릿 내용 저장
+export const usePostEventToastShareTemplateContent = () => {
+  const queryClient = useQueryClient();
+  const { mutate, isPending, error } = useMutation({
+    mutationFn: ({
+      eventToastId,
+      text,
+    }: {
+      eventToastId: number;
+      text: string;
+    }) => postEventToastShareTemplateContent({ eventToastId, text }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['shareTemplate'] });
     },
     onError: (error) => {
       // console.error(error);

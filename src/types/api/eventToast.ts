@@ -21,6 +21,12 @@ export interface EventToastPostReqBody {
   iconId: number;
 }
 
+export interface EventToastPostResponse {
+  id: number;
+  statusCode: string;
+  message: string;
+}
+
 export interface JamItemResponse {
   jamId: number;
   iconImageUrl: string;
@@ -63,4 +69,16 @@ export interface jamPostRequestBody {
     iconId: number;
     title: string;
   };
+}
+
+// 공유 템플릿 관련
+export interface EventToastShareTemplateResponse {
+  eventToastTemplateResponse: {
+    title: string;
+    openedDate: string;
+  };
+  iconImageUrl: string;
+  profileImageUrl: string;
+  nickname: string;
+  text: string;
 }

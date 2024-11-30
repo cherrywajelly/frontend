@@ -1,67 +1,93 @@
 'use client';
 
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { FiShare } from 'react-icons/fi';
 import { FiDownload } from 'react-icons/fi';
 import { FiLink } from 'react-icons/fi';
 
 import TopBar from '@/components/common-components/top-bar';
 
+import {
+  useGetEventToastShareTemplate,
+  usePostEventToastShareTemplateContent,
+} from '@/hooks/api/useEventToast';
 import { notifyError, notifySuccess } from '@/utils/toast';
+
+import { formatDate } from '@/utils';
 
 import kakaoLogo from '../../../../../public/images/button/kakao.svg';
 import shareImg from '../../../../../public/images/toast/share-thumbnail.png';
 
-import saveAs from 'file-saver';
+import FileSaver from 'file-saver';
 import html2canvas from 'html2canvas';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
+import { text } from 'stream/consumers';
 
 export default function EventToastSharePage() {
   const params = useParams();
   const eventToastId = Number(params.eventToastId);
 
+  const { data, isLoading } = useGetEventToastShareTemplate(eventToastId);
+  const { mutate, isPending } = usePostEventToastShareTemplateContent();
+
+  const [text, setText] = useState<string>(data?.text || '');
+
+  useEffect(() => {
+    if (data) {
+      if (data.text === null) setText('');
+      else {
+        setText(data.text);
+      }
+    }
+  }, [data, eventToastId]);
+
+  const handleSaveClick = () => {
+    mutate(
+      {
+        eventToastId,
+        text,
+      },
+      {
+        onSuccess: (data) => {
+          console.log(data);
+        },
+      },
+    );
+  };
+
   const divRef = useRef<HTMLDivElement>(null);
-
-  // const handleDownload = async () => {
-  //   if (!divRef.current) return;
-
-  //   try {
-  //     const div = divRef.current;
-  //     const canvas = await html2canvas(div, {
-  //       scale: 2,
-  //       // width: div.offsetWidth,
-  //       // height: div.offsetHeight,
-  //     });
-  //     canvas.toBlob((blob) => {
-  //       if (blob !== null) {
-  //         saveAs(blob, 'result.png');
-  //       }
-  //     });
-  //   } catch (error) {
-  //     console.error('Error converting div to image:', error);
-  //   }
-  // };
 
   const handleDownload = async () => {
     if (!divRef.current) return;
 
     try {
       const div = divRef.current;
-      const canvas = await html2canvas(div, {
-        scale: 2,
+
+      const canvas = await html2canvas(divRef.current, {
+        useCORS: true, // CORS 문제 해결
+        backgroundColor: null, // 투명 배경 유지
+        scale: window.devicePixelRatio || 2, // 고해상도
       });
 
       canvas.toBlob((blob) => {
-        if (blob !== null) {
-          const url = URL.createObjectURL(blob);
-          const link = document.createElement('a');
-          link.href = url;
-          link.download = 'result.png'; // 다운로드 파일 이름 설정
-          link.click();
-          URL.revokeObjectURL(url); // 메모리 해제
+        if (blob) {
+          FileSaver.saveAs(blob, 'event-toast.png');
+        } else {
+          notifyError('이미지를 저장할 수 없습니다.');
         }
       });
+
+      // canvas.toBlob((blob) => {
+      //   if (blob !== null) {
+      //     const url = URL.createObjectURL(blob);
+      //     const link = document.createElement('a');
+      //     link.href = url;
+      //     link.download = 'result.png'; // 다운로드 파일 이름 설정
+      //     link.click();
+      //     URL.revokeObjectURL(url); // 메모리 해제
+      //   }
+      // });
     } catch (error) {
       console.error('Error converting div to image:', error);
     }
@@ -142,11 +168,14 @@ export default function EventToastSharePage() {
     <div className="w-full h-lvh">
       <TopBar title="공유하기" />
 
-      <div className="p-6 h-full flex flex-col gap-6 items-center bg-gray-05 flex-grow">
+      <div className="p-6 h-[calc(100vh-48px)] flex flex-col gap-6 items-center bg-gray-05 flex-grow overflow-y-auto">
         {/* 기타 */}
         <div className="flex gap-4">
           <button
-            onClick={() => handleCopyUrl(`${copyUrl}`)}
+            onClick={() => {
+              handleSaveClick();
+              handleCopyUrl(`${copyUrl}`);
+            }}
             className="p-4 rounded-full bg-white flex flex-col shadow-lg"
           >
             <FiLink />
@@ -181,27 +210,36 @@ export default function EventToastSharePage() {
         {/* 다운로드받을 이미지 영역 */}
         <div
           ref={divRef}
-          className="relative flex justify-center items-center rounded-[20px] w-[346px] h-[706px] bg-template-pattern"
+          className="relative flex justify-center items-center rounded-[20px] w-full h-full min-h-[706px] bg-template-pattern bg-top bg-no-repeat"
         >
-          <div className="absolute flex flex-col gap-2 items-center top-[130px] text-white">
+          <div className="w-[273px] absolute flex flex-col gap-2 items-center top-[130px] text-white">
             <div
               style={{
-                backgroundImage: "url('/images/toast/emptyToast.png')",
+                backgroundImage: data ? `url(${data.iconImageUrl})` : ``,
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
                 width: '110px',
                 height: '110px',
               }}
             />
-            <span className="text-body2">내 생일축하해줘</span>
-          </div>
+            <span className="text-body2">
+              {data && data.eventToastTemplateResponse.title}
+            </span>
 
-          <div className="absolute mt-[88px] w-[273px] h-[187px] flex flex-col">
-            <textarea className="h-[187px] p-6 rounded-[20px]" />
-          </div>
+            <textarea
+              className="mt-5 h-[187px] w-full p-6 rounded-[20px] text-gray-80"
+              value={text}
+              onChange={(e) => setText(e.target.value)}
+            />
 
-          <div className="absolute bottom-[36px] text-white text-body1">
-            2024년 12월 26일까지 작성할 수 있어요!
+            <span className="text-white text-body4 flex w-full justify-end pr-2">
+              @{data && data.nickname}
+            </span>
+
+            <div className="mt-[100px] text-white text-body1">
+              {data && formatDate(data?.eventToastTemplateResponse.openedDate)}
+              까지 작성할 수 있어요!
+            </div>
           </div>
         </div>
       </div>
