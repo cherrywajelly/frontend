@@ -47,7 +47,7 @@ export default function IconDetailPage({ params }: { params: PageParams }) {
         },
         {
           onSuccess: (responseData) => {
-            console.log(responseData);
+            // console.log(responseData);
             requestTossPayments({
               amount: data.price,
               orderId: responseData.orderId,

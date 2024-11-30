@@ -5,15 +5,41 @@ import { useState } from 'react';
 import Button from '@/components/common-components/button';
 import TopBar from '@/components/common-components/top-bar';
 
+import { usePostUserPayments } from '@/hooks/api/usePayments';
+import { requestTossPayments } from '@/utils/payments';
+
 import PremiumsInfo from '@/containers/premiums/PremiumsInfo';
 
 export default function PremiumsPage() {
-  const handleSubmit = () => {
-    // TODO: 이용권 저장 api 연동
-    // console.log('hi');
-  };
-
   const [selectedItem, setSelectedItem] = useState<string>('BASIC');
+  const originUrl = process.env.NEXT_PUBLIC_DOMAIN;
+
+  const { mutate: mutateUserPayments, isPending: isPendingUserPayments } =
+    usePostUserPayments();
+
+  const handleSubmit = () => {
+    mutateUserPayments(
+      {
+        itemId: 2,
+        amount: 5500,
+        itemType: 'PREMIUM',
+        successUrl: `${originUrl}/api/v1/payments/success`,
+        failUrl: `${originUrl}/api/v1/payments/fail`,
+      },
+      {
+        onSuccess: (responseData) => {
+          requestTossPayments({
+            amount: 5500,
+            orderId: responseData.orderId,
+            orderName: responseData.orderName,
+            customerName: responseData.customerEmail,
+            successUrl: responseData.successUrl,
+            failUrl: responseData.failUrl,
+          });
+        },
+      },
+    );
+  };
 
   return (
     <div className="w-full h-lvh">
