@@ -11,6 +11,8 @@ import {
   useGetIconGroupsDetail,
   usePostBuyIconGroups,
 } from '@/hooks/api/useIconGroups';
+import { usePostUserPayments } from '@/hooks/api/usePayments';
+import { requestTossPayments } from '@/utils/payments';
 import { notifySuccess } from '@/utils/toast';
 
 import Image from 'next/image';
@@ -22,21 +24,42 @@ type PageParams = {
 export default function IconDetailPage({ params }: { params: PageParams }) {
   const iconGroupId = params.iconGroupId;
 
+  const clientKey = process.env.NEXT_PUBLIC_TOSS_PAYMENTS_CLIENT_KEY;
+  const originUrl = process.env.NEXT_PUBLIC_DOMAIN;
+
   const { data, isLoading } = useGetIconGroupsDetail(iconGroupId);
   const [isPurchased, setIsPurchased] = useState<boolean>(false);
 
   const { mutate, isPending } = usePostBuyIconGroups();
 
+  const { mutate: mutateUserPayments, isPending: isPendingUserPayments } =
+    usePostUserPayments();
+
   const handleSubmit = () => {
-    mutate(iconGroupId, {
-      onSuccess: () => {
-        notifySuccess('아이콘 구매가 완료되었어요!');
-        setIsPurchased(true);
-      },
-      onError: () => {
-        alert('예기치 못한 에러가 발생했습니다.');
-      },
-    });
+    if (data) {
+      mutateUserPayments(
+        {
+          itemId: iconGroupId,
+          amount: data.price,
+          itemType: 'ICON',
+          successUrl: `${originUrl}/api/v1/payments/success?iconGroupId=${iconGroupId}`,
+          failUrl: `${originUrl}/api/v1/payments/fail?iconGroupId=${iconGroupId}`,
+        },
+        {
+          onSuccess: (responseData) => {
+            console.log(responseData);
+            requestTossPayments({
+              amount: data.price,
+              orderId: responseData.orderId,
+              orderName: responseData.orderName,
+              customerName: responseData.customerEmail,
+              successUrl: responseData.successUrl,
+              failUrl: responseData.failUrl,
+            });
+          },
+        },
+      );
+    }
   };
 
   return (

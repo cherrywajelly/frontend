@@ -1,3 +1,5 @@
+import React from 'react';
+
 import tempImg from '../../../public/images/timetoast.png';
 import { Dialog } from '../common-components/dialog';
 
@@ -8,7 +10,7 @@ export type ConfirmDialogProps = {
   isOpen: boolean;
   onClose: () => void;
   title?: string;
-  description?: string;
+  description?: string | React.ReactNode;
   children?: React.ReactNode;
   className?: string;
 };
