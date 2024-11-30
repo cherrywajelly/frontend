@@ -42,8 +42,8 @@ export default function IconDetailPage({ params }: { params: PageParams }) {
           itemId: iconGroupId,
           amount: data.price,
           itemType: 'ICON',
-          successUrl: `${originUrl}/api/v1/payments/success`,
-          failUrl: `${originUrl}/api/v1/payments/fail`,
+          successUrl: `${originUrl}/api/v1/payments/success?iconGroupId=${iconGroupId}`,
+          failUrl: `${originUrl}/api/v1/payments/fail?iconGroupId=${iconGroupId}`,
         },
         {
           onSuccess: (responseData) => {
