@@ -29,6 +29,8 @@ export default function EventToastPage() {
     useRecoilState(eventToastDataState);
   const router = useRouter();
 
+  const [eventToastId, setEventToastId] = useState<number>();
+
   const [selectedItem, setSelectedItem] = useRecoilState(bottomBarItemState);
 
   const handleBack = () => {
@@ -60,7 +62,10 @@ export default function EventToastPage() {
         title: eventToastData.toastName as string,
       },
       {
-        onSuccess: handleSuccess,
+        onSuccess: (data) => {
+          setEventToastId(data.id);
+          handleSuccess();
+        },
         onError: (error) => {
           setStep(0);
           alert('예기치 못한 에러가 발생했습니다.');
@@ -104,7 +109,7 @@ export default function EventToastPage() {
             color="active"
             className="w-full"
             onClick={() => {
-              notifyLater();
+              router.push(`/event-toast/${eventToastId}/share`);
             }}
           >
             공유하기
