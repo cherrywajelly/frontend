@@ -104,8 +104,6 @@ export default function GiftToastItemPage({ params }: { params: PageParams }) {
           </>
         )}
       </div>
-
-      {/* <BottomBar /> */}
     </div>
   );
 }
