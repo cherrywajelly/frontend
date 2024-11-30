@@ -8,22 +8,59 @@ import Button from '@/components/common-components/button';
 import Input from '@/components/common-components/input';
 import TopBar from '@/components/common-components/top-bar';
 
+import { usePostInquiries } from '@/hooks/api/useSetting';
+import { notifySuccess } from '@/utils/toast';
+
 import {
   formats,
   modules,
   QuillWrapper,
 } from '@/containers/write-toast/WriteToastForm';
 
+import { useRouter } from 'next/navigation';
+
 export default function SettingInquiryPage() {
   const [title, setTitle] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [contents, setContents] = useState<string>('');
 
+  const router = useRouter();
+
   const emailRegExp =
     /^[A-Za-z0-9]([-_.]?[A-Za-z0-9])*@[A-Za-z0-9]([-_.]?[A-Za-z0-9])*\.[A-Za-z]{2,3}$/;
 
+  const { mutate, isPending } = usePostInquiries();
+
+  const convertContentsToFile = (contents: string, title: string) => {
+    const blob = new Blob([contents], { type: 'text/html' });
+    const fileName = `${title || 'jam_contents'}.html`;
+    const file = new File([blob], fileName, { type: 'text/html' });
+
+    return file;
+  };
+
+  const inQuiryContentsFile = convertContentsToFile(contents, title);
+
   const handleSubmit = () => {
-    // TODO: 문의 로직 진행
+    const inquiryRequest = {
+      title: title,
+      email: email,
+    };
+
+    mutate(
+      {
+        inquiryContents: inQuiryContentsFile,
+        inquiryRequest: inquiryRequest,
+      },
+      {
+        onSuccess: () => {
+          // alert('성공적으로 잼을 발랐어요!');
+          notifySuccess('성공적으로 문의가 전송되었어요!');
+          router.replace('/mypage');
+        },
+        onError: (error) => {},
+      },
+    );
   };
 
   const isEmailValid = emailRegExp.test(email);
