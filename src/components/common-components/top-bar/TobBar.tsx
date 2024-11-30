@@ -78,10 +78,10 @@ const TopBar = ({
           data-testid="back-button"
         />
       ) : (
-        <></>
+        <div className="w-[24px]" />
       )}
 
-      <div className="flex-grow text-center text-body2 text-black-main">
+      <div className="flex-grow text-center text-body2 text-gray-80 drop-shadow">
         {title}
       </div>
 
@@ -101,7 +101,7 @@ const TopBar = ({
           </button>
         )
       ) : (
-        <div className="w-[20px]" />
+        <div className="w-[24px]" />
       )}
     </div>
   );
