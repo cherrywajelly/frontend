@@ -82,7 +82,7 @@ const BottomBar = () => {
   useEffect(() => {}, [selectedItem]);
 
   return (
-    <div className="relative flex justify-center bg-gray-05">
+    <div className="relative flex justify-center">
       <div className={navVariants.container}>
         {navItem.map((item) => {
           const isActive = selectedItem.title === item.title;

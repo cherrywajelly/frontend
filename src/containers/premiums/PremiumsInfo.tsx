@@ -23,7 +23,6 @@ export default function PremiumsInfo(props: PremiumsInfoProps) {
   const { selectedItem, setSelectedItem } = props;
 
   const { data, isLoading } = useGetPremiumsInfo();
-  console.log('data', data);
 
   return (
     <div className="mt-[60px] h-full">
