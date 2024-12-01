@@ -123,7 +123,7 @@ export default function EventToastSharePage() {
         objectType: 'feed',
         content: {
           title: title,
-          description: '친구의 토스트에 잼을 발라주세요!',
+          description: `친구의 토스트에 잼을 발라주세요!`,
           imageUrl:
             'https://github.com/user-attachments/assets/4dc1e25b-63d7-41ff-819e-f420f3cabeb8',
           link: {
@@ -191,7 +191,7 @@ export default function EventToastSharePage() {
             onClick={() =>
               shareKakao(
                 copyUrl as string,
-                '친구의 이벤트 토스트가 도착했어요!',
+                `${data?.nickname}님의 이벤트 토스트가 도착했어요!`,
               )
             }
           >
