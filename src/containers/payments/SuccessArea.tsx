@@ -52,8 +52,8 @@ export default function SuccessArea() {
   }, [paymentKey, orderId, amount, mutate]);
 
   return (
-    <>
-      <div className="h-[calc(100vh-48px)] p-6 flex flex-col bg-white py-6">
+    <div>
+      <div className="h-[calc(100vh-48px)] p-6 flex flex-col bg-white py-6 text-gray-80">
         <h1>결제 성공</h1>
         <div>{`주문 아이디: ${orderId}`}</div>
         <div>{`결제 금액: ${Number(amount).toLocaleString()}원`}</div>
@@ -69,14 +69,14 @@ export default function SuccessArea() {
           <Button
             className="w-full text-white bg-gray-60"
             onClick={() => {
-              if (iconGroupId === null) router.push(`/setting/premiums`);
-              else router.push(`/setting/market/${iconGroupId}`);
+              if (iconGroupId === null) router.replace(`/setting/premiums`);
+              else router.replace(`/setting/market/${iconGroupId}`);
             }}
           >
             확인
           </Button>
         </ConfirmDialog>
       )}
-    </>
+    </div>
   );
 }
