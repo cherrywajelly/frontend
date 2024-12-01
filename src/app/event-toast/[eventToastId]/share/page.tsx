@@ -64,7 +64,7 @@ export default function EventToastSharePage() {
     try {
       const div = divRef.current;
 
-      const canvas = await html2canvas(divRef.current, {
+      const canvas = await html2canvas(div, {
         useCORS: true, // CORS 문제 해결
         backgroundColor: null, // 투명 배경 유지
         scale: window.devicePixelRatio || 2, // 고해상도
@@ -72,24 +72,29 @@ export default function EventToastSharePage() {
 
       canvas.toBlob((blob) => {
         if (blob) {
-          FileSaver.saveAs(blob, 'event-toast.png');
+          // iOS Safari 전용 처리
+          const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+          if (isIOS) {
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'event-toast.png';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+          } else {
+            // 일반 브라우저 (안드로이드, 데스크탑)
+            FileSaver.saveAs(blob, 'event-toast.png');
+          }
         } else {
-          notifyError('이미지를 저장할 수 없습니다.');
+          notifyError('이미지 저장에 에러가 생겼어요!');
         }
       });
-
-      // canvas.toBlob((blob) => {
-      //   if (blob !== null) {
-      //     const url = URL.createObjectURL(blob);
-      //     const link = document.createElement('a');
-      //     link.href = url;
-      //     link.download = 'result.png'; // 다운로드 파일 이름 설정
-      //     link.click();
-      //     URL.revokeObjectURL(url); // 메모리 해제
-      //   }
-      // });
     } catch (error) {
       console.error('Error converting div to image:', error);
+      // notifyError('이미지 저장에 에러가 생겼어요!');
     }
   };
 
