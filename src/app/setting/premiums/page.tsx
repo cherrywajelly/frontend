@@ -101,7 +101,9 @@ export default function PremiumsPage() {
               className="mb-6 flex-none"
               disabled={selectedItem === 'BASIC'}
             >
-              이용권 구매하기
+              {premiumsInfoData.premiumType === 'PREMIUM'
+                ? '구매 완료'
+                : '이용권 구매하기'}
             </Button>
           )}
         </div>
