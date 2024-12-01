@@ -24,4 +24,5 @@ export interface IconGroupsDetailResponse {
   creatorNickname: string;
   price: number;
   iconResponses: IconProps[];
+  isBuy: boolean;
 }

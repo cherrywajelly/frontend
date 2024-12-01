@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 
+import Button from '@/components/common-components/button';
+
 import ConfirmDialog from '@/components/alert/ConfirmDialog';
 
 import { usePostUserPaymentsSuccess } from '@/hooks/api/usePayments';
-
-import { Button } from '@headlessui/react';
 
 import { useRouter, useSearchParams } from 'next/navigation';
 

@@ -117,7 +117,6 @@ export default function SearchPage() {
         </div>
       </div>
 
-      <div className="pt-[96px]" />
       <BottomBar />
     </div>
   );
