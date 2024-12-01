@@ -102,7 +102,7 @@ export default function EventToastPage({ params }: { params: PageParams }) {
                       className="opacity-50 w-[240px] h-[240px]"
                     />
                     <div className="text-gray-60">
-                      {data.dDay === 0 ? '' : `D-${data.dDay}`}
+                      {data.dDay <= 0 ? '' : `D-${data.dDay}`}
                     </div>
                   </div>
                 ) : (
@@ -136,14 +136,16 @@ export default function EventToastPage({ params }: { params: PageParams }) {
             )}
           </div>
 
-          <Button
-            color="active"
-            onClick={handleShare}
-            className="mt-6"
-            size="md"
-          >
-            공유하기
-          </Button>
+          {isMine && (
+            <Button
+              color="active"
+              onClick={handleShare}
+              className="mt-6"
+              size="md"
+            >
+              공유하기
+            </Button>
+          )}
         </div>
       )}
     </div>
