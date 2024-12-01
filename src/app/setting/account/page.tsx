@@ -56,7 +56,7 @@ export default function SettingAccountPage() {
               <span className="text-body4 text-gray-80 whitespace-nowrap">
                 이메일
               </span>
-              <Input placeholder={myData?.nickname} disabled />
+              <Input placeholder={myData?.email} disabled />
             </div>
 
             <div className="w-full flex flex-col">
