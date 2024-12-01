@@ -194,15 +194,6 @@ export default function UserProfilePage({ params }: { params: PageProps }) {
                       openDate={item.openedDate}
                       toastImg={item.icon.iconImageUrl}
                     >
-                      {/* <Button
-                    size="sm"
-                    color="primary"
-                    onClick={() =>
-                      router.push(`/event-toast/${item.eventToastId}`)
-                    }
-                  >
-                    잼 바르기
-                  </Button> */}
                       {item.isWritten ? (
                         <Button size="sm" color="disabled" disabled>
                           잼을 발랐어요

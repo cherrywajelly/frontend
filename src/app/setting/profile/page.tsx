@@ -1,7 +1,6 @@
 'use client';
 
 import { ChangeEvent, useEffect, useMemo, useRef, useState } from 'react';
-import { isValid, set } from 'react-datepicker/dist/date_utils';
 import { FiCamera } from 'react-icons/fi';
 
 import Button from '@/components/common-components/button';
@@ -30,7 +29,6 @@ const SettingProfilePage = () => {
   const queryClient = useQueryClient();
 
   const { data, isLoading, refetch: refetchMyInfo } = useMyInfo();
-  const { refetch: refetchMyProfile } = useGetMyProfile();
   const prevNickname = data && data.nickname;
   const prevProfileImg = data && data.profileUrl;
 
@@ -52,7 +50,6 @@ const SettingProfilePage = () => {
   useEffect(() => {
     if (data) {
       setNickname(data.nickname);
-      // setProfileImgPreview(data.profileUrl);
       refetchMyInfo();
     }
   }, [data, router, profileImgPreviewItem]);

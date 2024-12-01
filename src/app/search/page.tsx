@@ -13,7 +13,7 @@ import { SearchItemResponse } from '@/types/api/search';
 
 import { memberIdState } from '@/atoms/userInfoAtom';
 
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useRecoilValue } from 'recoil';
 
 export default function SearchPage() {
@@ -47,7 +47,6 @@ export default function SearchPage() {
             setSearchResults(data.searchResponses);
           },
           onError: (err) => {
-            // console.log(err); // 오류 처리
             setSearchResults([]);
           },
         },
@@ -92,7 +91,7 @@ export default function SearchPage() {
             {isFocused && (
               <span
                 onClick={handleCancel}
-                className="whitespace-nowrap text-body1 text-gray-40 transition-opacity duration-300 opacity-100"
+                className="pl-4 whitespace-nowrap text-body1 text-gray-40 transition-opacity duration-300 opacity-100"
               >
                 취소
               </span>
@@ -118,7 +117,6 @@ export default function SearchPage() {
         </div>
       </div>
 
-      <div className="pt-[96px]" />
       <BottomBar />
     </div>
   );

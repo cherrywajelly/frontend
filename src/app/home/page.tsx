@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react';
 
 import BottomBar from '@/components/common-components/bottom-bar';
-import Button from '@/components/common-components/button';
 import TopBar from '@/components/common-components/top-bar';
 
 import { usePostFCMTest, usePutFCM } from '@/hooks/api/useFcm';
@@ -12,10 +11,7 @@ import ArriveEventToast from '@/containers/home/ArriveEventToast';
 import ArriveGiftToast from '@/containers/home/ArriveGiftToast';
 import { firebaseApp } from '@/firebase';
 
-import Logo from '../../public/images/timetoast.png';
-
 import { getMessaging, onMessage, getToken } from 'firebase/messaging';
-import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 export default function HomePage() {
@@ -128,7 +124,7 @@ export default function HomePage() {
 
   return (
     <div className="w-full h-screen bg-gray-05">
-      <TopBar title="Time Toast" isBackBtn={false} />
+      <TopBar title="TimeToast" isBackBtn={false} />
 
       <div className="w-full h-[calc(100vh-144px)] flex flex-grow flex-col overflow-y-auto p-6 bg-gray-05">
         <ArriveGiftToast />

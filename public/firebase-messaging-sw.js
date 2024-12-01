@@ -19,11 +19,6 @@ firebase.initializeApp(firebaseConfig);
 // eslint-disable-next-line no-undef
 const messaging = firebase.messaging();
 
-// self.addEventListener('install', function (e) {
-//   console.log('Service Worker 설치');
-//   self.skipWaiting();
-// });
-
 // 활성화
 self.addEventListener('activate', function (e) {
   // console.log('fcm service worker가 실행되었습니다.');
@@ -71,13 +66,6 @@ self.addEventListener('push', (event) => {
     }),
   );
 });
-
-// self.addEventListener('notificationclick', function (event) {
-//   console.log('notificationclick');
-//   const url = '/notifications';
-//   event.notification.close();
-//   event.waitUntil(clients.openWindow(url));
-// });
 
 self.addEventListener('notificationclick', function (event) {
   event.preventDefault();

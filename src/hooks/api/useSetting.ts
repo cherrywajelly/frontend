@@ -1,9 +1,10 @@
-import { RequestGroupTeam } from '@/types/api/setting';
+import { InquiriesRequestBody, RequestGroupTeam } from '@/types/api/setting';
 
 import {
   deleteWithdrawal,
   postGroupTeam,
   postGroupTeamImage,
+  postInquiries,
   postProfileImage,
 } from '@/api/setting';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -67,5 +68,18 @@ export const useDeleteWithdrawal = () => {
     },
     onError: (error) => {},
   });
+  return { mutate, isPending, error };
+};
+
+// 문의 작성 저장
+export const usePostInquiries = () => {
+  const { mutate, isPending, error } = useMutation({
+    mutationFn: (item: InquiriesRequestBody) => postInquiries(item),
+    onSuccess: () => {},
+    onError: (error) => {
+      // console.error(error);
+    },
+  });
+
   return { mutate, isPending, error };
 };

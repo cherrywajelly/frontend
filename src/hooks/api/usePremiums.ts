@@ -1,6 +1,10 @@
 import { PremiumResponse } from '@/types/api/premiums';
 
-import { getPremiumsInfo, postPremiumsInfo } from '@/api/premiums';
+import {
+  getPremiumsInfo,
+  getUserPremiumsAbout,
+  postPremiumsInfo,
+} from '@/api/premiums';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 // 프리미엄 정보 조회
@@ -24,4 +28,13 @@ export const usePostBuyIconGroups = () => {
     onError: (error) => {},
   });
   return { mutate, isPending, error };
+};
+
+// 사용자 프리미엄 구독 정보 조회
+export const useGetUserPremiumsAbout = () => {
+  const { data, isLoading, error } = useQuery({
+    queryKey: ['userPremiumsAbout'],
+    queryFn: () => getUserPremiumsAbout(),
+  });
+  return { data, isLoading, error };
 };

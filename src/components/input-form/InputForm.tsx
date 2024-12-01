@@ -4,6 +4,11 @@ export type InputFormProps = {
   children?: React.ReactNode;
 };
 
+/**
+ * InputForm 컴포넌트
+ * @param {InputFormProps} props - InputForm에 전달되는 props
+ * @returns {JSX.Element} - InputForm 컴포넌트 JSX 반환
+ */
 export default function InputForm(props: InputFormProps) {
   const { title, subTitle, children } = props;
 

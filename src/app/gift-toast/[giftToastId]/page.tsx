@@ -1,6 +1,5 @@
 'use client';
 
-import BottomBar from '@/components/common-components/bottom-bar';
 import Button from '@/components/common-components/button';
 import Spinner from '@/components/common-components/spinner';
 import TopBar from '@/components/common-components/top-bar';
@@ -10,7 +9,6 @@ import ToastBox from '@/components/toast/ToastBox';
 
 import { useGetGiftToastItem } from '@/hooks/api/useGiftToast';
 
-import tempImg from '../../../../public/images/timetoast.png';
 import lockedToast from '../../../../public/images/toast/lockedToast.png';
 
 import clsx from 'clsx';
@@ -106,8 +104,6 @@ export default function GiftToastItemPage({ params }: { params: PageParams }) {
           </>
         )}
       </div>
-
-      {/* <BottomBar /> */}
     </div>
   );
 }

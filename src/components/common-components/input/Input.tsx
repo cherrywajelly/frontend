@@ -18,6 +18,12 @@ const style: {
   },
 };
 
+/**
+ * Input 컴포넌트
+ *
+ * @param {InputProps} props - Input 컴포넌트의 속성
+ * @returns {JSX.Element} - Input 컴포넌트
+ */
 const Input = forwardRef<HTMLInputElement, PropsWithChildren<InputProps>>(
   (props, ref) => {
     const {
