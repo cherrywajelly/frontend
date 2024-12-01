@@ -68,7 +68,10 @@ export default function SuccessArea() {
         >
           <Button
             className="w-full text-white bg-gray-60"
-            onClick={() => router.push(`/setting/market/${iconGroupId}`)}
+            onClick={() => {
+              if (iconGroupId === null) router.push(`/setting/premiums`);
+              else router.push(`/setting/market/${iconGroupId}`);
+            }}
           >
             확인
           </Button>
