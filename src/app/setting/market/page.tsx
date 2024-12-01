@@ -4,10 +4,14 @@ import TopBar from '@/components/common-components/top-bar';
 
 import IconMarketTabList from '@/containers/setting/IconMarketTabList';
 
+import { useRouter } from 'next/navigation';
+
 export default function IconMarketPage() {
+  const router = useRouter();
+
   return (
     <div className="w-full h-lvh">
-      <TopBar title="아이콘 마켓" />
+      <TopBar title="아이콘 마켓" onBack={() => router.replace('/mypage')} />
 
       <div className="h-[calc(100vh-48px)] flex flex-col bg-white py-6">
         <div className="flex flex-col items-center">
