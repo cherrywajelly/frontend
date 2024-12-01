@@ -70,58 +70,61 @@ export default function IconDetailPage({ params }: { params: PageParams }) {
         {isLoading ? (
           <Spinner />
         ) : (
-          <div className="h-full flex flex-col items-center">
-            {/* info */}
-            <div className="flex flex-col justify-center items-center">
-              <Image
-                src={data?.thumbnailImageUrl ?? ''}
-                alt=""
-                width={120}
-                height={120}
-                className="w-[120px] h-[120px] object-cover rounded-[10px]"
-              />
-              <span className="mt-6 text-black-main text-body1">
-                {data?.title}
-              </span>
-              <span className="mt-2 text-gray-80 text-body4 ">
-                {data?.creatorNickname}
-              </span>
-              <span className="mt-2 text-gray-80 text-body4 flex items-center gap-1">
-                <BiDollarCircle />
-                {data?.price}
-              </span>
+          <>
+            <div className="h-full flex flex-col items-center">
+              {/* info */}
+              <div className="flex flex-col justify-center items-center">
+                <Image
+                  src={data?.thumbnailImageUrl ?? ''}
+                  alt=""
+                  width={120}
+                  height={120}
+                  className="w-[120px] h-[120px] object-cover rounded-[10px]"
+                />
+                <span className="mt-6 text-black-main text-body1">
+                  {data?.title}
+                </span>
+                <span className="mt-2 text-gray-80 text-body4 ">
+                  {data?.creatorNickname}
+                </span>
+                <span className="mt-2 text-gray-80 text-body4 flex items-center gap-1">
+                  <BiDollarCircle />
+                  {data?.price}
+                </span>
+              </div>
+
+              {/* icon */}
+              <div className="mt-6 w-full h-full grid grid-cols-3 gap-x-4 gap-y-6">
+                {data &&
+                  data?.iconResponses &&
+                  data.iconResponses.map((icon) => (
+                    <div
+                      key={icon.iconId}
+                      className="flex items-center justify-center"
+                    >
+                      <Image
+                        src={icon.iconImageUrl}
+                        alt={icon.iconId.toString()}
+                        width={100}
+                        height={100}
+                        className="cursor-pointer w-[100px] h-[100px] object-cover"
+                      />
+                    </div>
+                  ))}
+              </div>
             </div>
 
-            {/* icon */}
-            <div className="mt-6 w-full h-full grid grid-cols-3 gap-x-4 gap-y-6">
-              {data &&
-                data?.iconResponses &&
-                data.iconResponses.map((icon) => (
-                  <div
-                    key={icon.iconId}
-                    className="flex items-center justify-center"
-                  >
-                    <Image
-                      src={icon.iconImageUrl}
-                      alt={icon.iconId.toString()}
-                      width={100}
-                      height={100}
-                      className="cursor-pointer w-[100px] h-[100px] object-cover"
-                    />
-                  </div>
-                ))}
-            </div>
-          </div>
+            <Button
+              size="md"
+              className="flex-none mb-6"
+              color={data?.isBuy || isPending ? 'disabled' : 'active'}
+              onClick={handleSubmit}
+              disabled={data?.isBuy || isPending}
+            >
+              {data?.isBuy ? '구매완료' : '구매하기'}
+            </Button>
+          </>
         )}
-        <Button
-          size="md"
-          className="flex-none mb-6"
-          color={isPurchased || isPending ? 'disabled' : 'active'}
-          onClick={handleSubmit}
-          disabled={isPurchased || isPending}
-        >
-          {isPurchased ? '구매완료' : '구매하기'}
-        </Button>
       </div>
     </div>
   );
