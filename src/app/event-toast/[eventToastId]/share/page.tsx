@@ -5,6 +5,7 @@ import { FiShare } from 'react-icons/fi';
 import { FiDownload } from 'react-icons/fi';
 import { FiLink } from 'react-icons/fi';
 
+import Spinner from '@/components/common-components/spinner';
 import TopBar from '@/components/common-components/top-bar';
 
 import {
@@ -173,81 +174,86 @@ export default function EventToastSharePage() {
     <div className="w-full h-lvh">
       <TopBar title="공유하기" />
 
-      <div className="p-6 h-[calc(100vh-48px)] flex flex-col gap-6 items-center bg-gray-05 flex-grow overflow-y-auto">
-        {/* 기타 */}
-        <div className="flex gap-4">
-          <button
-            onClick={() => {
-              handleSaveClick();
-              handleCopyUrl(`${copyUrl}`);
-            }}
-            className="p-4 rounded-full bg-white flex flex-col shadow-lg"
-          >
-            <FiLink />
-          </button>
-
-          <button
-            className="w-[48px] h-[50px] shadow-lg flex justify-center items-center bg-[#FEE500] rounded-full"
-            onClick={() =>
-              shareKakao(
-                copyUrl as string,
-                `${data?.nickname}님의 이벤트 토스트가 도착했어요!`,
-              )
-            }
-          >
-            <Image src={kakaoLogo} alt="kakao" />
-          </button>
-
-          <button
-            onClick={handleWebShare}
-            className="p-4 rounded-full bg-white flex flex-col shadow-lg"
-          >
-            <FiShare />
-          </button>
-          <button
-            onClick={handleDownload}
-            className="p-4 rounded-full bg-white flex flex-col shadow-lg"
-          >
-            <FiDownload />
-          </button>
-        </div>
-
-        {/* 다운로드받을 이미지 영역 */}
-        <div
-          ref={divRef}
-          className="relative flex justify-center items-center rounded-[20px] w-full h-full min-h-[706px] bg-template-pattern bg-top bg-no-repeat"
-        >
-          <div className="w-[273px] absolute flex flex-col gap-2 items-center top-[130px] text-white">
-            <div
-              style={{
-                backgroundImage: data ? `url(${data.iconImageUrl})` : ``,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                width: '110px',
-                height: '110px',
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        <div className="p-6 h-[calc(100vh-48px)] flex flex-col gap-6 items-center bg-gray-05 flex-grow overflow-y-auto">
+          {/* 기타 */}
+          <div className="flex gap-4">
+            <button
+              onClick={() => {
+                handleSaveClick();
+                handleCopyUrl(`${copyUrl}`);
               }}
-            />
-            <span className="text-body2">
-              {data && data.eventToastTemplateResponse.title}
-            </span>
+              className="p-4 rounded-full bg-white flex flex-col shadow-lg"
+            >
+              <FiLink />
+            </button>
 
-            <textarea
-              className="mt-5 h-[187px] w-full p-6 rounded-[20px] text-gray-80"
-              value={text}
-              onChange={(e) => setText(e.target.value)}
-            />
+            <button
+              className="w-[48px] h-[50px] shadow-lg flex justify-center items-center bg-[#FEE500] rounded-full"
+              onClick={() =>
+                shareKakao(
+                  copyUrl as string,
+                  `${data?.nickname}님의 이벤트 토스트가 도착했어요!`,
+                )
+              }
+            >
+              <Image src={kakaoLogo} alt="kakao" />
+            </button>
 
-            <span className="text-white text-body4 flex w-full justify-end pr-2">
-              @{data && data.nickname}
-            </span>
+            <button
+              onClick={handleWebShare}
+              className="p-4 rounded-full bg-white flex flex-col shadow-lg"
+            >
+              <FiShare />
+            </button>
+            <button
+              onClick={handleDownload}
+              className="p-4 rounded-full bg-white flex flex-col shadow-lg"
+            >
+              <FiDownload />
+            </button>
+          </div>
 
-            <div className="mt-[100px] text-white text-body1">
-              {data && formatDate(data?.eventToastTemplateResponse.openedDate)}
-              까지 작성할 수 있어요!
+          {/* 다운로드받을 이미지 영역 */}
+          <div
+            ref={divRef}
+            className="relative flex justify-center items-center rounded-[20px] w-full h-full min-h-[706px] bg-template-pattern bg-top bg-no-repeat"
+          >
+            <div className="w-[273px] absolute flex flex-col gap-2 items-center top-[130px] text-white">
+              <div
+                style={{
+                  backgroundImage: data ? `url(${data.iconImageUrl})` : ``,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                  width: '110px',
+                  height: '110px',
+                }}
+              />
+              <span className="text-body2">
+                {data && data.eventToastTemplateResponse.title}
+              </span>
+
+              <textarea
+                className="mt-5 h-[187px] w-full p-6 rounded-[20px] text-gray-80"
+                value={text}
+                onChange={(e) => setText(e.target.value)}
+              />
+
+              <span className="text-white text-body4 flex w-full justify-end pr-2">
+                @{data && data.nickname}
+              </span>
+
+              <div className="mt-[100px] text-white text-body1">
+                {data &&
+                  formatDate(data?.eventToastTemplateResponse.openedDate)}
+                까지 작성할 수 있어요!
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
