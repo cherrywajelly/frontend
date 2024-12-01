@@ -73,7 +73,7 @@ export default function GiftToastItemPage({ params }: { params: PageParams }) {
                       <PieceBox
                         key={item.toastPieceId}
                         handleDelete={() => {
-                          console.log('hi');
+                          // console.log('hi');
                         }}
                         data={item}
                         onClick={() =>

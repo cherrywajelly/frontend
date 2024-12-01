@@ -50,7 +50,7 @@ export default function EventToastSharePage() {
       },
       {
         onSuccess: (data) => {
-          console.log(data);
+          // console.log(data);
         },
       },
     );
