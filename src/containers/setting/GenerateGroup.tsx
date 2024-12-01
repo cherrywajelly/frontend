@@ -89,7 +89,7 @@ export default function GenerateGroup({
       ) : (
         <>
           <div className="flex flex-col items-center flex-none">
-            <div className="relative">
+            <div className="relative" onClick={handleFileUploadClick}>
               <Image
                 src={profileImg ? URL.createObjectURL(profileImg) : temp}
                 alt=""
@@ -97,10 +97,7 @@ export default function GenerateGroup({
                 height={120}
                 className="object-cover rounded-full w-[120px] h-[120px]"
               />
-              <div
-                onClick={handleFileUploadClick}
-                className="absolute bottom-[-12px] right-0 border-4 border-gray-05 bg-gray-10 w-[40px] h-[40px] rounded-full flex justify-center items-center"
-              >
+              <div className="absolute bottom-[-12px] right-0 border-4 border-gray-05 bg-gray-10 w-[40px] h-[40px] rounded-full flex justify-center items-center">
                 <FiCamera size={20} />
               </div>
               <input

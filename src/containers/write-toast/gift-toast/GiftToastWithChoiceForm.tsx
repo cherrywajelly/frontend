@@ -98,7 +98,9 @@ export default function GiftToastWithChoiceForm() {
             )}
           </UserListItem>
 
-          <TargetDivider text="친구와 함께" />
+          {followingData && followingData.followResponses && (
+            <TargetDivider text="친구와 함께" />
+          )}
           {followingData &&
             followingData.followResponses.map((item) => (
               <UserListItem
@@ -121,11 +123,12 @@ export default function GiftToastWithChoiceForm() {
               </UserListItem>
             ))}
 
-          <TargetDivider text="그룹과 함께" isButton />
+          {groupData && groupData.teamResponses && (
+            <TargetDivider text="그룹과 함께" isButton />
+          )}
           {groupData &&
             groupData.teamResponses.map((item, idx) => (
               <UserListItem
-                // key={item.teamId}
                 key={idx}
                 profileImg={item.teamProfileUrl}
                 nickname={item.teamName}
