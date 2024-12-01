@@ -29,3 +29,15 @@ export const postPremiumsInfo = async (premiumId: number) => {
       throw err;
     });
 };
+
+// 사용자 프리미엄 구독 정보 조회
+export const getUserPremiumsAbout = async () => {
+  const res = await apiRequest(`/api/v1/members/premiums`);
+
+  if (!res.ok) {
+    throw new Error(`HTTP error! Status: ${res.status}`);
+  }
+
+  const data = await res.json();
+  return data;
+};
