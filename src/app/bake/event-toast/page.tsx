@@ -93,6 +93,7 @@ export default function EventToastPage() {
                 dataState={eventToastDataState}
                 handleSubmit={handleSubmit}
                 type="toast"
+                isPending={isPending}
               />
             )}
           </>

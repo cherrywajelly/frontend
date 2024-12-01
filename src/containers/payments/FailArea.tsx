@@ -64,7 +64,7 @@ export default function FailArea() {
           className="!max-w-[400px]"
           onClose={() => setIsOpen((prev) => !prev)}
         >
-          <div className="flex flex-col items-center">
+          <div className="flex flex-col items-center text-gray-80">
             <span className="!text-body2">{code}</span>
             <span className="!text-body2">{message}</span>
             <span className="!text-body2">

@@ -13,7 +13,7 @@ export default function LoginPage() {
       <div className="h-full flex flex-col items-center justify-center">
         <Image src={MainImage} alt="timetoast" className="" />
 
-        <div className="w-full flex flex-1 justify-center px-6 flex-col gap-4 mb-[48px]">
+        <div className="bg-white w-full flex flex-1 justify-center px-6 flex-col gap-4 mb-[48px]">
           <KakaoButton />
           <GoogleButton />
         </div>
