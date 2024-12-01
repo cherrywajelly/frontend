@@ -52,7 +52,7 @@ export default function FailArea() {
   const [isOpen, setIsOpen] = useState<boolean>(true);
 
   return (
-    <>
+    <div>
       {isOpen && (
         <ConfirmDialog
           description={
@@ -73,6 +73,6 @@ export default function FailArea() {
           </div>
         </ConfirmDialog>
       )}
-    </>
+    </div>
   );
 }
