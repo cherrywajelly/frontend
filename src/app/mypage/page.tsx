@@ -34,7 +34,7 @@ export default function MyPage() {
 
   return (
     <div className="w-full h-lvh bg-white">
-      <TopBar title="마이페이지" isRight="setting" />
+      <TopBar title="마이페이지" isRight="setting" isBackBtn={false} />
 
       <div className="h-[calc(100vh-144px)] flex flex-grow flex-col bg-gray-05 overflow-y-auto">
         {isLoading ? (
