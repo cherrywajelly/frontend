@@ -8,9 +8,7 @@ import SuccessArea from '@/containers/payments/SuccessArea';
 
 export default function Success() {
   return (
-    <div className="w-full h-dvh">
-      {/* <TopBar title="아이콘 마켓" /> */}
-
+    <div className="w-full h-lvh">
       <Suspense>
         <SuccessArea />
       </Suspense>

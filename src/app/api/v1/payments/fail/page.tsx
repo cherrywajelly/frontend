@@ -8,9 +8,7 @@ import FailArea from '@/containers/payments/FailArea';
 
 export default function Fail() {
   return (
-    <div className="w-full h-dvh">
-      {/* <TopBar title="아이콘 마켓" /> */}
-
+    <div className="w-full h-lvh">
       <Suspense>
         <FailArea />
       </Suspense>

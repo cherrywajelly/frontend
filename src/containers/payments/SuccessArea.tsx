@@ -52,16 +52,19 @@ export default function SuccessArea() {
   }, [paymentKey, orderId, amount, mutate]);
 
   return (
-    <div>
-      <div className="h-[calc(100vh-48px)] p-6 flex flex-col bg-white py-6 text-gray-80">
-        <h1>결제 성공</h1>
-        <div>{`주문 아이디: ${orderId}`}</div>
-        <div>{`결제 금액: ${Number(amount).toLocaleString()}원`}</div>
-      </div>
-
+    <div className="h-lvh w-full">
       {isOpen && (
         <ConfirmDialog
-          description="결제가 완료되었어요."
+          // description="결제가 완료되었어요."
+          description={
+            <>
+              <h1 className="text-gray-80 text-subtitle1">
+                결제가 완료되었어요.
+              </h1>
+              <div>{`주문 아이디: ${orderId}`}</div>
+              <div>{`결제 금액: ${Number(amount).toLocaleString()}원`}</div>
+            </>
+          }
           isOpen={isOpen}
           className="!max-w-[400px]"
           onClose={() => setIsOpen((prev) => !prev)}

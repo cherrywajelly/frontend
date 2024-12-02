@@ -158,7 +158,7 @@ const SettingProfilePage = () => {
       <TopBar title="프로필 편집" />
 
       <div className="h-[calc(100vh-48px)] flex flex-col bg-gray-05">
-        {isLoading ? (
+        {isLoading || isPendingSignUp || isPendingProfileImage ? (
           <Spinner />
         ) : (
           <div className="w-full h-full p-6 flex flex-col justify-between bg-gray-05">

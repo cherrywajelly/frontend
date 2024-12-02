@@ -110,14 +110,14 @@ export default function EventToastPage() {
             color="active"
             className="w-full"
             onClick={() => {
-              router.push(`/event-toast/${eventToastId}/share`);
+              router.replace(`/event-toast/${eventToastId}/share`);
             }}
           >
             공유하기
           </Button>
           <Button
             className="w-full text-white bg-gray-60"
-            onClick={() => router.push('/home')}
+            onClick={() => router.replace('/home')}
           >
             홈으로 가기
           </Button>

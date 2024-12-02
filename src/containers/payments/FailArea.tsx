@@ -56,7 +56,7 @@ export default function FailArea() {
   const [isOpen, setIsOpen] = useState<boolean>(true);
 
   return (
-    <div>
+    <div className="h-lvh">
       {isOpen && (
         <ConfirmDialog
           description={
@@ -72,7 +72,7 @@ export default function FailArea() {
             <span className="!text-body2">{code}</span>
             <span className="!text-body2">{message}</span>
             <span className="!text-body2">
-              <b>{countdown}</b>초 후 마이페이지로 돌아갑니다.
+              <b>{countdown}</b>초 후 이전 페이지로 돌아갑니다.
             </span>
           </div>
         </ConfirmDialog>
