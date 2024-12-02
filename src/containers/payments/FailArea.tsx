@@ -22,7 +22,11 @@ export default function FailArea() {
     }, 1000);
 
     const timerId = setTimeout(() => {
-      router.replace('/setting/market');
+      if (document.referrer) {
+        router.replace(document.referrer); // 이전 페이지로 이동
+      } else {
+        router.replace('/mypage');
+      }
     }, 3000);
 
     return () => {
@@ -68,7 +72,7 @@ export default function FailArea() {
             <span className="!text-body2">{code}</span>
             <span className="!text-body2">{message}</span>
             <span className="!text-body2">
-              <b>{countdown}</b>초 후 마켓 페이지로 돌아갑니다.
+              <b>{countdown}</b>초 후 마이페이지로 돌아갑니다.
             </span>
           </div>
         </ConfirmDialog>
