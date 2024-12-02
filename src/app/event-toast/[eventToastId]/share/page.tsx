@@ -72,28 +72,36 @@ export default function EventToastSharePage() {
 
       canvas.toBlob((blob) => {
         if (blob) {
-          // iOS Safari 전용 처리
-          const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
-
-          if (isIOS) {
-            const url = URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = 'event-toast.png';
-            document.body.appendChild(link);
-
-            link.click();
-            document.body.removeChild(link);
-            URL.revokeObjectURL(url);
-          } else {
-            // 일반 브라우저 (안드로이드, 데스크탑)
-            saveAs(blob, 'event-toast.png');
-            // FileSaver.saveAs(blob, 'event-toast.png');
-          }
+          saveAs(blob, 'event-toast.png');
         } else {
-          notifyError('이미지 저장에 에러가 생겼어요!');
+          notifyError('이미지를 저장할 수 없습니다.');
         }
       });
+
+      // canvas.toBlob((blob) => {
+      //   if (blob) {
+      //     // iOS Safari 전용 처리
+      //     const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+      //     if (isIOS) {
+      //       const url = URL.createObjectURL(blob);
+      //       const link = document.createElement('a');
+      //       link.href = url;
+      //       link.download = 'event-toast.png';
+      //       document.body.appendChild(link);
+
+      //       link.click();
+      //       document.body.removeChild(link);
+      //       URL.revokeObjectURL(url);
+      //     } else {
+      //       // 일반 브라우저 (안드로이드, 데스크탑)
+      //       saveAs(blob, 'event-toast.png');
+      //       // FileSaver.saveAs(blob, 'event-toast.png');
+      //     }
+      //   } else {
+      //     notifyError('이미지 저장에 에러가 생겼어요!');
+      //   }
+      // });
     } catch (error) {
       console.error('Error converting div to image:', error);
       notifyError('이미지 저장에 에러가 생겼어요!');
