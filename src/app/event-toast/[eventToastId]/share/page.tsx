@@ -64,40 +64,77 @@ export default function EventToastSharePage() {
 
     try {
       const div = divRef.current;
-
       const canvas = await html2canvas(div, {
-        useCORS: true, // CORS 문제 해결
-        backgroundColor: null, // 투명 배경 유지
-        scale: window.devicePixelRatio || 2, // 고해상도
+        useCORS: true,
+        backgroundColor: null,
+        scale: window.devicePixelRatio || 2,
       });
 
-      canvas.toBlob((blob) => {
-        if (blob) {
-          // iOS Safari 전용 처리
-          const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+      const dataUrl = canvas.toDataURL('image/png');
 
-          if (isIOS) {
-            const url = URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = 'event-toast.png';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            URL.revokeObjectURL(url);
-          } else {
-            // 일반 브라우저 (안드로이드, 데스크탑)
-            FileSaver.saveAs(blob, 'event-toast.png');
-          }
+      // iOS 처리: 이미지 새 창에 열기
+      const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+      if (isIOS) {
+        const newWindow = window.open();
+        if (newWindow) {
+          newWindow.document.body.innerHTML = `<img src="${dataUrl}" style="width:100%; height:auto;" />`;
         } else {
-          notifyError('이미지 저장에 에러가 생겼어요!');
+          notifyError('이미지를 열 수 없습니다. 팝업 차단을 확인해주세요.');
         }
-      });
+      } else {
+        // 일반 브라우저 처리
+        const link = document.createElement('a');
+        link.href = dataUrl;
+        link.download = 'event-toast.png';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
     } catch (error) {
       console.error('Error converting div to image:', error);
-      // notifyError('이미지 저장에 에러가 생겼어요!');
+      notifyError('이미지 저장에 에러가 생겼어요!');
     }
   };
+
+  // const handleDownload = async () => {
+  //   if (!divRef.current) return;
+
+  //   try {
+  //     const div = divRef.current;
+
+  //     const canvas = await html2canvas(div, {
+  //       useCORS: true, // CORS 문제 해결
+  //       backgroundColor: null, // 투명 배경 유지
+  //       scale: window.devicePixelRatio || 2, // 고해상도
+  //     });
+
+  //     canvas.toBlob((blob) => {
+  //       if (blob) {
+  //         // iOS Safari 전용 처리
+  //         const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+  //         if (isIOS) {
+  //           const url = URL.createObjectURL(blob);
+  //           const link = document.createElement('a');
+  //           link.href = url;
+  //           link.download = 'event-toast.png';
+  //           document.body.appendChild(link);
+  //           link.click();
+  //           document.body.removeChild(link);
+  //           URL.revokeObjectURL(url);
+  //         } else {
+  //           // 일반 브라우저 (안드로이드, 데스크탑)
+  //           FileSaver.saveAs(blob, 'event-toast.png');
+  //         }
+  //       } else {
+  //         notifyError('이미지 저장에 에러가 생겼어요!');
+  //       }
+  //     });
+  //   } catch (error) {
+  //     console.error('Error converting div to image:', error);
+  //     // notifyError('이미지 저장에 에러가 생겼어요!');
+  //   }
+  // };
 
   const handleCopyUrl = (url: string) => {
     navigator.clipboard
@@ -187,7 +224,7 @@ export default function EventToastSharePage() {
               }}
               className="p-4 rounded-full bg-white flex flex-col shadow-lg"
             >
-              <FiLink />
+              <FiLink className="text-gray-80" />
             </button>
 
             <button
@@ -206,13 +243,13 @@ export default function EventToastSharePage() {
               onClick={handleWebShare}
               className="p-4 rounded-full bg-white flex flex-col shadow-lg"
             >
-              <FiShare />
+              <FiShare className="text-gray-80" />
             </button>
             <button
               onClick={handleDownload}
               className="p-4 rounded-full bg-white flex flex-col shadow-lg"
             >
-              <FiDownload />
+              <FiDownload className="text-gray-80" />
             </button>
           </div>
 
