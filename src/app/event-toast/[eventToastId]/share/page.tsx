@@ -73,72 +73,31 @@ export default function EventToastSharePage() {
 
       canvas.toBlob((blob) => {
         if (blob) {
+          // iOS Safari 전용 처리
           const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
-          console.log('isIOS', isIOS);
 
           if (isIOS) {
-            // iOS Safari 전용 처리
             const url = URL.createObjectURL(blob);
-            const newWindow = window.open();
-            if (newWindow) {
-              console.log('newwindow');
-              newWindow.document.body.innerHTML = `<img src="${url}" style="width:100%; height:auto;" />`;
-            } else {
-              notifyError('이미지를 열 수 없습니다. 팝업 차단을 확인해주세요.');
-            }
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'event-toast.png';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
           } else {
-            // 일반 브라우저 처리
+            // 일반 브라우저 (안드로이드, 데스크탑)
             FileSaver.saveAs(blob, 'event-toast.png');
           }
         } else {
-          notifyError('이미지 저장에 실패했습니다!');
+          notifyError('이미지 저장에 에러가 생겼어요!');
         }
       });
     } catch (error) {
       console.error('Error converting div to image:', error);
-      notifyError('이미지 저장 중 에러가 발생했습니다!');
+      // notifyError('이미지 저장에 에러가 생겼어요!');
     }
   };
-
-  // const handleDownload = async () => {
-  //   if (!divRef.current) return;
-
-  //   try {
-  //     const div = divRef.current;
-
-  //     const canvas = await html2canvas(div, {
-  //       useCORS: true, // CORS 문제 해결
-  //       backgroundColor: null, // 투명 배경 유지
-  //       scale: window.devicePixelRatio || 2, // 고해상도
-  //     });
-
-  //     canvas.toBlob((blob) => {
-  //       if (blob) {
-  //         // iOS Safari 전용 처리
-  //         const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
-
-  //         if (isIOS) {
-  //           const url = URL.createObjectURL(blob);
-  //           const link = document.createElement('a');
-  //           link.href = url;
-  //           link.download = 'event-toast.png';
-  //           document.body.appendChild(link);
-  //           link.click();
-  //           document.body.removeChild(link);
-  //           URL.revokeObjectURL(url);
-  //         } else {
-  //           // 일반 브라우저 (안드로이드, 데스크탑)
-  //           FileSaver.saveAs(blob, 'event-toast.png');
-  //         }
-  //       } else {
-  //         notifyError('이미지 저장에 에러가 생겼어요!');
-  //       }
-  //     });
-  //   } catch (error) {
-  //     console.error('Error converting div to image:', error);
-  //     // notifyError('이미지 저장에 에러가 생겼어요!');
-  //   }
-  // };
 
   const handleCopyUrl = (url: string) => {
     navigator.clipboard
