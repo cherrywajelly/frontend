@@ -96,7 +96,7 @@ export default function EventToastSharePage() {
       });
     } catch (error) {
       console.error('Error converting div to image:', error);
-      // notifyError('이미지 저장에 에러가 생겼어요!');
+      notifyError('이미지 저장에 에러가 생겼어요!');
     }
   };
 

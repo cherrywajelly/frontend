@@ -22,7 +22,7 @@ export default function FailArea() {
     }, 1000);
 
     const timerId = setTimeout(() => {
-      router.push('/setting/market');
+      router.replace('/setting/market');
     }, 3000);
 
     return () => {
