@@ -56,7 +56,7 @@ export default function FailArea() {
   const [isOpen, setIsOpen] = useState<boolean>(true);
 
   return (
-    <div className="h-full">
+    <div className="h-screen">
       {isOpen && (
         <ConfirmDialog
           description={
