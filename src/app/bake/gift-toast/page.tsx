@@ -158,7 +158,7 @@ export default function GiftToastPage() {
           </Button>
           <Button
             className="w-full text-white bg-gray-60"
-            onClick={() => router.push('/home')}
+            onClick={() => router.replace('/home')}
           >
             홈으로 가기
           </Button>
