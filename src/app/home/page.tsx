@@ -1,18 +1,21 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { CgHome } from 'react-icons/cg';
 
 import BottomBar from '@/components/common-components/bottom-bar';
 import TopBar from '@/components/common-components/top-bar';
 
 import { usePostFCMTest, usePutFCM } from '@/hooks/api/useFcm';
 
+import { bottomBarItemState } from '@/atoms/componentAtom';
 import ArriveEventToast from '@/containers/home/ArriveEventToast';
 import ArriveGiftToast from '@/containers/home/ArriveGiftToast';
 import { firebaseApp } from '@/firebase';
 
 import { getMessaging, onMessage, getToken } from 'firebase/messaging';
 import { useRouter } from 'next/navigation';
+import { useRecoilState } from 'recoil';
 
 export default function HomePage() {
   const accessToken =
@@ -80,7 +83,15 @@ export default function HomePage() {
   //   listenForMessages();
   // }, []);
 
+  const [selectedItem, setSelectedItem] = useRecoilState(bottomBarItemState);
+
   useEffect(() => {
+    setSelectedItem({
+      icon: <CgHome />,
+      title: '홈',
+      url: '/home',
+    });
+
     const fetchTokenAndSave = async () => {
       try {
         const existingToken = sessionStorage.getItem('fcmToken');
