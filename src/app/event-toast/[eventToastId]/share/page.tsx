@@ -74,12 +74,14 @@ export default function EventToastSharePage() {
       canvas.toBlob((blob) => {
         if (blob) {
           const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+          console.log('isIOS', isIOS);
 
           if (isIOS) {
             // iOS Safari 전용 처리
             const url = URL.createObjectURL(blob);
             const newWindow = window.open();
             if (newWindow) {
+              console.log('newwindow');
               newWindow.document.body.innerHTML = `<img src="${url}" style="width:100%; height:auto;" />`;
             } else {
               notifyError('이미지를 열 수 없습니다. 팝업 차단을 확인해주세요.');
