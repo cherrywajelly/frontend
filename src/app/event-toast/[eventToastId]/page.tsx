@@ -43,7 +43,7 @@ export default function EventToastPage({ params }: { params: PageParams }) {
       {isLoading ? (
         <Spinner />
       ) : (
-        <div className="p-6 h-[calc(100vh-72px)] flex flex-col justify-between">
+        <div className="p-6 h-[calc(100dvh-72px)] flex flex-col justify-between">
           <div className="flex justify-between flex-grow flex-col bg-gray-05 overflow-y-auto">
             {data && (
               <>
