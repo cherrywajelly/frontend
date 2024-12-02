@@ -8,7 +8,7 @@ import FailArea from '@/containers/payments/FailArea';
 
 export default function Fail() {
   return (
-    <div className="w-full h-lvh">
+    <div className="w-full h-dvh">
       <Suspense>
         <FailArea />
       </Suspense>
