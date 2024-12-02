@@ -49,14 +49,22 @@ export default function SettingAccountPage() {
               <span className="text-body4 text-gray-80 whitespace-nowrap">
                 닉네임
               </span>
-              <Input placeholder={myData?.nickname} disabled />
+              <Input
+                placeholder={myData?.nickname}
+                disabled
+                className="bg-gray-05"
+              />
             </div>
 
             <div className="flex items-center w-full gap-4">
               <span className="text-body4 text-gray-80 whitespace-nowrap">
                 이메일
               </span>
-              <Input placeholder={myData?.email} disabled />
+              <Input
+                placeholder={myData?.email}
+                disabled
+                className="bg-gray-05"
+              />
             </div>
 
             <div className="w-full flex flex-col">
@@ -64,7 +72,11 @@ export default function SettingAccountPage() {
                 <span className="text-body4 text-gray-80 whitespace-nowrap">
                   구독권
                 </span>
-                <Input placeholder={data?.premiumType ?? ''} disabled />
+                <Input
+                  placeholder={data?.premiumType ?? ''}
+                  disabled
+                  className="bg-gray-05"
+                />
               </div>
               <span className="p-2 text-navigation1 text-right text-gray-60">
                 만료일자: 24.12.25
