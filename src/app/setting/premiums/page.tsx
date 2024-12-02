@@ -82,7 +82,7 @@ export default function PremiumsPage() {
           </div>
 
           {selectedItem === 'PREMIUM' && (
-            <div className="bg-white flex flex-col items-center p-6 border border-gray-10 rounded-[10px] shadow-lg w-full">
+            <div className="text-gray-80 bg-white flex flex-col items-center p-6 border border-gray-10 rounded-[10px] shadow-lg w-full">
               <span className="text-gray-08 text-body2">
                 선택한 구독권: <b>{selectedItem}</b>
               </span>

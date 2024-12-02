@@ -80,8 +80,11 @@ export default function GiftToastOpenDateForm() {
         </InputForm>
       </div>
       <div className="flex flex-col w-full">
-        <span className="flex gap-2 justify-center items-center pb-[30px] text-body5 text-gray-80 text-center">
-          <button onClick={toggleAgree} className="flex items-center space-x-2">
+        <span
+          onClick={toggleAgree}
+          className="flex gap-2 justify-center items-center pb-[30px] text-body5 text-gray-80 text-center"
+        >
+          <button className="flex items-center space-x-2">
             {giftData.isAgree ? (
               <RiCheckboxCircleFill className="text-primary-main" size={20} />
             ) : (
