@@ -5,6 +5,7 @@ import Button from '@/components/common-components/button';
 import ConfirmDialog from '@/components/alert/ConfirmDialog';
 
 import { usePostUserPaymentsSuccess } from '@/hooks/api/usePayments';
+import { notifySuccess } from '@/utils/toast';
 
 import { useRouter, useSearchParams } from 'next/navigation';
 
@@ -15,12 +16,8 @@ export default function SuccessArea() {
   const paymentKey = searchParams.get('paymentKey') as string;
   const orderId = searchParams.get('orderId') as string;
   const amount = searchParams.get('amount');
-  const iconGroupId = searchParams.get('iconGroupId');
 
-  const [isOpen, setIsOpen] = useState<boolean>(true);
-
-  const { mutate, isPending } = usePostUserPaymentsSuccess();
-
+  const { mutate } = usePostUserPaymentsSuccess();
   const hasMutated = useRef(false);
 
   useEffect(() => {
@@ -37,49 +34,38 @@ export default function SuccessArea() {
           amount: Number(amount),
         },
         {
-          onSuccess: (data) => {
-            console.log('data:', data);
+          onSuccess: () => {
+            // console.log('결제 성공');
+            // notifySuccess('결제 성공!');
+            // setIsOpen(true); // 결제 성공 후 모달 표시
           },
           onError: (error) => {
-            console.log('Error:', error);
+            console.error('Error:', error);
           },
         },
       );
-
-      // window.history.replaceState(null, '', window.location.href);
     };
     init();
-  }, [paymentKey, orderId, amount, mutate]);
+  }, []);
 
   return (
-    <div className="h-lvh w-full">
-      {isOpen && (
-        <ConfirmDialog
-          // description="결제가 완료되었어요."
-          description={
-            <div className="p-4 flex flex-col">
-              <h1 className="text-gray-80 text-subtitle1">
-                결제가 완료되었어요.
-              </h1>
-              {/* <span>{`주문 아이디: ${orderId}`}</span> */}
-              <span>{`결제 금액: ${Number(amount).toLocaleString()}원`}</span>
-            </div>
-          }
-          isOpen={isOpen}
-          className="!max-w-[400px]"
-          onClose={() => setIsOpen((prev) => !prev)}
+    <div className="h-lvh w-full m-auto">
+      <div className="h-full p-4 flex justify-center items-center flex-col">
+        <h1 className="text-gray-80 text-subtitle1">결제가 완료되었어요.</h1>
+        <span>{`결제 금액: ${Number(amount).toLocaleString()}원`}</span>
+
+        <Button
+          onClick={() => {
+            router.back();
+            router.back();
+          }}
+          color="primary"
+          size="sm"
+          className="my-6"
         >
-          <Button
-            className="w-full text-white bg-gray-60"
-            onClick={() => {
-              if (iconGroupId === null) router.replace(`/setting/premiums`);
-              else router.replace(`/setting/market/${iconGroupId}`);
-            }}
-          >
-            확인
-          </Button>
-        </ConfirmDialog>
-      )}
+          이전 페이지로 돌아가기
+        </Button>
+      </div>
     </div>
   );
 }

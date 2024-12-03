@@ -55,10 +55,11 @@ self.addEventListener('push', (event) => {
   }
 
   const data = event.data.json();
-  console.log('fcmdata:', data);
-  const title = data.notification?.title || '알림';
+  // console.log('fcmdata:', data);
+
+  const title = data.data.title || '알림';
   const options = {
-    body: data.notification?.body || '새로운 메시지가 도착했습니다.',
+    body: data.data.body || '새로운 메시지가 도착했습니다.',
   };
 
   event.waitUntil(

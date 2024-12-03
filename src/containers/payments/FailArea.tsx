@@ -25,7 +25,9 @@ export default function FailArea() {
       if (document.referrer) {
         router.replace(document.referrer); // 이전 페이지로 이동
       } else {
-        router.replace('/mypage');
+        // router.replace('/mypage');
+        router.back();
+        router.back();
       }
     }, 3000);
 

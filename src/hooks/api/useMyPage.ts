@@ -56,12 +56,12 @@ export const useGetFollowings = () => {
 
 // 그룹 목록 조회
 export const useGetGroup = () => {
-  const { data, isLoading, error } = useQuery<GroupListResponse>({
+  const { data, isLoading, error, refetch } = useQuery<GroupListResponse>({
     queryKey: ['group'],
     queryFn: () => getGroup(),
     refetchOnWindowFocus: true,
   });
-  return { data, isLoading, error };
+  return { data, isLoading, error, refetch };
 };
 
 // 팔로잉 등록
