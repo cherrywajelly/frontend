@@ -62,6 +62,7 @@ export default function EventToastSharePage() {
     if (!divRef.current) return;
 
     try {
+      alert('try실행');
       const canvas = await html2canvas(divRef.current, {
         useCORS: true,
         backgroundColor: null,
