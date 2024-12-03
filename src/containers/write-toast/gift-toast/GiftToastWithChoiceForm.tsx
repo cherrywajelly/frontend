@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   RiCheckboxBlankCircleLine,
   RiCheckboxCircleFill,
@@ -16,9 +16,11 @@ import { useGetFollowings, useGetGroup } from '@/hooks/api/useMyPage';
 
 import { giftToastDataState, giftToastStepState } from '@/atoms/toastAtom';
 
+import { useRouter } from 'next/navigation';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 
 export default function GiftToastWithChoiceForm() {
+  const router = useRouter();
   const setStep = useSetRecoilState(giftToastStepState);
   const [giftData, setGiftData] = useRecoilState(giftToastDataState);
 
@@ -39,7 +41,7 @@ export default function GiftToastWithChoiceForm() {
   // 팔로잉 목록 및 그룹 목록 조회
   const { data: followingData, isLoading: isLoadingFollowings } =
     useGetFollowings();
-  const { data: groupData, isLoading: isLoadingGroup } = useGetGroup();
+  const { data: groupData, isLoading: isLoadingGroup, refetch } = useGetGroup();
 
   const toggleUserSelection = (
     itemId: number | null,
@@ -51,6 +53,10 @@ export default function GiftToastWithChoiceForm() {
       setGiftData((prev) => ({ ...prev, id: itemId, type }));
     }
   };
+
+  useEffect(() => {
+    refetch();
+  }, [router]);
 
   return (
     <div className="w-full h-full px-6 py-6 flex flex-col justify-between">
