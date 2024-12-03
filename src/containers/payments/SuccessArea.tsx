@@ -57,13 +57,13 @@ export default function SuccessArea() {
         <ConfirmDialog
           // description="결제가 완료되었어요."
           description={
-            <>
+            <div className="p-4 flex flex-col">
               <h1 className="text-gray-80 text-subtitle1">
                 결제가 완료되었어요.
               </h1>
-              <div>{`주문 아이디: ${orderId}`}</div>
-              <div>{`결제 금액: ${Number(amount).toLocaleString()}원`}</div>
-            </>
+              {/* <span>{`주문 아이디: ${orderId}`}</span> */}
+              <span>{`결제 금액: ${Number(amount).toLocaleString()}원`}</span>
+            </div>
           }
           isOpen={isOpen}
           className="!max-w-[400px]"
