@@ -71,37 +71,26 @@ export default function EventToastSharePage() {
       return 'OTHER';
     }
   };
-  const convertWithHtml2Image = async (target: HTMLElement) => {
-    return await html2canvas(target, { useCORS: true });
-  };
 
   const handleDownload = async () => {
     if (!divRef.current) return;
     try {
-      // const canvas = await html2canvas(divRef.current, {
-      //   useCORS: true,
-      //   backgroundColor: null,
-      //   scale: window.devicePixelRatio || 2,
-      // });
+      const canvas = await html2canvas(divRef.current, {
+        useCORS: true,
+        backgroundColor: null,
+        scale: window.devicePixelRatio || 2,
+      });
 
-      const canvas = await convertWithHtml2Image(divRef.current);
-      const downloadLink = document.createElement('a');
-      const userAgent = checkUserAgent();
-      console.log(userAgent);
-      downloadLink.href = canvas.toDataURL('image/jpeg');
-      downloadLink.download = `event-toast`;
-      downloadLink.click();
+      const dataUrl = canvas.toDataURL('image/png'); // Base64 URL
+      const link = document.createElement('a');
+      link.href = dataUrl;
 
-      // const dataUrl = canvas.toDataURL('image/png'); // Base64 URL
-      // const link = document.createElement('a');
-      // link.href = dataUrl;
+      if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+        link.target = '_blank';
+      }
 
-      // if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-      //   link.target = '_blank';
-      // }
-
-      // link.download = 'event-toast.png';
-      // link.click();
+      link.download = 'event-toast.png';
+      link.click();
     } catch (error) {
       console.error('Error saving image:', error);
       notifyError('이미지 저장에 실패했어요!');
