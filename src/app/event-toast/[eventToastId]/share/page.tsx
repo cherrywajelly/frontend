@@ -23,7 +23,7 @@ import FileSaver from 'file-saver';
 import html2canvas from 'html2canvas';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
-import { text } from 'stream/consumers';
+import { userAgent } from 'next/server';
 
 export default function EventToastSharePage() {
   const params = useParams();
@@ -58,46 +58,85 @@ export default function EventToastSharePage() {
   };
 
   const divRef = useRef<HTMLDivElement>(null);
+  const { userAgent } = navigator;
+
+  const checkUserAgent = () => {
+    if (/iPad|iPhone|iPod/.test(userAgent)) {
+      return 'IOS';
+    } else if (/Chrome/.test(userAgent)) {
+      return 'CHROME';
+    } else if (/Safari/.test(userAgent)) {
+      return 'SAFARI';
+    } else {
+      return 'OTHER';
+    }
+  };
 
   const handleDownload = async () => {
     if (!divRef.current) return;
-
     try {
-      const div = divRef.current;
-
-      const canvas = await html2canvas(div, {
-        useCORS: true, // CORS 문제 해결
-        backgroundColor: null, // 투명 배경 유지
-        scale: window.devicePixelRatio || 2, // 고해상도
+      const canvas = await html2canvas(divRef.current, {
+        useCORS: true,
+        backgroundColor: null,
+        scale: window.devicePixelRatio || 2,
       });
 
-      canvas.toBlob((blob) => {
-        if (blob) {
-          // iOS Safari 전용 처리
-          const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+      const dataUrl = canvas.toDataURL('image/png'); // Base64 URL
+      const link = document.createElement('a');
+      link.href = dataUrl;
 
-          if (isIOS) {
-            const url = URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = 'event-toast.png';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            URL.revokeObjectURL(url);
-          } else {
-            // 일반 브라우저 (안드로이드, 데스크탑)
-            FileSaver.saveAs(blob, 'event-toast.png');
-          }
-        } else {
-          notifyError('이미지 저장에 에러가 생겼어요!');
-        }
-      });
+      if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+        link.target = '_blank';
+      }
+
+      link.download = 'event-toast.png';
+      link.click();
     } catch (error) {
-      console.error('Error converting div to image:', error);
-      // notifyError('이미지 저장에 에러가 생겼어요!');
+      console.error('Error saving image:', error);
+      notifyError('이미지 저장에 실패했어요!');
     }
   };
+
+  // const handleDownload = async () => {
+  //   if (!divRef.current) return;
+
+  //   try {
+  //     const div = divRef.current;
+
+  //     const canvas = await html2canvas(div, {
+  //       useCORS: true, // CORS 문제 해결
+  //       backgroundColor: null, // 투명 배경 유지
+  //       scale: window.devicePixelRatio || 2, // 고해상도
+  //     });
+
+  //     canvas.toBlob((blob) => {
+  //       if (blob) {
+  //         // iOS Safari 전용 처리
+  //         const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+  //         if (isIOS) {
+  //           const url = URL.createObjectURL(blob);
+  //           const link = document.createElement('a');
+  //           link.href = url;
+  //           link.download = 'event-toast.png';
+  //           document.body.appendChild(link);
+
+  //           link.click();
+  //           document.body.removeChild(link);
+  //           URL.revokeObjectURL(url);
+  //         } else {
+  //           // 일반 브라우저 (안드로이드, 데스크탑)
+  //           FileSaver.saveAs(blob, 'event-toast.png');
+  //         }
+  //       } else {
+  //         notifyError('이미지 저장에 에러가 생겼어요!');
+  //       }
+  //     });
+  //   } catch (error) {
+  //     console.error('Error converting div to image:', error);
+  //     notifyError('이미지 저장에 에러가 생겼어요!');
+  //   }
+  // };
 
   const handleCopyUrl = (url: string) => {
     navigator.clipboard
@@ -187,7 +226,7 @@ export default function EventToastSharePage() {
               }}
               className="p-4 rounded-full bg-white flex flex-col shadow-lg"
             >
-              <FiLink />
+              <FiLink className="text-gray-80" />
             </button>
 
             <button
@@ -206,13 +245,13 @@ export default function EventToastSharePage() {
               onClick={handleWebShare}
               className="p-4 rounded-full bg-white flex flex-col shadow-lg"
             >
-              <FiShare />
+              <FiShare className="text-gray-80" />
             </button>
             <button
               onClick={handleDownload}
               className="p-4 rounded-full bg-white flex flex-col shadow-lg"
             >
-              <FiDownload />
+              <FiDownload className="text-gray-80" />
             </button>
           </div>
 

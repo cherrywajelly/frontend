@@ -13,7 +13,7 @@ import Script from 'next/script';
 
 export const metadata = {
   title: 'TimeToast',
-  description: '지속 가능한 추억 아카이빙 서비스, 타잉토스트',
+  description: '흩어지는 기엄을 담는 나만의 토스트, 타임토스트',
   manifest: '/manifest.json',
 };
 
