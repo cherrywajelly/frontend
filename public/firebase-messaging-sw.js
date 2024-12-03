@@ -56,13 +56,14 @@ self.addEventListener('push', (event) => {
 
   const data = event.data.json();
   console.log('fcmdata:', data);
-  const title = data.notification?.title || '알림';
-  const options = {
-    body: data.notification?.body || '새로운 메시지가 도착했습니다.',
-  };
+  const title = data.data.title || '알림';
+  // const title = data.notification?.title || '알림';
+  // const options = {
+  //   body: data.notification?.body || '새로운 메시지가 도착했습니다.',
+  // };
 
   event.waitUntil(
-    self.registration.showNotification(title, options).catch((error) => {
+    self.registration.showNotification(title).catch((error) => {
       console.error('showNotification 에러:', error);
     }),
   );
