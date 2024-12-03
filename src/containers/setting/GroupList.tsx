@@ -40,7 +40,7 @@ export default function GroupList() {
     <div className="w-full h-full p-6 flex flex-col bg-gray-05">
       <div className="flex items-center flex-none">
         <Input
-          placeholder="검색어를 입력하세요."
+          placeholder="그룹명을 검색해보세요."
           size="sm"
           search
           value={searchValue}

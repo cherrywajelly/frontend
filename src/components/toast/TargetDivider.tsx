@@ -21,7 +21,7 @@ export default function TargetDivider(props: TargetDividerProps) {
           size="sm"
           color="primary"
           onClick={() => {
-            router.push('/setting/group');
+            router.push('/setting/group/create');
           }}
         >
           그룹 만들기
