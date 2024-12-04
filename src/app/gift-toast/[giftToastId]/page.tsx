@@ -43,6 +43,7 @@ export default function GiftToastItemPage({ params }: { params: PageParams }) {
                 description={data.giftToastInfo.description}
                 isCapsule
                 whoInfo={data.giftToastTeamMember}
+                giftToastType={data.giftToastInfo.giftToastType}
               >
                 <Button
                   size="sm"

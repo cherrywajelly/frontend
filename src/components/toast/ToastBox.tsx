@@ -20,6 +20,7 @@ export type ToastBoxProps = {
   isCapsule?: boolean;
   whoInfo?: GiftToastTeamMemberResponse | null;
   dDay?: number;
+  giftToastType?: string;
 };
 
 export default function ToastBox(props: ToastBoxProps) {
@@ -37,6 +38,7 @@ export default function ToastBox(props: ToastBoxProps) {
     isCapsule = false,
     whoInfo,
     dDay,
+    giftToastType,
   } = props;
 
   const router = useRouter();
@@ -94,7 +96,7 @@ export default function ToastBox(props: ToastBoxProps) {
       <span className="text-body4 text-gray-80">{description}</span>
       <>{children}</>
 
-      {isCapsule && (
+      {isCapsule && giftToastType === 'GROUP' && (
         <div>
           <div
             className="flex items-center justify-between cursor-pointer mt-4"
