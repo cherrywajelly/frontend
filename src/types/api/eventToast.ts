@@ -13,6 +13,7 @@ export interface EventToastItemResponse extends EventToastDefaultResponse {
     iconId: number;
     iconImageUrl: string;
   };
+  dDay?: number;
 }
 
 export interface EventToastPostReqBody {

@@ -19,6 +19,7 @@ export type ToastBoxProps = {
   description?: string;
   isCapsule?: boolean;
   whoInfo?: GiftToastTeamMemberResponse | null;
+  dDay?: number;
 };
 
 export default function ToastBox(props: ToastBoxProps) {
@@ -35,6 +36,7 @@ export default function ToastBox(props: ToastBoxProps) {
     description,
     isCapsule = false,
     whoInfo,
+    dDay,
   } = props;
 
   const router = useRouter();
@@ -83,7 +85,12 @@ export default function ToastBox(props: ToastBoxProps) {
             <span className="text-gray-80 text-body4">{openDate}</span>
           </span>
         </div>
+
+        {!isCapsule && (
+          <span className="text-body4 text-gray-80">D-{dDay}</span>
+        )}
       </div>
+
       <span className="text-body4 text-gray-80">{description}</span>
       <>{children}</>
 

@@ -60,6 +60,7 @@ export default function EventToastPage({ params }: { params: PageParams }) {
                   nickname={data.nickname}
                   openDate={data.openedDate}
                   memberId={data.memberId}
+                  dDay={data.dDay}
                 >
                   {isMine ? (
                     data.isOpened ? (
