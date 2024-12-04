@@ -91,7 +91,7 @@ export default function JamWritePage() {
   useEffect(() => {}, [jamData]);
 
   return (
-    <div className="w-full h-lvh">
+    <div className="w-full h-svh">
       <TopBar
         onBack={handleBack}
         title="잼 바르기"

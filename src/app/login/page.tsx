@@ -9,7 +9,7 @@ import Image from 'next/image';
 
 export default function LoginPage() {
   return (
-    <div className="w-full h-lvh flex flex-col justify-between bg-white">
+    <div className="w-full h-svh flex flex-col justify-between bg-white pb-[48px] box-border">
       <div className="h-full flex flex-col items-center justify-center">
         <Image src={MainImage} alt="timetoast" className="w-[500px]" />
 

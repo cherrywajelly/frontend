@@ -45,7 +45,7 @@ export default function NotificationsPage() {
   }, [selectedFcmId, refetch]);
 
   return (
-    <div className="w-full h-screen bg-gray-05">
+    <div className="w-full h-svh bg-gray-05">
       <TopBar title="알림" isBackBtn={false} />
 
       <div className="w-full h-[calc(100vh-144px)] flex flex-grow flex-col overflow-y-auto bg-gray-05">

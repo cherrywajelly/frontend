@@ -75,14 +75,14 @@ const Carousel = () => {
   ];
 
   return (
-    <div className="w-full">
+    <div className="w-full m-auto">
       <Slider {...settings} className="">
         {slideContent.map((item, idx) => {
           const isLastSlide = idx === slideContent.length - 1;
 
           return (
-            <div key={idx} className="flex flex-col gap-0">
-              <div className="h-[70px]">
+            <div key={idx} className="flex flex-col h-[600px]">
+              <div className="">
                 <span className="text-h1 text-gray-80 break-keep">
                   {item.title}
                 </span>
@@ -97,15 +97,14 @@ const Carousel = () => {
               <br />
               <br />
 
-              <div className="w-[240px] m-auto h-auto mb-[30px] break-keep shadow-lg rounded-[10px]">
+              <div className="w-[220px] m-auto h-auto mb-[30px] break-keep shadow-lg rounded-[10px]">
                 <Image
                   src={item.gif}
                   alt=""
+                  width={220}
                   className="border border-gray-10 rounded-[10px]"
                 />
               </div>
-
-              <br />
 
               <span className="text-gray-80 text-subtitle4 break-keep text-center">
                 {item.subTitle2}
@@ -113,7 +112,7 @@ const Carousel = () => {
 
               {isLastSlide && (
                 <Button
-                  className="w-full bg-gray-80 text-white mt-8 h-[48px] px-25 text-subtitle3"
+                  className="w-full bg-gray-80 text-white mt-8 mb-4 h-[48px] px-25 text-subtitle3"
                   onClick={() => {
                     router.push('/login');
                   }}
@@ -122,7 +121,6 @@ const Carousel = () => {
                 </Button>
               )}
 
-              <br />
               <br />
             </div>
           );
