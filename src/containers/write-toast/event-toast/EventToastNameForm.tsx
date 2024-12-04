@@ -37,7 +37,11 @@ export default function EventToastNameForm() {
             placeholder="토스트 이름을 입력해주세요."
             value={eventData.toastName}
             onChange={handleToastName}
+            maxLength={20}
           />
+          <span className="pt-2 px-2 text-body5 text-gray-80">
+            토스트 이름은 최대 20자까지 가능합니다.
+          </span>
         </InputForm>
       </div>
 
