@@ -4,6 +4,7 @@ import {
   EventToastShareTemplateResponse,
   jamPostRequestBody,
 } from '@/types/api/eventToast';
+import { notifyError } from '@/utils/toast';
 
 import { apiRequest } from '.';
 
@@ -72,6 +73,10 @@ export const postEventToast = async ({
 
     if (res.status === 500) {
       throw new Error('Internal Server Error');
+    }
+
+    if (res.status === 400) {
+      return res.json();
     }
 
     if (res.status === 200) {

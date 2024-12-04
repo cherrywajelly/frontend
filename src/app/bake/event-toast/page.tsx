@@ -11,7 +11,7 @@ import ConfirmDialog from '@/components/alert/ConfirmDialog';
 
 import { usePostEventToast } from '@/hooks/api/useEventToast';
 import useFormatDate from '@/hooks/useFormat';
-import { notifyLater } from '@/utils/toast';
+import { notifyError, notifyLater } from '@/utils/toast';
 
 import { bottomBarItemState } from '@/atoms/componentAtom';
 import { eventToastDataState, eventToastStepState } from '@/atoms/toastAtom';
@@ -68,8 +68,8 @@ export default function EventToastPage() {
           handleSuccess();
         },
         onError: (error) => {
+          notifyError(`${error}`);
           setStep(0);
-          alert('예기치 못한 에러가 발생했습니다.');
         },
       },
     );
