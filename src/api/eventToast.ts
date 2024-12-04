@@ -60,12 +60,14 @@ export const postEventToast = async ({
   iconId,
   title,
   openedDate,
+  description,
 }: EventToastPostReqBody): Promise<EventToastPostResponse> => {
   try {
     const res = await apiRequest(`/api/v1/eventToasts`, 'POST', {
       iconId,
       title,
       openedDate,
+      description,
     });
 
     if (res.status === 500) {
