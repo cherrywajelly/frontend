@@ -1,5 +1,6 @@
 'use client';
 
+import BottomBar from '@/components/common-components/bottom-bar';
 import Button from '@/components/common-components/button';
 import Spinner from '@/components/common-components/spinner';
 import TopBar from '@/components/common-components/top-bar';
@@ -43,7 +44,12 @@ export default function EventToastPage({ params }: { params: PageParams }) {
       {isLoading ? (
         <Spinner />
       ) : (
-        <div className="p-6 h-[calc(100vh-72px)] flex flex-col justify-between">
+        <div
+          className={clsx(
+            'p-6 flex flex-col justify-between',
+            isMine ? 'h-[calc(100vh-72px)]' : 'h-[calc(100vh-144px)]',
+          )}
+        >
           <div className="flex justify-between flex-grow flex-col bg-gray-05 overflow-y-auto">
             {data && (
               <>
@@ -148,6 +154,7 @@ export default function EventToastPage({ params }: { params: PageParams }) {
           )}
         </div>
       )}
+      {!isMine && <BottomBar />}
     </div>
   );
 }
