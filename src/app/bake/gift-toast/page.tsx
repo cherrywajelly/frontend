@@ -75,6 +75,7 @@ export default function GiftToastPage() {
           memorizedDate: formatMemoryDate,
           openedDate: formatOpenDate,
           title: giftData.toastName as string,
+          description: giftData.toastDescription as string,
         },
         {
           onSuccess: handleSuccess,
@@ -93,6 +94,7 @@ export default function GiftToastPage() {
           memorizedDate: formatMemoryDate,
           openedDate: formatOpenDate,
           title: giftData.toastName as string,
+          description: giftData.toastDescription as string,
         },
         {
           onSuccess: handleSuccess,
@@ -110,6 +112,7 @@ export default function GiftToastPage() {
           memorizedDate: formatMemoryDate,
           openedDate: formatOpenDate,
           title: giftData.toastName as string,
+          description: giftData.toastDescription as string,
         },
         {
           onSuccess: handleSuccess,

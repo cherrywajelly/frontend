@@ -60,6 +60,7 @@ export default function EventToastPage() {
         iconId: eventToastData.iconId as number,
         openedDate: formatOpenDate,
         title: eventToastData.toastName as string,
+        description: eventToastData.toastDescription as string,
       },
       {
         onSuccess: (data) => {
