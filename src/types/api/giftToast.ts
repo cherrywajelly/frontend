@@ -1,3 +1,5 @@
+import { MyInfoResponse } from './login';
+
 export interface GiftToastDefaultResponse {
   giftToastId: number;
   title: string;
@@ -39,6 +41,13 @@ export interface GiftToastInfoResponse extends GiftToastItemResponse {
   openedDate: string;
   createdDate: string;
   profileImageUrl: string;
+  description: string;
+}
+
+export interface GiftToastTeamMemberResponse {
+  teamMembersCount: number;
+  isWrittenCount: number;
+  isWrittenMembers: MyInfoResponse[];
 }
 
 // 선물토스트 - 조회 response
@@ -46,6 +55,7 @@ export interface GiftToastResponses {
   dDay: number;
   giftToastInfo: GiftToastInfoResponse;
   toastPieceResponses: ToastPieceResponses;
+  giftToastTeamMember: GiftToastTeamMemberResponse | null;
 }
 
 // 선물 토스트 등록 (그룹)
@@ -54,6 +64,7 @@ export interface GiftToastRequestBody {
   memorizedDate: string;
   openedDate: string;
   title: string;
+  description: string;
 }
 
 export interface GiftToastGroupRequestBody extends GiftToastRequestBody {

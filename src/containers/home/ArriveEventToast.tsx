@@ -43,6 +43,7 @@ export default function ArriveEventToast() {
                 toastImg={item.icon.iconImageUrl}
                 nickname={item.nickname}
                 openDate={item.openedDate}
+                dDay={item.dDay}
                 onClick={() => {
                   router.push(`/event-toast/${item.eventToastId}`);
                 }}
