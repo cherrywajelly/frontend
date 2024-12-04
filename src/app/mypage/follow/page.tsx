@@ -17,7 +17,7 @@ export default function MyPageFollow() {
   const { data } = useMyInfo();
 
   return (
-    <div className="w-full h-lvh bg-gray-05">
+    <div className="w-full h-svh bg-gray-05">
       <TopBar title="마이페이지" />
 
       <div className="h-[calc(100vh-144px)] flex flex-grow flex-col bg-gray-05 py-6 overflow-y-auto">

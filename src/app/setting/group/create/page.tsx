@@ -27,7 +27,7 @@ export default function SettingGroup() {
   };
 
   return (
-    <div className="w-full h-lvh">
+    <div className="w-full h-svh">
       <TopBar onBack={handleBack} title="그룹 만들기" />
 
       <div className="h-[calc(100vh-48px)] flex flex-col bg-gray-05">
