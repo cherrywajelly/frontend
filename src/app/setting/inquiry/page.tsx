@@ -69,7 +69,7 @@ export default function SettingInquiryPage() {
     title.length > 0 && email.length > 0 && contents.length > 0;
 
   return (
-    <div className="w-full h-lvh">
+    <div className="w-full h-svh">
       <TopBar title="1:1 문의" />
 
       <div className="p-6 box-border h-[calc(100vh-48px)] flex justify-between flex-grow flex-col bg-gray-05 overflow-y-auto">

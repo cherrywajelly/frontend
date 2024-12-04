@@ -63,7 +63,7 @@ export default function IconDetailPage({ params }: { params: PageParams }) {
   };
 
   return (
-    <div className="w-full h-lvh">
+    <div className="w-full h-svh">
       <TopBar title="아이콘 마켓" />
 
       <div className="h-[calc(100vh-48px)] bg-white flex flex-col gap-6 justify-between bg-gray-white p-6 overflow-y-auto">
