@@ -50,7 +50,7 @@ export default function EventToastPage() {
   const handleSubmit = () => {
     const handleSuccess = () => {
       setIsDialogOpen(true);
-      setStep(0);
+      // setStep(0);
       setSelectedItem(navItem[0]);
       resetEventToastData();
     };
@@ -75,7 +75,7 @@ export default function EventToastPage() {
   };
 
   return (
-    <div className="w-full h-lvh">
+    <div className="w-full h-svh">
       <TopBar onBack={handleBack} title="이벤트 토스트 굽기" />
 
       <div className="h-[calc(100vh-48px)] flex flex-col gap-1 bg-gray-05">
@@ -110,6 +110,7 @@ export default function EventToastPage() {
             color="active"
             className="w-full"
             onClick={() => {
+              setStep(0);
               router.replace(`/event-toast/${eventToastId}/share`);
             }}
           >
@@ -117,7 +118,10 @@ export default function EventToastPage() {
           </Button>
           <Button
             className="w-full text-white bg-gray-60"
-            onClick={() => router.replace('/home')}
+            onClick={() => {
+              setStep(0);
+              router.replace('/home');
+            }}
           >
             홈으로 가기
           </Button>
