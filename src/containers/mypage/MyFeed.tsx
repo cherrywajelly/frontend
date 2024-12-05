@@ -99,8 +99,8 @@ export default function MyFeed() {
             size="sm"
             placeholder={
               activeTab === 0
-                ? '검색할 이벤트 토스트 이름을 입력하세요.'
-                : '검색할 캡슐 토스트 이름을 입력하세요.'
+                ? '검색할 토스트 이름을 입력하세요.'
+                : '검색할 토스트 이름을 입력하세요.'
             }
             search
             value={searchValue}
