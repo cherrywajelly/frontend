@@ -24,7 +24,7 @@ export default function JamItemPage({ params }: { params: PageParams }) {
   const { mutate, isPending } = useDeleteJamItem();
 
   return (
-    <div className="w-full h-svh bg-gray-05">
+    <div className="w-full h-lvh bg-gray-05">
       <TopBar title={data?.eventToastDataResponse.eventToastTitle} />
 
       <div className="h-[calc(100vh-144px)] flex flex-col flex-grow gap-4 bg-gray-05 p-6 overflow-y-auto">

@@ -59,7 +59,7 @@ export default function GiftToastWithChoiceForm() {
   }, [router]);
 
   return (
-    <div className="w-full h-svh px-6 py-6 flex flex-col justify-between">
+    <div className="w-full h-full px-6 py-6 flex flex-col justify-between">
       <InputForm title="캡슐 토스트에 함께 할 사람을 선택해주세요.">
         <div className="w-full flex items-center flex-none">
           <Input

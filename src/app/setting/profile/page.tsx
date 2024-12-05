@@ -154,7 +154,7 @@ const SettingProfilePage = () => {
   };
 
   return (
-    <div className="w-full h-svh">
+    <div className="w-full h-lvh">
       <TopBar title="프로필 편집" />
 
       <div className="h-[calc(100vh-48px)] flex flex-col bg-gray-05">
