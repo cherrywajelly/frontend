@@ -61,13 +61,13 @@ export default function SearchPage() {
 
   return (
     <div className="w-full h-lvh bg-gray-05">
-      <TopBar title="검색" isBackBtn={false} />
+      <TopBar title="사용자 검색" isBackBtn={false} />
 
       <div className="h-[calc(100vh-144px)] flex flex-col bg-gray-05">
         <div className="w-full h-full p-6 flex flex-col bg-gray-05">
           <div className="flex items-center flex-none">
             <Input
-              placeholder="검색어를 입력하세요."
+              placeholder="검색할 사용자의 닉네임을 입력하세요."
               size="sm"
               search
               value={searchValue}

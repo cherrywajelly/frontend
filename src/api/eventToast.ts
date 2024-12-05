@@ -4,6 +4,7 @@ import {
   EventToastShareTemplateResponse,
   jamPostRequestBody,
 } from '@/types/api/eventToast';
+import { notifyError } from '@/utils/toast';
 
 import { apiRequest } from '.';
 
@@ -60,16 +61,22 @@ export const postEventToast = async ({
   iconId,
   title,
   openedDate,
+  description,
 }: EventToastPostReqBody): Promise<EventToastPostResponse> => {
   try {
     const res = await apiRequest(`/api/v1/eventToasts`, 'POST', {
       iconId,
       title,
       openedDate,
+      description,
     });
 
     if (res.status === 500) {
       throw new Error('Internal Server Error');
+    }
+
+    if (res.status === 400) {
+      return res.json();
     }
 
     if (res.status === 200) {

@@ -39,7 +39,7 @@ export default function EventToastPage({ params }: { params: PageParams }) {
   };
 
   return (
-    <div className="w-full h-dvh bg-gray-05">
+    <div className="w-full h-lvh bg-gray-05">
       <TopBar onBack={handleBack} title={data?.title} />
       {isLoading ? (
         <Spinner />
@@ -60,6 +60,8 @@ export default function EventToastPage({ params }: { params: PageParams }) {
                   nickname={data.nickname}
                   openDate={data.openedDate}
                   memberId={data.memberId}
+                  dDay={data.dDay}
+                  isOpened={data.isOpened}
                 >
                   {isMine ? (
                     data.isOpened ? (

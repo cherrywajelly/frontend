@@ -19,7 +19,6 @@ type PageParams = {
 
 export default function JamItemPage({ params }: { params: PageParams }) {
   const { data, isLoading } = useGetJamDetail(params.jamId);
-  console.log('data', data);
 
   const router = useRouter();
   const { mutate, isPending } = useDeleteJamItem();

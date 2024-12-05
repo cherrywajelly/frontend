@@ -5,6 +5,7 @@ export interface ToastData {
   memoryDate?: Date | null;
   openDate?: Date | null;
   toastName?: string;
+  toastDescription?: string;
   deco: StaticImageData | string | null;
   id?: number | null;
   type?: 'mine' | 'friend' | 'group' | null;

@@ -78,9 +78,11 @@ export default function SettingAccountPage() {
                   className="bg-gray-05"
                 />
               </div>
-              <span className="p-2 text-navigation1 text-right text-gray-60">
-                만료일자: 24.12.25
-              </span>
+              {data?.premiumType === 'PREMIUM' && (
+                <span className="p-2 text-navigation1 text-right text-gray-60">
+                  만료일자: 24.12.25
+                </span>
+              )}
             </div>
           </div>
 

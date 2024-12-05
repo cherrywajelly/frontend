@@ -117,8 +117,12 @@ export default function GenerateGroup({
                 size="md"
                 className="mt-4"
                 value={groupName}
+                maxLength={20}
                 onChange={(e) => setGroupName(e.target.value)}
               />
+              <span className="p-1 text-navigation1 text-gray-60">
+                그룹명은 최대 20자까지 가능합니다.
+              </span>
             </div>
             <span className="w-full text-body1 text-black-main mt-5 mb-3">
               그룹원

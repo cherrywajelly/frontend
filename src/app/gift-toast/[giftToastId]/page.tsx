@@ -40,6 +40,10 @@ export default function GiftToastItemPage({ params }: { params: PageParams }) {
                 nickname={data.giftToastInfo.giftToastOwner}
                 openDate={data.giftToastInfo.openedDate}
                 isLoading={isLoading}
+                description={data.giftToastInfo.description}
+                isCapsule
+                whoInfo={data.giftToastTeamMember}
+                giftToastType={data.giftToastInfo.giftToastType}
               >
                 <Button
                   size="sm"

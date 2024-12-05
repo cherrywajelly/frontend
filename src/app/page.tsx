@@ -28,7 +28,7 @@ export default function Home() {
   }, [accessToken, router, refreshToken]);
 
   return (
-    <div className="w-full h-screen p-6 bg-white">
+    <div className="w-full h-lvh p-6 bg-white">
       {!accessToken ? (
         <div className="h-full text-center relative box-border w-full flex flex-col justify-center items-center">
           <Carousel />

@@ -13,12 +13,14 @@ export interface EventToastItemResponse extends EventToastDefaultResponse {
     iconId: number;
     iconImageUrl: string;
   };
+  dDay?: number;
 }
 
 export interface EventToastPostReqBody {
   openedDate: string;
   title: string;
   iconId: number;
+  description: string;
 }
 
 export interface EventToastPostResponse {
@@ -39,6 +41,7 @@ export interface EventToastResponse extends EventToastDefaultResponse {
   iconImageUrl: string;
   isOpened: boolean;
   memberId: number;
+  description: string;
 }
 
 export interface JamDataItemResponse {
