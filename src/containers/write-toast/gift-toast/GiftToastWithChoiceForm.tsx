@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   RiCheckboxBlankCircleLine,
   RiCheckboxCircleFill,
@@ -9,15 +9,18 @@ import Input from '@/components/common-components/input';
 
 import InputForm from '@/components/input-form/InputForm';
 import UserListItem from '@/components/search/UserListItem';
+import TargetDivider from '@/components/toast/TargetDivider';
 
 import { useMyInfo } from '@/hooks/api/useLogin';
 import { useGetFollowings, useGetGroup } from '@/hooks/api/useMyPage';
 
 import { giftToastDataState, giftToastStepState } from '@/atoms/toastAtom';
 
+import { useRouter } from 'next/navigation';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 
 export default function GiftToastWithChoiceForm() {
+  const router = useRouter();
   const setStep = useSetRecoilState(giftToastStepState);
   const [giftData, setGiftData] = useRecoilState(giftToastDataState);
 
@@ -38,7 +41,7 @@ export default function GiftToastWithChoiceForm() {
   // 팔로잉 목록 및 그룹 목록 조회
   const { data: followingData, isLoading: isLoadingFollowings } =
     useGetFollowings();
-  const { data: groupData, isLoading: isLoadingGroup } = useGetGroup();
+  const { data: groupData, isLoading: isLoadingGroup, refetch } = useGetGroup();
 
   const toggleUserSelection = (
     itemId: number | null,
@@ -50,6 +53,10 @@ export default function GiftToastWithChoiceForm() {
       setGiftData((prev) => ({ ...prev, id: itemId, type }));
     }
   };
+
+  useEffect(() => {
+    refetch();
+  }, [router]);
 
   return (
     <div className="w-full h-full px-6 py-6 flex flex-col justify-between">
@@ -68,13 +75,13 @@ export default function GiftToastWithChoiceForm() {
               }
             }}
             className={`transition-all duration-300 ${
-              isFocused ? 'w-[calc(100%-30px)]' : 'w-full'
+              isFocused ? 'w-[calc(100%-20px)]' : 'w-full'
             }`}
           />
           {isFocused && (
             <span
               onClick={handleCancel}
-              className="whitespace-nowrap text-body1 text-gray-40 transition-opacity duration-300 opacity-100"
+              className="pl-4 whitespace-nowrap text-body1 text-gray-40 transition-opacity duration-300 opacity-100"
             >
               취소
             </span>
@@ -84,6 +91,7 @@ export default function GiftToastWithChoiceForm() {
 
       <div className="flex-grow my-6 overflow-y-auto hide-scrollbar">
         <div className="flex flex-col gap-4">
+          <TargetDivider text="나에게" />
           <UserListItem
             profileImg={mineData?.profileUrl ?? ''}
             nickname={mineData?.nickname as string}
@@ -95,6 +103,10 @@ export default function GiftToastWithChoiceForm() {
               <RiCheckboxBlankCircleLine className="text-gray-40" size={24} />
             )}
           </UserListItem>
+
+          {followingData && followingData.followResponses && (
+            <TargetDivider text="친구와 함께" />
+          )}
           {followingData &&
             followingData.followResponses.map((item) => (
               <UserListItem
@@ -116,10 +128,13 @@ export default function GiftToastWithChoiceForm() {
                 )}
               </UserListItem>
             ))}
+
+          {groupData && groupData.teamResponses && (
+            <TargetDivider text="그룹과 함께" isButton />
+          )}
           {groupData &&
             groupData.teamResponses.map((item, idx) => (
               <UserListItem
-                // key={item.teamId}
                 key={idx}
                 profileImg={item.teamProfileUrl}
                 nickname={item.teamName}

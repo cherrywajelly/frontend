@@ -13,7 +13,7 @@ import Script from 'next/script';
 
 export const metadata = {
   title: 'TimeToast',
-  description: '지속 가능한 추억 아카이빙 서비스, 타잉토스트',
+  description: '흩어지는 기엄을 담는 나만의 토스트, 타임토스트',
   manifest: '/manifest.json',
 };
 
@@ -93,6 +93,7 @@ export default function RootLayout({
           className={`${pretendard.variable} font-pretendard antialiased m-auto`}
         >
           <Script src="/service-worker.js" />
+          <Script src="https://js.tosspayments.com/v1/payment" />
           <Script
             src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js"
             integrity={process.env.NEXT_PUBLIC_KAKAO_JS_SDK_INTEGRITY}

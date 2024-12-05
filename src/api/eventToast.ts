@@ -1,7 +1,10 @@
 import {
   EventToastPostReqBody,
+  EventToastPostResponse,
+  EventToastShareTemplateResponse,
   jamPostRequestBody,
 } from '@/types/api/eventToast';
+import { notifyError } from '@/utils/toast';
 
 import { apiRequest } from '.';
 
@@ -58,25 +61,32 @@ export const postEventToast = async ({
   iconId,
   title,
   openedDate,
-}: EventToastPostReqBody) => {
-  await apiRequest(`/api/v1/eventToasts`, 'POST', {
-    iconId,
-    title,
-    openedDate,
-  })
-    .then((res) => {
-      if (res.status === 500) {
-        throw new Error('Internal Server Error');
-      }
-
-      if (res.status === 200) {
-        return res;
-      }
-    })
-    .catch((err) => {
-      // console.log(err);
-      throw err;
+  description,
+}: EventToastPostReqBody): Promise<EventToastPostResponse> => {
+  try {
+    const res = await apiRequest(`/api/v1/eventToasts`, 'POST', {
+      iconId,
+      title,
+      openedDate,
+      description,
     });
+
+    if (res.status === 500) {
+      throw new Error('Internal Server Error');
+    }
+
+    if (res.status === 400) {
+      return res.json();
+    }
+
+    if (res.status === 200) {
+      return res.json();
+    }
+
+    throw new Error('Unexpected response status');
+  } catch (err) {
+    throw err;
+  }
 };
 
 // 이벤트 토스트 삭제
@@ -169,4 +179,46 @@ export const postJamItemToEventToast = async (
       // console.log(err);
       throw err;
     });
+};
+
+// 이벤트 토스트 공유 템플릿 조회
+export const getEventToastShareTemplate = async (
+  eventToastId: number,
+): Promise<EventToastShareTemplateResponse> => {
+  const res = await apiRequest(`/api/v1/templates/${eventToastId}`);
+
+  if (!res.ok) {
+    throw new Error(`HTTP error! Status: ${res.status}`);
+  }
+
+  const data = await res.json();
+  return data;
+};
+
+// 이벤트 토스트 공유 템플릿 내용 저장
+export const postEventToastShareTemplateContent = async ({
+  eventToastId,
+  text,
+}: {
+  eventToastId: number;
+  text: string;
+}) => {
+  try {
+    const res = await apiRequest(`/api/v1/templates`, 'POST', {
+      eventToastId,
+      text,
+    });
+
+    if (res.status === 500) {
+      throw new Error('Internal Server Error');
+    }
+
+    if (res.status === 200) {
+      return res.json();
+    }
+
+    throw new Error('Unexpected response status');
+  } catch (err) {
+    throw err;
+  }
 };

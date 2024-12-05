@@ -4,7 +4,11 @@ import TopBar from '@/components/common-components/top-bar';
 
 import IconMarketTabList from '@/containers/setting/IconMarketTabList';
 
+import { useRouter } from 'next/navigation';
+
 export default function IconMarketPage() {
+  const router = useRouter();
+
   return (
     <div className="w-full h-lvh">
       <TopBar title="아이콘 마켓" />

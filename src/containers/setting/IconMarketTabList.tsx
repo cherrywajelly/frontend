@@ -27,8 +27,8 @@ export default function IconMarketTabList() {
   const router = useRouter();
 
   return (
-    <>
-      <div className="w-full flex border-b border-gray-10 px-6">
+    <div className="w-full">
+      <div className="flex border-b border-gray-10 px-6">
         {['토스트 아이콘', '잼 아이콘'].map((tabName, index) => (
           <div
             key={index}
@@ -75,6 +75,6 @@ export default function IconMarketTabList() {
             ))}
         </div>
       </div>
-    </>
+    </div>
   );
 }

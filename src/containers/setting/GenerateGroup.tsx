@@ -89,7 +89,7 @@ export default function GenerateGroup({
       ) : (
         <>
           <div className="flex flex-col items-center flex-none">
-            <div className="relative">
+            <div className="relative" onClick={handleFileUploadClick}>
               <Image
                 src={profileImg ? URL.createObjectURL(profileImg) : temp}
                 alt=""
@@ -97,10 +97,7 @@ export default function GenerateGroup({
                 height={120}
                 className="object-cover rounded-full w-[120px] h-[120px]"
               />
-              <div
-                onClick={handleFileUploadClick}
-                className="absolute bottom-[-12px] right-0 border-4 border-gray-05 bg-gray-10 w-[40px] h-[40px] rounded-full flex justify-center items-center"
-              >
+              <div className="absolute bottom-[-12px] right-0 border-4 border-gray-05 bg-gray-10 w-[40px] h-[40px] rounded-full flex justify-center items-center">
                 <FiCamera size={20} />
               </div>
               <input
@@ -120,8 +117,12 @@ export default function GenerateGroup({
                 size="md"
                 className="mt-4"
                 value={groupName}
+                maxLength={20}
                 onChange={(e) => setGroupName(e.target.value)}
               />
+              <span className="p-1 text-navigation1 text-gray-60">
+                그룹명은 최대 20자까지 가능합니다.
+              </span>
             </div>
             <span className="w-full text-body1 text-black-main mt-5 mb-3">
               그룹원

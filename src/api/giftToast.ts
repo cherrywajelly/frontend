@@ -49,6 +49,7 @@ export const postGiftToastGroup = async ({
   openedDate,
   title,
   teamId,
+  description,
 }: GiftToastGroupRequestBody) => {
   const response = await apiRequest(`/api/v1/giftToasts/group`, 'POST', {
     iconId,
@@ -56,6 +57,7 @@ export const postGiftToastGroup = async ({
     openedDate,
     title,
     teamId,
+    description,
   });
 
   if (response.status === 500) {
@@ -77,6 +79,7 @@ export const postGiftToastFriend = async ({
   openedDate,
   title,
   friendId,
+  description,
 }: GiftToastFriendRequestBody) => {
   const response = await apiRequest(`/api/v1/giftToasts/friend`, 'POST', {
     iconId,
@@ -84,6 +87,7 @@ export const postGiftToastFriend = async ({
     openedDate,
     title,
     friendId,
+    description,
   });
 
   if (response.status === 500) {
@@ -104,12 +108,14 @@ export const postGiftToastMine = async ({
   memorizedDate,
   openedDate,
   title,
+  description,
 }: GiftToastRequestBody) => {
   const response = await apiRequest(`/api/v1/giftToasts/mine`, 'POST', {
     iconId,
     memorizedDate,
     openedDate,
     title,
+    description,
   });
 
   if (response.status === 500) {

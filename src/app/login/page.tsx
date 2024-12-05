@@ -9,11 +9,11 @@ import Image from 'next/image';
 
 export default function LoginPage() {
   return (
-    <div className="px-0 h-screen flex flex-col justify-between">
+    <div className="w-full h-svh flex flex-col justify-between bg-white pb-[48px] box-border">
       <div className="h-full flex flex-col items-center justify-center">
-        <Image src={MainImage} alt="timetoast" className="" />
+        <Image src={MainImage} alt="timetoast" className="w-[500px]" />
 
-        <div className="w-full flex flex-1 justify-center px-6 flex-col gap-4 mb-[48px]">
+        <div className="w-full flex flex-1 justify-center px-6 box-border flex-col gap-4 my-[48px]">
           <KakaoButton />
           <GoogleButton />
         </div>

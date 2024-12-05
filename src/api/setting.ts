@@ -1,4 +1,4 @@
-import { RequestGroupTeam } from '@/types/api/setting';
+import { InquiriesRequestBody, RequestGroupTeam } from '@/types/api/setting';
 
 import { apiRequest } from '.';
 
@@ -74,6 +74,37 @@ export const postProfileImage = async (profileImage: File) => {
 // 회원 탈퇴
 export const deleteWithdrawal = async () => {
   await apiRequest(`/api/v1/withdrawal`, 'DELETE')
+    .then((res) => {
+      if (res.status === 500) {
+        throw new Error('Internal Server Error');
+      }
+
+      if (res.status === 200) {
+        return res;
+      }
+    })
+    .catch((err) => {
+      // console.log(err);
+      throw err;
+    });
+};
+
+// 문의 작성 저장
+export const postInquiries = async ({
+  inquiryContents,
+  inquiryRequest,
+}: InquiriesRequestBody) => {
+  const formData = new FormData();
+
+  formData.append('inquiryContents', inquiryContents);
+
+  const requestBlob = new Blob([JSON.stringify(inquiryRequest)], {
+    type: 'application/json',
+  });
+
+  formData.append('inquiryRequest', requestBlob);
+
+  await apiRequest(`/api/v1/inquiries`, 'POST', formData)
     .then((res) => {
       if (res.status === 500) {
         throw new Error('Internal Server Error');

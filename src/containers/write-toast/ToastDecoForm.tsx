@@ -30,6 +30,7 @@ export type ToastFormProps = {
   handleSubmit?: () => void;
   isMainToast?: boolean;
   type: 'toast' | 'jam';
+  isPending?: boolean;
 };
 
 export default function ToastDecoForm(props: ToastFormProps) {
@@ -39,6 +40,7 @@ export default function ToastDecoForm(props: ToastFormProps) {
     handleSubmit,
     isMainToast = true,
     type,
+    isPending,
   } = props;
 
   const [selectedTopic, setSelectedTopic] = useState<string>();
@@ -163,6 +165,7 @@ export default function ToastDecoForm(props: ToastFormProps) {
         </div>
 
         <Button
+          id="serverCallButton"
           color={
             toastData.deco !== defaultImg && toastData.deco !== defaultJam
               ? 'active'
@@ -170,7 +173,9 @@ export default function ToastDecoForm(props: ToastFormProps) {
           }
           onClick={handleSubmit}
           disabled={
-            toastData.deco == defaultImg || toastData.deco === defaultJam
+            isPending ||
+            toastData.deco === defaultImg ||
+            toastData.deco === defaultJam
           }
         >
           {isMainToast ? '토스트 생성' : '다음'}

@@ -1,5 +1,6 @@
 'use client';
 
+import BottomBar from '@/components/common-components/bottom-bar';
 import Button from '@/components/common-components/button';
 import Spinner from '@/components/common-components/spinner';
 import TopBar from '@/components/common-components/top-bar';
@@ -43,7 +44,12 @@ export default function EventToastPage({ params }: { params: PageParams }) {
       {isLoading ? (
         <Spinner />
       ) : (
-        <div className="p-6 h-[calc(100vh-72px)] flex flex-col justify-between">
+        <div
+          className={clsx(
+            'p-6 flex flex-col justify-between',
+            isMine ? 'h-[calc(100vh-72px)]' : 'h-[calc(100vh-144px)]',
+          )}
+        >
           <div className="flex justify-between flex-grow flex-col bg-gray-05 overflow-y-auto">
             {data && (
               <>
@@ -54,6 +60,8 @@ export default function EventToastPage({ params }: { params: PageParams }) {
                   nickname={data.nickname}
                   openDate={data.openedDate}
                   memberId={data.memberId}
+                  dDay={data.dDay}
+                  isOpened={data.isOpened}
                 >
                   {isMine ? (
                     data.isOpened ? (
@@ -102,7 +110,7 @@ export default function EventToastPage({ params }: { params: PageParams }) {
                       className="opacity-50 w-[240px] h-[240px]"
                     />
                     <div className="text-gray-60">
-                      {data.dDay === 0 ? '' : `D-${data.dDay}`}
+                      {data.dDay <= 0 ? '' : `D-${data.dDay}`}
                     </div>
                   </div>
                 ) : (
@@ -136,16 +144,19 @@ export default function EventToastPage({ params }: { params: PageParams }) {
             )}
           </div>
 
-          <Button
-            color="active"
-            onClick={handleShare}
-            className="mt-6"
-            size="md"
-          >
-            공유하기
-          </Button>
+          {isMine && (
+            <Button
+              color="active"
+              onClick={handleShare}
+              className="mt-6"
+              size="md"
+            >
+              공유하기
+            </Button>
+          )}
         </div>
       )}
+      {!isMine && <BottomBar />}
     </div>
   );
 }

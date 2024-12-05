@@ -13,12 +13,20 @@ export interface EventToastItemResponse extends EventToastDefaultResponse {
     iconId: number;
     iconImageUrl: string;
   };
+  dDay?: number;
 }
 
 export interface EventToastPostReqBody {
   openedDate: string;
   title: string;
   iconId: number;
+  description: string;
+}
+
+export interface EventToastPostResponse {
+  id: number;
+  statusCode: string;
+  message: string;
 }
 
 export interface JamItemResponse {
@@ -33,6 +41,7 @@ export interface EventToastResponse extends EventToastDefaultResponse {
   iconImageUrl: string;
   isOpened: boolean;
   memberId: number;
+  description: string;
 }
 
 export interface JamDataItemResponse {
@@ -63,4 +72,16 @@ export interface jamPostRequestBody {
     iconId: number;
     title: string;
   };
+}
+
+// 공유 템플릿 관련
+export interface EventToastShareTemplateResponse {
+  eventToastTemplateResponse: {
+    title: string;
+    openedDate: string;
+  };
+  iconImageUrl: string;
+  profileImageUrl: string;
+  nickname: string;
+  text: string;
 }

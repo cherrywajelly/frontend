@@ -34,7 +34,6 @@ export default function FollowTab() {
   });
 
   const router = useRouter();
-  const queryClient = useQueryClient();
 
   const [isFocused, setIsFocused] = useState<boolean>(false);
   const [searchValue, setSearchValue] = useState<string>('');
@@ -130,13 +129,13 @@ export default function FollowTab() {
               }
             }}
             className={`transition-all duration-300 ${
-              isFocused ? 'w-[calc(100%-30px)]' : 'w-full'
+              isFocused ? 'w-[calc(100%-20px)]' : 'w-full'
             }`}
           />
           {isFocused && (
             <span
               onClick={handleCancel}
-              className="whitespace-nowrap text-body1 text-gray-40 transition-opacity duration-300 opacity-100"
+              className="pl-4 whitespace-nowrap text-body1 text-gray-40 transition-opacity duration-300 opacity-100"
             >
               취소
             </span>

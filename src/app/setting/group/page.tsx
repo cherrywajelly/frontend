@@ -10,7 +10,7 @@ export default function GroupListPage() {
   const router = useRouter();
   return (
     <div className="w-full h-lvh">
-      <TopBar title="그룹 관리" onBack={() => router.push('/mypage')} />
+      <TopBar title="그룹 관리" />
 
       <div className="h-[calc(100vh-48px)] flex flex-col bg-gray-05">
         {<GroupList />}

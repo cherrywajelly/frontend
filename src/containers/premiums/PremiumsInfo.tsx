@@ -1,25 +1,53 @@
+import { Dispatch, SetStateAction } from 'react';
+
 import Button from '@/components/common-components/button';
 
 import { useGetPremiumsInfo } from '@/hooks/api/usePremiums';
 
+import clsx from 'clsx';
+
 const variants = {
   title: 'text-black-main text-body1 w-1/3 text-center break-keep m-auto',
   text: 'text-gray-80 text-body2 w-1/3 text-center break-keep m-auto',
+  activeStyle: '!h-[70px] w-1/3 rounded-[6px] border border-secondary-main',
+  defaultStyle:
+    '!h-[70px] w-1/3 rounded-[6px] !bg-gray-05 text-gray-80 border border-gray-80',
 };
 
-export default function PremiumsInfo() {
-  const { data, isLoading } = useGetPremiumsInfo();
+export type PremiumsInfoProps = {
+  selectedItem: string;
+  setSelectedItem: Dispatch<SetStateAction<string>>;
+};
 
-  console.log('data', data);
+export default function PremiumsInfo(props: PremiumsInfoProps) {
+  const { selectedItem, setSelectedItem } = props;
+
+  const { data, isLoading } = useGetPremiumsInfo();
 
   return (
     <div className="mt-[60px] h-full">
       <div className="flex justify-end gap-3 items-center">
         <div className="h-[70px] w-1/3" />
-        <Button className="!h-[70px] w-1/3 rounded-[6px]" color="secondary">
+        <Button
+          onClick={() => setSelectedItem('BASIC')}
+          className={clsx(
+            selectedItem === 'BASIC'
+              ? variants.activeStyle
+              : variants.defaultStyle,
+          )}
+          color={selectedItem === 'BASIC' ? 'secondary' : 'disabled'}
+        >
           BASIC
         </Button>
-        <Button className="!h-[70px] w-1/3 rounded-[6px]" color="secondary">
+        <Button
+          onClick={() => setSelectedItem('PREMIUM')}
+          className={clsx(
+            selectedItem === 'PREMIUM'
+              ? variants.activeStyle
+              : variants.defaultStyle,
+          )}
+          color={selectedItem === 'PREMIUM' ? 'secondary' : 'disabled'}
+        >
           PREMIUM
         </Button>
       </div>

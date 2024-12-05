@@ -193,16 +193,8 @@ export default function UserProfilePage({ params }: { params: PageProps }) {
                       nickname={item.nickname}
                       openDate={item.openedDate}
                       toastImg={item.icon.iconImageUrl}
+                      dDay={item.dDay}
                     >
-                      {/* <Button
-                    size="sm"
-                    color="primary"
-                    onClick={() =>
-                      router.push(`/event-toast/${item.eventToastId}`)
-                    }
-                  >
-                    잼 바르기
-                  </Button> */}
                       {item.isWritten ? (
                         <Button size="sm" color="disabled" disabled>
                           잼을 발랐어요
@@ -224,7 +216,7 @@ export default function UserProfilePage({ params }: { params: PageProps }) {
               ) : isLoadingUserProfile ? (
                 <CustomSkeleton height={50} containerClassName="mt-4" />
               ) : (
-                <div className="mt-4 w-full text-center text-body4 bg-white border border-gray-10 p-4 rounded-[10px]">
+                <div className="mt-4 w-full text-gray-60 text-center text-body4 bg-white border border-gray-10 p-4 rounded-[10px]">
                   {isFollow ? (
                     <>{data?.nickname}님이 아직 토스트를 굽지 않았어요!</>
                   ) : (

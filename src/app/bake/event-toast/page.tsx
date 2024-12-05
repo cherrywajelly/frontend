@@ -11,7 +11,7 @@ import ConfirmDialog from '@/components/alert/ConfirmDialog';
 
 import { usePostEventToast } from '@/hooks/api/useEventToast';
 import useFormatDate from '@/hooks/useFormat';
-import { notifyLater } from '@/utils/toast';
+import { notifyError, notifyLater } from '@/utils/toast';
 
 import { bottomBarItemState } from '@/atoms/componentAtom';
 import { eventToastDataState, eventToastStepState } from '@/atoms/toastAtom';
@@ -28,6 +28,8 @@ export default function EventToastPage() {
   const [eventToastData, setEventToastData] =
     useRecoilState(eventToastDataState);
   const router = useRouter();
+
+  const [eventToastId, setEventToastId] = useState<number>();
 
   const [selectedItem, setSelectedItem] = useRecoilState(bottomBarItemState);
 
@@ -48,7 +50,7 @@ export default function EventToastPage() {
   const handleSubmit = () => {
     const handleSuccess = () => {
       setIsDialogOpen(true);
-      setStep(0);
+      // setStep(0);
       setSelectedItem(navItem[0]);
       resetEventToastData();
     };
@@ -58,12 +60,16 @@ export default function EventToastPage() {
         iconId: eventToastData.iconId as number,
         openedDate: formatOpenDate,
         title: eventToastData.toastName as string,
+        description: eventToastData.toastDescription as string,
       },
       {
-        onSuccess: handleSuccess,
+        onSuccess: (data) => {
+          setEventToastId(data.id);
+          handleSuccess();
+        },
         onError: (error) => {
-          setStep(0);
-          alert('예기치 못한 에러가 발생했습니다.');
+          notifyError(`${error}`);
+          // setStep(0);
         },
       },
     );
@@ -88,6 +94,7 @@ export default function EventToastPage() {
                 dataState={eventToastDataState}
                 handleSubmit={handleSubmit}
                 type="toast"
+                isPending={isPending}
               />
             )}
           </>
@@ -104,14 +111,18 @@ export default function EventToastPage() {
             color="active"
             className="w-full"
             onClick={() => {
-              notifyLater();
+              setStep(0);
+              router.replace(`/event-toast/${eventToastId}/share`);
             }}
           >
             공유하기
           </Button>
           <Button
             className="w-full text-white bg-gray-60"
-            onClick={() => router.push('/home')}
+            onClick={() => {
+              setStep(0);
+              router.replace('/home');
+            }}
           >
             홈으로 가기
           </Button>
