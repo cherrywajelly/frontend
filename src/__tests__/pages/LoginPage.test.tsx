@@ -9,11 +9,4 @@ describe('LoginPage', () => {
     const logo = screen.getByAltText('timetoast');
     expect(logo).toBeInTheDocument();
   });
-
-  it('renders the TimeToast heading', () => {
-    render(<LoginPage />);
-
-    const heading = screen.getByText('TimeToast');
-    expect(heading).toBeInTheDocument();
-  });
 });

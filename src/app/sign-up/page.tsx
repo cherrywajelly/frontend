@@ -99,6 +99,7 @@ export default function SignUpPage() {
                 color={nickname ? 'primary' : 'disabled'}
                 onClick={handleValidNickname}
                 size="lg"
+                disabled={!nickname}
               >
                 중복확인
               </Button>

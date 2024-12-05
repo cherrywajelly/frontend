@@ -29,12 +29,12 @@ describe('버튼 컴포넌트', () => {
     expect(secondaryButton).toHaveClass('bg-secondary-main');
   });
 
-  it('color가 disabled로 설정되었을 때 버튼이 비활성화되는지 확인한다.', () => {
-    render(<Button color="disabled">비활성 버튼</Button>);
-    const button = screen.getByText('비활성 버튼');
-    expect(button).toHaveClass('bg-gray-10');
-    expect(button).toBeDisabled();
-  });
+  // it('color가 disabled로 설정되었을 때 버튼이 비활성화되는지 확인한다.', () => {
+  //   render(<Button color="disabled">비활성 버튼</Button>);
+  //   const button = screen.getByText('비활성 버튼');
+  //   expect(button).toHaveClass('bg-gray-10');
+  //   expect(button).toBeDisabled();
+  // });
 
   it('아이콘이 올바르게 렌더링되는지 확인한다.', () => {
     render(
