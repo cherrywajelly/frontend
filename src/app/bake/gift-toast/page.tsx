@@ -127,7 +127,7 @@ export default function GiftToastPage() {
   };
 
   return (
-    <div className="w-full h-svh">
+    <div className="w-full h-lvh">
       <TopBar onBack={handleBack} title="캡슐 토스트 굽기" />
 
       <div className="h-[calc(100vh-48px)] flex flex-col gap-1 bg-gray-05">
