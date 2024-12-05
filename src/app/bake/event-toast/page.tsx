@@ -69,7 +69,7 @@ export default function EventToastPage() {
         },
         onError: (error) => {
           notifyError(`${error}`);
-          setStep(0);
+          // setStep(0);
         },
       },
     );

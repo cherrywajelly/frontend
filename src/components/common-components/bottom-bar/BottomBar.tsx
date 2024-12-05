@@ -6,7 +6,8 @@ import { PiBellBold } from 'react-icons/pi';
 
 import { bottomBarItemState } from '@/atoms/componentAtom';
 
-import tempImg from '../../../../public/images/timetoast.png';
+import capsule from '../../../../public/images/toast/capsule.png';
+import event from '../../../../public/images/toast/event.png';
 import { NavItem } from './BottomBar.types';
 
 import clsx from 'clsx';
@@ -120,7 +121,7 @@ const BottomBar = () => {
         >
           <div className="w-full max-w-[400px] flex gap-4">
             <div
-              className="flex flex-col justify-center text-center bg-white py-4 px-3 shadow-lg w-1/2 rounded-[10px]"
+              className="flex flex-col justify-center items-center text-center bg-white py-4 px-3 shadow-lg w-1/2 rounded-[10px]"
               onClick={(e) => {
                 e.stopPropagation();
                 router.push('/bake/event-toast');
@@ -129,13 +130,19 @@ const BottomBar = () => {
               <span className="text-black-main text-body1 break-keep">
                 이벤트토스트 굽기
               </span>
-              <Image src={tempImg} alt="" />
+              <Image
+                src={event}
+                alt=""
+                width={148}
+                height={148}
+                className="pb-3"
+              />
               <p className="text-gray-80 text-body4 break-keep">
                 특별한 날을 기념하는 토스트를 구워보세요
               </p>
             </div>
             <div
-              className="flex flex-col justify-center text-center bg-white py-4 px-3 shadow-lg w-1/2 rounded-[10px]"
+              className="flex flex-col justify-center items-center text-center bg-white py-4 px-3 shadow-lg w-1/2 rounded-[10px]"
               onClick={(e) => {
                 e.stopPropagation();
                 router.push('/bake/gift-toast');
@@ -144,7 +151,13 @@ const BottomBar = () => {
               <span className="text-black-main text-body1">
                 캡슐토스트 굽기
               </span>
-              <Image src={tempImg} alt="" />
+              <Image
+                src={capsule}
+                alt=""
+                width={148}
+                height={148}
+                className="pb-3"
+              />
               <p className="text-gray-80 text-body4 break-keep">
                 친구들과 그룹을 만들어 추억을 나눠보세요
               </p>
