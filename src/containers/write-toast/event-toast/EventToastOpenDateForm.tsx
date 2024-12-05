@@ -36,7 +36,7 @@ export default function EventToastOpenDateForm() {
   tomorrow.setDate(today.getDate() + 1);
 
   return (
-    <div className="w-full h-full px-6 py-6 flex flex-col justify-between">
+    <div className="w-full h-svh px-6 py-6 flex flex-col justify-between">
       <div>
         <InputForm
           title="토스트를 오픈할 특별한 날을 선택해주세요."

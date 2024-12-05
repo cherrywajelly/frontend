@@ -41,7 +41,7 @@ export default function GiftToastOpenDateForm() {
     setGiftData((prev) => ({ ...prev, isAgree: !prev.isAgree }));
 
   return (
-    <div className="w-full h-full px-6 py-6 flex flex-col justify-between">
+    <div className="w-full h-svh px-6 py-6 flex flex-col justify-between">
       <div>
         <InputForm
           title="토스트에 기록하고 싶은 날을 선택해주세요."

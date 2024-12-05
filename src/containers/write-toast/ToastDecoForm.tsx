@@ -89,7 +89,7 @@ export default function ToastDecoForm(props: ToastFormProps) {
       : `${nickname}님의 토스트를 꾸며보세요!`;
 
   return (
-    <div className="w-full h-full pt-6 flex flex-col justify-between">
+    <div className="w-full h-svh pt-6 flex flex-col justify-between">
       <div className="px-6">
         <InputForm title={localTitle}>
           <Image
