@@ -95,7 +95,10 @@ export default function ToastBox(props: ToastBoxProps) {
         )}
       </div>
 
-      <span className="text-body4 text-gray-80">{description}</span>
+      {description && (
+        <span className="text-body4 text-gray-80">{description}</span>
+      )}
+
       <>{children}</>
 
       {isCapsule && giftToastType === 'GROUP' && (
