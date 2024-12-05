@@ -57,7 +57,7 @@ export default function PremiumsPage() {
   };
 
   return (
-    <div className="w-full h-svh">
+    <div className="w-full h-lvh">
       <TopBar title="구독 플랜" />
 
       {isLoading ? (

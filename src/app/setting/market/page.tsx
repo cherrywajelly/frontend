@@ -10,7 +10,7 @@ export default function IconMarketPage() {
   const router = useRouter();
 
   return (
-    <div className="w-full h-svh">
+    <div className="w-full h-lvh">
       <TopBar title="아이콘 마켓" />
 
       <div className="h-[calc(100vh-48px)] flex flex-col bg-white py-6">

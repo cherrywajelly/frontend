@@ -119,7 +119,7 @@ export default function ShowcaseEdit() {
   const isLoading = isPosting || isDeleting || isLoadingShowcaseListData;
 
   return (
-    <div className="w-full h-svh">
+    <div className="w-full h-lvh">
       <TopBar title="진열장 편집" />
 
       <div className="flex flex-col bg-gray-05">

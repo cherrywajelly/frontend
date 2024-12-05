@@ -210,7 +210,7 @@ export default function EventToastSharePage() {
   };
 
   return (
-    <div className="w-full h-svh">
+    <div className="w-full h-lvh">
       <TopBar title="공유하기" />
 
       {isLoading ? (

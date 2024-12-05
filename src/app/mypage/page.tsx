@@ -33,7 +33,7 @@ export default function MyPage() {
     typeof window !== 'undefined' && sessionStorage.getItem('accesstoken');
 
   return (
-    <div className="w-full h-svh bg-white">
+    <div className="w-full h-lvh bg-white">
       <TopBar title="마이페이지" isRight="setting" isBackBtn={false} />
 
       <div className="h-[calc(100vh-144px)] flex flex-grow flex-col bg-gray-05 overflow-y-auto">

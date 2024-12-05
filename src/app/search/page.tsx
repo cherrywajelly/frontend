@@ -60,7 +60,7 @@ export default function SearchPage() {
   }, [pageIndex, pageSize, searchValue]);
 
   return (
-    <div className="w-full h-svh bg-gray-05">
+    <div className="w-full h-lvh bg-gray-05">
       <TopBar title="사용자 검색" isBackBtn={false} />
 
       <div className="h-[calc(100vh-144px)] flex flex-col bg-gray-05">
