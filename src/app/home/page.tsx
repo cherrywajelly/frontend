@@ -73,7 +73,7 @@ export default function HomePage() {
   }, [mutateFCM]);
 
   return (
-    <div className="w-full h-svh bg-gray-05">
+    <div className="w-full h-dvh bg-gray-05">
       <TopBar title="TimeToast" isBackBtn={false} />
 
       <div className="w-full h-[calc(100vh-144px)] flex flex-grow flex-col overflow-y-auto p-6 bg-gray-05">
