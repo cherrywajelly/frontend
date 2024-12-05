@@ -21,6 +21,7 @@ export type ToastBoxProps = {
   whoInfo?: GiftToastTeamMemberResponse | null;
   dDay?: number;
   giftToastType?: string;
+  isOpened?: boolean;
 };
 
 export default function ToastBox(props: ToastBoxProps) {
@@ -39,6 +40,7 @@ export default function ToastBox(props: ToastBoxProps) {
     whoInfo,
     dDay,
     giftToastType,
+    isOpened,
   } = props;
 
   const router = useRouter();
@@ -88,7 +90,7 @@ export default function ToastBox(props: ToastBoxProps) {
           </span>
         </div>
 
-        {!isCapsule && (
+        {!isCapsule && !isOpened && (
           <span className="text-body4 text-gray-80">D-{dDay}</span>
         )}
       </div>
