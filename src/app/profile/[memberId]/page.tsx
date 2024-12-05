@@ -193,6 +193,7 @@ export default function UserProfilePage({ params }: { params: PageProps }) {
                       nickname={item.nickname}
                       openDate={item.openedDate}
                       toastImg={item.icon.iconImageUrl}
+                      dDay={item.dDay}
                     >
                       {item.isWritten ? (
                         <Button size="sm" color="disabled" disabled>
