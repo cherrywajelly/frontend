@@ -165,7 +165,8 @@ export default function ToastDecoForm(props: ToastFormProps) {
         </div>
 
         <Button
-          id="serverCallButton"
+          role="button"
+          data-testid="event-toast-submit-button"
           color={
             toastData.deco !== defaultImg && toastData.deco !== defaultJam
               ? 'active'

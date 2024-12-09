@@ -17,7 +17,7 @@ export default function MyInfo() {
   }, [data]);
 
   return (
-    <div className="px-6 py-4">
+    <div data-testid="my-info" className="px-6 py-4">
       <UserInfo
         nickname={data?.nickname ?? ''}
         profileImg={data?.profileUrl ?? ''}
