@@ -43,6 +43,7 @@ export default function MyPage() {
           <>
             <MyInfo />
             <Showcase
+              data-testid="showcase"
               isMine={true}
               data={showcaseDataList}
               nickname={nickname as string}

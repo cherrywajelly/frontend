@@ -37,7 +37,7 @@ export default function ArriveGiftToast() {
   }, [myInfoData]);
 
   return (
-    <div>
+    <div role="status">
       <span className="text-gray-80 text-subtitle1">
         {isLoadingToastData ? (
           <CustomSkeleton height={32} containerClassName="w-full" />
