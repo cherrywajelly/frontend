@@ -74,7 +74,6 @@ const Button = forwardRef<HTMLButtonElement, PropsWithChildren<ButtonProps>>(
         onClick={onClick}
         disabled={disabled}
         {...rest}
-        disabled={disabled}
       >
         {startIcon}
         {children}
