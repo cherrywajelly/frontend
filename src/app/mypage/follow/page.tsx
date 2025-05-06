@@ -31,7 +31,6 @@ export default function MyPageFollow() {
               height={80}
               className="object-cover rounded-full w-[80px] h-[80px]"
               priority
-              unoptimized
             />
           </div>
 
