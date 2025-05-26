@@ -1,6 +1,10 @@
+import withBundleAnalyzer from '@next/bundle-analyzer';
+
 import withPWA from 'next-pwa';
 
 const imgHostName = process.env.NEXT_PUBLIC_IMAGE_HOSTNAME;
+
+const isAnalyze = process.env.ANALYZE === 'true';
 
 const nextConfig = {
   images: {
@@ -28,8 +32,14 @@ const nextConfig = {
   },
 };
 
-const config = withPWA({
-  dest: 'public',
-})(nextConfig);
+const withPlugins = (plugins, config) => {
+  return plugins.reduce((acc, plugin) => plugin(acc), config);
+};
 
-export default config;
+export default withPlugins(
+  [
+    withPWA({ dest: 'public' }),
+    isAnalyze ? withBundleAnalyzer({ enabled: true }) : (config) => config,
+  ],
+  nextConfig,
+);
