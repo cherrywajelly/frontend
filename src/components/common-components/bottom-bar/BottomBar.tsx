@@ -27,7 +27,7 @@ const navVariants = {
   container:
     'fixed bottom-0 bg-white w-full max-w-[600px] h-[96px] px-6 pt-4 flex justify-between rounded-t-[12px] shadow-[0_0_4px_0px_rgba(78,69,64,0.25)]',
   itemContainer:
-    'w-full max-w-[64px] flex flex-col gap-[2px] justify-start items-center',
+    'w-full max-w-[64px] flex flex-col gap-[2px] justify-start items-center cursor-pointer',
   textDefault: 'text-body5 text-gray-20',
   iconDefault: 'text-[24px] text-body5 text-gray-20',
   textActive: 'text-navigation1 text-secondary-main',
@@ -45,26 +45,6 @@ const BottomBar = () => {
 
   const backdropRef = useRef<HTMLDivElement>(null);
 
-  // useEffect(() => {
-  //   const handleClickOutside = (event: MouseEvent) => {
-  //     if (
-  //       backdropRef.current &&
-  //       !backdropRef.current.contains(event.target as Node)
-  //     ) {
-  //       handleCloseBackdrop();
-  //     }
-  //   };
-
-  //   // '토스트' 선택 시에만 이벤트 리스너 추가
-  //   if (selectedItem.title === '토스트') {
-  //     document.addEventListener('mousedown', handleClickOutside);
-  //   }
-
-  //   return () => {
-  //     document.removeEventListener('mousedown', handleClickOutside);
-  //   };
-  // }, [selectedItem]);
-
   const router = useRouter();
 
   const handleClickItem = (item: NavItem) => {
@@ -79,8 +59,6 @@ const BottomBar = () => {
   const handleCloseBackdrop = () => {
     setSelectedItem(previousItem);
   };
-
-  useEffect(() => {}, [selectedItem]);
 
   return (
     <div className="relative flex justify-center">
