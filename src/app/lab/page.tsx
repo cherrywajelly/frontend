@@ -113,8 +113,6 @@ export default function LabPage() {
         </div>
       </UserInfo>
 
-      {/* <div>input component test</div> */}
-      {/* <Input placeholder="인풋입니다인풋" /> */}
       {/* <Input placeholder="normal input" startIcon={<LuCalendarDays />} /> */}
       {/* 
       <Dialog open={isOpen} onClose={onToggleModal}>
