@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { CgHome } from 'react-icons/cg';
 import { FaRegSquarePlus } from 'react-icons/fa6';
 import { FiSearch, FiUser } from 'react-icons/fi';
@@ -12,7 +12,7 @@ import { NavItem } from './BottomBar.types';
 
 import clsx from 'clsx';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useRecoilState } from 'recoil';
 
 export const navItem: NavItem[] = [
@@ -27,7 +27,7 @@ const navVariants = {
   container:
     'fixed bottom-0 bg-white w-full max-w-[600px] h-[96px] px-6 pt-4 flex justify-between rounded-t-[12px] shadow-[0_0_4px_0px_rgba(78,69,64,0.25)]',
   itemContainer:
-    'w-full max-w-[64px] flex flex-col gap-[2px] justify-start items-center',
+    'w-full max-w-[64px] flex flex-col gap-[2px] justify-start items-center cursor-pointer',
   textDefault: 'text-body5 text-gray-20',
   iconDefault: 'text-[24px] text-body5 text-gray-20',
   textActive: 'text-navigation1 text-secondary-main',
@@ -44,26 +44,7 @@ const BottomBar = () => {
   const [previousItem, setPreviousItem] = useState(navItem[0]); // 이전 아이템을 저장할 상태
 
   const backdropRef = useRef<HTMLDivElement>(null);
-
-  // useEffect(() => {
-  //   const handleClickOutside = (event: MouseEvent) => {
-  //     if (
-  //       backdropRef.current &&
-  //       !backdropRef.current.contains(event.target as Node)
-  //     ) {
-  //       handleCloseBackdrop();
-  //     }
-  //   };
-
-  //   // '토스트' 선택 시에만 이벤트 리스너 추가
-  //   if (selectedItem.title === '토스트') {
-  //     document.addEventListener('mousedown', handleClickOutside);
-  //   }
-
-  //   return () => {
-  //     document.removeEventListener('mousedown', handleClickOutside);
-  //   };
-  // }, [selectedItem]);
+  const pathName = usePathname();
 
   const router = useRouter();
 
@@ -80,13 +61,11 @@ const BottomBar = () => {
     setSelectedItem(previousItem);
   };
 
-  useEffect(() => {}, [selectedItem]);
-
   return (
     <div className="relative flex justify-center">
       <div className={navVariants.container}>
         {navItem.map((item) => {
-          const isActive = selectedItem.title === item.title;
+          const isActive = pathName === item.url;
           return (
             <div
               key={item.title}
