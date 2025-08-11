@@ -9,7 +9,7 @@ jobs:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     env:
-      IMAGE_HOSTNAME: ${{ secrets.IMAGE_HOSTNAME }}
+      NEXT_PUBLIC_IMAGE_HOSTNAME: ${{ secrets.IMAGE_HOSTNAME }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
